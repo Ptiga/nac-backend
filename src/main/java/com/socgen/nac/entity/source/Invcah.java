@@ -1,4 +1,4 @@
-package com.socgen.nac.entity;
+package com.socgen.nac.entity.source;
 
 public class Invcah{
 
@@ -7,6 +7,8 @@ public class Invcah{
     private String nomfonds;
     private String deviseFonds;
     private String dateVL;
+    private String triComptable;
+    private String categorie;
     private String isinValeur;
     private String libeleValeur;
     private String dateCours;
@@ -17,12 +19,14 @@ public class Invcah{
     public Invcah() {
     }
 
-    public Invcah(String sourceFilename, String codeFonds, String nomfonds, String deviseFonds, String dateVL, String isinValeur, String libeleValeur, String dateCours, double cours, String deviseCours) {
+    public Invcah(String sourceFilename, String codeFonds, String nomfonds, String deviseFonds, String dateVL, String triComptable, String categorie, String isinValeur, String libeleValeur, String dateCours, double cours, String deviseCours) {
         this.sourceFilename = sourceFilename;
         this.codeFonds = codeFonds;
         this.nomfonds = nomfonds;
         this.deviseFonds = deviseFonds;
         this.dateVL = dateVL;
+        this.triComptable = triComptable;
+        this.categorie = categorie;
         this.isinValeur = isinValeur;
         this.libeleValeur = libeleValeur;
         this.dateCours = dateCours;
@@ -69,6 +73,22 @@ public class Invcah{
 
     public void setDateVL(String dateVL) {
         this.dateVL = dateVL;
+    }
+
+    public String getTriComptable() {
+        return triComptable;
+    }
+
+    public void setTriComptable(String triComptable) {
+        this.triComptable = triComptable;
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
     }
 
     public String getIsinValeur() {

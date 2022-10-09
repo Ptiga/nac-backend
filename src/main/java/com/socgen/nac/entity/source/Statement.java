@@ -1,12 +1,19 @@
-package com.socgen.nac.entity;
+package com.socgen.nac.entity.source;
 
 //import org.apache.commons.io.FilenameUtils;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+//@PropertySource("classpath:application.properties")
 public class Statement {
 
-    @Value("${dataSeparator}")
+    //L'annotation ne récupère pas la valeur renseignée dans le fichier .properties !!!
+    //@Value("${statement.dataSeparator}")
     private Character dataSeparator;
 
     private String filename;
@@ -74,7 +81,7 @@ public class Statement {
         return fileTimestamp;
     }
 
-    public void setFileTimestamp() {
+    public void setFileTimestamp(String fileTimestamp) {
         this.fileTimestamp = fileTimestamp;
     }
 
@@ -95,6 +102,7 @@ public class Statement {
         char charFound;
         for (int i = 0; i < this.filename.length(); i++) {
             charFound = this.filename.charAt(i);
+            //if (charFound == dataSeparator)
             if (charFound == '_')
                 numberOfSeparators++;
         }

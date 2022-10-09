@@ -1,5 +1,6 @@
-package com.socgen.nac.entity;
+package com.socgen.nac.entity.source;
 
+import com.socgen.nac.entity.source.Statement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

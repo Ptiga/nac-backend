@@ -1,12 +1,20 @@
-package com.socgen.nac.service;
+package com.socgen.nac.service.source;
 
-import com.socgen.nac.entity.Statement;
-import com.socgen.nac.repository.SourceFileRepositoryInterface;
+import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class StatementService implements StatementServiceInterface{
+
+    @Value("${statementService.numberOfSeparatorExpected}")
+    private int numberOfSeparatorExpected;
+
 
     @Autowired
     private SourceFileRepositoryInterface statementRepository;
@@ -34,8 +42,6 @@ public class StatementService implements StatementServiceInterface{
             default:
                 return false;
         }
-
-
     }
 
     @Override
@@ -50,6 +56,7 @@ public class StatementService implements StatementServiceInterface{
 
     @Override
     public boolean isStatementUsable(Statement statement) {
+        //if (isExpectedStatementType(statement) && isExpectedFormat(statement) && statement.getNumberOfSeparators()==numberOfSeparatorExpected){
         if (isExpectedStatementType(statement) && isExpectedFormat(statement) && statement.getNumberOfSeparators()==4){
             return true;
         }else{
@@ -57,7 +64,20 @@ public class StatementService implements StatementServiceInterface{
         }
     }
 
-
+    @Override
+    public void addRemainingAttributes(Statement statement) {
+        List<String> listAttributes = new ArrayList<String>();
+        String filename = statement.getFilename().substring(statement.getFilename().indexOf('_')+1);
+        for(int i = 1; i < statement.getNumberOfSeparators(); i++){
+            listAttributes.add(filename.substring(0, filename.indexOf('_')));
+            filename = filename.substring(filename.indexOf('_')+1);
+        }
+        listAttributes.add(filename.substring(0, filename.indexOf('.')));
+        statement.setUserTag(listAttributes.get(0));
+        statement.setFund(listAttributes.get(1));
+        statement.setNavDate(listAttributes.get(2));
+        statement.setFileTimestamp(listAttributes.get(3));
+    }
 
 
     //Appel dans le repo

@@ -1,6 +1,6 @@
-package com.socgen.nac.service;
+package com.socgen.nac.service.source;
 
-import com.socgen.nac.entity.Statement;
+import com.socgen.nac.entity.source.Statement;
 
 public interface StatementServiceInterface {
 
@@ -11,4 +11,7 @@ public interface StatementServiceInterface {
     boolean isExpectedFormat(Statement statement);
 
     boolean isStatementUsable(Statement statement);
+
+    void addRemainingAttributes(Statement statement);
 }
+
