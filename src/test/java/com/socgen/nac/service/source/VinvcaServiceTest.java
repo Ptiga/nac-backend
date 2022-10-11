@@ -1,9 +1,13 @@
 package com.socgen.nac.service.source;
 
+import com.socgen.nac.entity.source.Statement;
 import com.socgen.nac.entity.source.Vinvca;
+import com.socgen.nac.repository.file.SourceFileRepository;
 import com.socgen.nac.service.source.VinvcaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 public class VinvcaServiceTest{
 
@@ -20,13 +24,17 @@ public class VinvcaServiceTest{
     double prix = 326.0;
     String devise = "EUR";
 
-    //Le "= new VinvcaService()" est-il obligatoire ?
-    //VinvcaService vinvcaService;
+    String sourceFolder = "c://temp//GP3_files_test//";
+    char dataSeparator = '_';
+    int numberOfSeparator = 4;
+    SourceFileRepository sourceFileRepository = new SourceFileRepository(sourceFolder, dataSeparator, numberOfSeparator);
+    StatementService statementService = new StatementService(sourceFileRepository);
+
     VinvcaService vinvcaService = new VinvcaService();
 
     @Test
     public void testVinvcaConstructor(){
-        Vinvca vinvca = vinvcaService.createVinvca(filename, fonds, nomFonds, deviseFonds, dataValo, triComptable, categorie, isin, libelleValeur, dateCours, prix, devise);
+        Vinvca vinvca = new Vinvca(filename, fonds, nomFonds, deviseFonds, dataValo, triComptable, categorie, isin, libelleValeur, dateCours, prix, devise);
         Assertions.assertEquals(filename, vinvca.getSourceFilename());
         Assertions.assertEquals(fonds, vinvca.getCodeFonds());
         Assertions.assertEquals(nomFonds, vinvca.getNomfonds());
@@ -41,5 +49,13 @@ public class VinvcaServiceTest{
         Assertions.assertEquals(devise, vinvca.getDeviseCours());
     }
 
+    @Test
+    public void createVinvcaFromFiles(){
+        List<Statement> listeFichiers = statementService.manageListOfFunds(sourceFileRepository.listFiles());
+        statementService.splitToDedicatedList(listeFichiers);
+        statementService.createStatementDetail(statementService.getDedicatedList("vinvca"));
+        vinvcaService.createVinvcaFromList(sourceFileRepository.getExtractedLinesList());
+        Assertions.assertTrue(vinvcaService.listeDetailVinvca.size()>0);
+    }
 
 }

@@ -53,11 +53,11 @@ public class SourceFileRepository implements SourceFileRepositoryInterface {
             FileReader fileReader = new FileReader(sourceFolder + statement.getFilename());
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            String line = statement.getFilename() + ";" + bufferedReader.readLine();
+            String line = bufferedReader.readLine();
 
             while (line != null) {
             if((statement.isStatementContainsHeader() && lineNum!=1) || !statement.isStatementContainsHeader()){
-                String[] ligneFichier = line.split(";");
+                String[] ligneFichier = (statement.getFilename() + ";" + line).split(";");
                 extractedLines.add(ligneFichier);
             }
             line = bufferedReader.readLine();

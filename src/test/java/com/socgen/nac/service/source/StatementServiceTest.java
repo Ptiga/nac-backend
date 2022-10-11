@@ -127,14 +127,13 @@ public class StatementServiceTest {
     @Test
     void createDetail(){
         List<Statement> listeFichiers = statementService.manageListOfFunds(sourceFileRepository.listFiles());
-        //List<Statement> listeFichiers = new ArrayList<>();
-        //listeFichiers.add(new Statement(filename3));
-        //listeFichiers.add(new Statement("invcah_cpot_FD0003_20220630_010722122175.fic"));
         statementService.splitToDedicatedList(listeFichiers);
         statementService.createStatementDetail(statementService.getDedicatedList("invcah"));
         System.out.println(sourceFileRepository.getExtractedLinesList());
         Assertions.assertTrue(sourceFileRepository.getExtractedLinesList().size()>0);
     }
+
+
 
 
 }

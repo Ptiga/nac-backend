@@ -43,4 +43,5 @@ public class SourceFileRepositoryTest {
         List<String[]>extractedList = sourceFileRepository.getExtractedLinesList();
         Assertions.assertEquals(25, extractedList.size());
     }
+
 }

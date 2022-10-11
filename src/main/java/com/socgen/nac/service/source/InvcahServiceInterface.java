@@ -1,7 +1,11 @@
 package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Invcah;
+import com.socgen.nac.entity.source.Statement;
+
+import java.util.List;
 
 public interface InvcahServiceInterface {
-    Invcah createInvcah(String filename, String codeFonds, String nomFonds, String deviseFonds, String dateValo, String triComptable, String categorie, String isin, String libelleValeur, String dateCours, double cours, String deviseCours);
+
+    void createInvcahFromList(List<String[]> listDetail);
 }

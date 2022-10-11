@@ -1,8 +1,12 @@
 package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Jourop;
+import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.repository.file.SourceFileRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 public class JouropServiceTest {
 
@@ -15,11 +19,18 @@ public class JouropServiceTest {
     double tradePrice =         23538976.39        ;
     String deviseCours = "USD";
 
+    String sourceFolder = "c://temp//GP3_files_test//";
+    char dataSeparator = '_';
+    int numberOfSeparator = 4;
+    SourceFileRepository sourceFileRepository = new SourceFileRepository(sourceFolder, dataSeparator, numberOfSeparator);
+    StatementService statementService = new StatementService(sourceFileRepository);
+
     JouropService jouropService = new JouropService();
+
 
     @Test
     public void createJourop(){
-        Jourop jourop = jouropService.createJourop(sourceFilename, codeFonds, categorie, transactionType, isinValeur, tradeDate, tradePrice, deviseCours);
+        Jourop jourop = new Jourop(sourceFilename, codeFonds, categorie, transactionType, isinValeur, tradeDate, tradePrice, deviseCours);
         Assertions.assertEquals(sourceFilename, jourop.getSourceFilename());
         Assertions.assertEquals(codeFonds, jourop.getCodeFonds());
         Assertions.assertEquals(categorie, jourop.getCategorie());
@@ -30,7 +41,14 @@ public class JouropServiceTest {
         Assertions.assertEquals(deviseCours, jourop.getTradeCurrency());
     }
 
-
+    @Test
+    public void createJouropFromFiles(){
+        List<Statement> listeFichiers = statementService.manageListOfFunds(sourceFileRepository.listFiles());
+        statementService.splitToDedicatedList(listeFichiers);
+        statementService.createStatementDetail(statementService.getDedicatedList("jourop"));
+        jouropService.createJouropFromList(sourceFileRepository.getExtractedLinesList());
+        Assertions.assertTrue(jouropService.listeDetailJourop.size()>0);
+    }
 
 
 }
