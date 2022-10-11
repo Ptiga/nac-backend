@@ -9,12 +9,12 @@ import com.socgen.nac.entity.source.Vinvca;
 import java.util.Map;
 
 public interface CheckFluctuationServiceInterface {
-    CheckFluctuationData createCheckFluctuationData(Invcah invcah, Vinvca vinvca, Jourop jourop);
 
     double calculateFluctuation(Vinvca vinvca, Invcah invcah);
 
     double retrieveTheshold(Map ThresholdList, String triComptable);
 
+    CheckFluctuationData createCheckFluctuationData(Invcah invcah);
 
 
     //Iterable<Vinvca>

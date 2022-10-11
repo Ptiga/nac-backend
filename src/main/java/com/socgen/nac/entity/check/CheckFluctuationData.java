@@ -13,7 +13,6 @@ public class CheckFluctuationData {
 
     public CheckFluctuationData(Invcah invcah, Vinvca vinvca) {
         this.invcah = invcah;
-        this.vinvca = vinvca;
     }
 
 

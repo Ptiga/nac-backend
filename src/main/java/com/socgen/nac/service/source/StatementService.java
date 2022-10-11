@@ -1,6 +1,7 @@
 package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.repository.file.SourceFileRepository;
 import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,32 +13,31 @@ import java.util.List;
 @Service
 public class StatementService implements StatementServiceInterface{
 
-    @Value("${statementService.numberOfSeparatorExpected}")
-    private int numberOfSeparatorExpected;
+    private List<Statement>listeInvcah = new ArrayList<>();
+    private List<Statement>listeVinvca = new ArrayList<>();
+    private List<Statement>listeJourop = new ArrayList<>();
 
 
     @Autowired
-    private SourceFileRepositoryInterface statementRepository;
+    private SourceFileRepositoryInterface sourceFileRepository;
 
 
-    public SourceFileRepositoryInterface getStatementRepository() {
-        return statementRepository;
+    public SourceFileRepositoryInterface getSourceFileRepository() {
+        return sourceFileRepository;
     }
 
-    public void setStatementRepository(SourceFileRepositoryInterface statementRepository) {
-        this.statementRepository = statementRepository;
+    public void setSourceFileRepository(SourceFileRepositoryInterface sourceFileRepository) {
+        this.sourceFileRepository = sourceFileRepository;
     }
 
-
-    @Override
-    public Statement createStatement(String filename) {
-        return new Statement(filename);
+    public StatementService(SourceFileRepositoryInterface sourceFileRepository) {
+        this.sourceFileRepository = sourceFileRepository;
     }
 
     @Override
     public boolean isExpectedStatementType(Statement statement) {
         switch (statement.getStatementType()){
-            case "invcah", "vinvcah", "jourop" :
+            case "invcah", "vinvca", "jourop" :
                 return true;
             default:
                 return false;
@@ -57,7 +57,7 @@ public class StatementService implements StatementServiceInterface{
     @Override
     public boolean isStatementUsable(Statement statement) {
         //if (isExpectedStatementType(statement) && isExpectedFormat(statement) && statement.getNumberOfSeparators()==numberOfSeparatorExpected){
-        if (isExpectedStatementType(statement) && isExpectedFormat(statement) && statement.getNumberOfSeparators()==4){
+        if (isExpectedStatementType(statement) && isExpectedFormat(statement) && statement.getNumberOfSeparators()==statement.getNumberOfSeparatorExpected()){
             return true;
         }else{
             return false;
@@ -67,10 +67,10 @@ public class StatementService implements StatementServiceInterface{
     @Override
     public void addRemainingAttributes(Statement statement) {
         List<String> listAttributes = new ArrayList<String>();
-        String filename = statement.getFilename().substring(statement.getFilename().indexOf('_')+1);
+        String filename = statement.getFilename().substring(statement.getFilename().indexOf(statement.getDataSeparator())+1);
         for(int i = 1; i < statement.getNumberOfSeparators(); i++){
-            listAttributes.add(filename.substring(0, filename.indexOf('_')));
-            filename = filename.substring(filename.indexOf('_')+1);
+            listAttributes.add(filename.substring(0, filename.indexOf(statement.getDataSeparator())));
+            filename = filename.substring(filename.indexOf(statement.getDataSeparator())+1);
         }
         listAttributes.add(filename.substring(0, filename.indexOf('.')));
         statement.setUserTag(listAttributes.get(0));
@@ -79,7 +79,69 @@ public class StatementService implements StatementServiceInterface{
         statement.setFileTimestamp(listAttributes.get(3));
     }
 
+    @Override
+    public List<Statement> manageListOfFunds(List<Statement> listeFichiers) {
+        List<Statement>usableStatements = new ArrayList<>();
+        for (Statement statement: listeFichiers) {
+            if(isStatementUsable(statement)){
+                addRemainingAttributes(statement);
+                usableStatements.add(statement);
+            }
+        }
+        return usableStatements;
+        }
+
+    @Override
+    public void splitToDedicatedList(List<Statement> listeFichiers) {
+        for (Statement statement: listeFichiers) {
+            putStatementInProperList(statement);
+        }
+    }
+
+    @Override
+    public void putStatementInProperList(Statement statement) {
+        switch (statement.getStatementType()){
+            case "invcah":
+                listeInvcah.add(statement);
+                break;
+            case "vinvca":
+                listeVinvca.add(statement);
+                break;
+            case "jourop":
+                listeJourop.add(statement);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public List<Statement> getDedicatedList(String listName) {
+        switch (listName){
+            case "invcah":
+                return listeInvcah;
+            case "vinvca":
+                return listeVinvca;
+            case "jourop":
+                return listeJourop;
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public void createStatementDetail(List<Statement> listStatement) {
+        for (Statement statement: listStatement) {
+            //sourceFileRepository = getSourceFileRepository();
+            sourceFileRepository.readSourceFile(statement);
+        }
+    }
+
+    @Override
+    public List<Statement> checkSourceFolder() {
+        return sourceFileRepository.listFiles();
+    }
+
 
     //Appel dans le repo
-
 }

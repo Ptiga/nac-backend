@@ -9,7 +9,7 @@ public class Jourop{
     private String isinValeur;
     private String tradeDate;
     private double tradePrice;
-    private String deviseCours;
+    private String tradeCurrency;
 
 
     public Jourop(String sourceFilename, String codeFonds, String categorie, String transactionType, String isinValeur, String tradeDate, double tradePrice, String deviseCours) {
@@ -20,7 +20,7 @@ public class Jourop{
         this.isinValeur = isinValeur;
         this.tradeDate = tradeDate;
         this.tradePrice = tradePrice;
-        this.deviseCours = deviseCours;
+        this.tradeCurrency = deviseCours;
     }
 
 
@@ -80,11 +80,11 @@ public class Jourop{
         this.tradePrice = tradePrice;
     }
 
-    public String getDeviseCours() {
-        return deviseCours;
+    public String getTradeCurrency() {
+        return tradeCurrency;
     }
 
-    public void setDeviseCours(String deviseCours) {
-        this.deviseCours = deviseCours;
+    public void setTradeCurrency(String tradeCurrency) {
+        this.tradeCurrency = tradeCurrency;
     }
 }

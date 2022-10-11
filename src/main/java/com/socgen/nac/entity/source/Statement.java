@@ -14,7 +14,8 @@ public class Statement {
 
     //L'annotation ne récupère pas la valeur renseignée dans le fichier .properties !!!
     //@Value("${statement.dataSeparator}")
-    private Character dataSeparator;
+    private final Character dataSeparator;
+    private final int numberOfSeparatorExpected;
 
     private String filename;
     private String statementType;
@@ -25,15 +26,17 @@ public class Statement {
     private String fileExtension;
     private int numberOfSeparators;
 
-
+/*
     public Statement() {
     }
-
-    public Statement(String filename) {
+*/
+    public Statement(String filename, char dataSeparator, int numberOfSeparatorExpected) {
         this.filename = filename;
         this.setStatementType();
         this.setFileExtension();
+        this.dataSeparator = dataSeparator;
         this.setNumberOfSeparator();
+        this.numberOfSeparatorExpected = numberOfSeparatorExpected;
     }
 
 
@@ -102,10 +105,29 @@ public class Statement {
         char charFound;
         for (int i = 0; i < this.filename.length(); i++) {
             charFound = this.filename.charAt(i);
-            //if (charFound == dataSeparator)
-            if (charFound == '_')
+            if (charFound == dataSeparator)
+            //if (charFound == '_')
                 numberOfSeparators++;
         }
         this.numberOfSeparators = numberOfSeparators;
+    }
+
+    public Character getDataSeparator() {
+        return dataSeparator;
+    }
+
+    public int getNumberOfSeparatorExpected() {
+        return numberOfSeparatorExpected;
+    }
+
+    public boolean isStatementContainsHeader(){
+        switch (this.statementType){
+            case "invcah", "vinvca":
+                return true;
+            case "jourop":
+                return false;
+            default:
+                return false;
+        }
     }
 }

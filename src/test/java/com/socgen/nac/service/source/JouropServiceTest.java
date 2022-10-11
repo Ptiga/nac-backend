@@ -1,7 +1,6 @@
 package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Jourop;
-import com.socgen.nac.service.source.JouropService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +27,7 @@ public class JouropServiceTest {
         Assertions.assertEquals(isinValeur, jourop.getIsinValeur());
         Assertions.assertEquals(tradeDate, jourop.getTradeDate());
         Assertions.assertEquals(tradePrice, jourop.getTradePrice());
-        Assertions.assertEquals(deviseCours, jourop.getDeviseCours());
+        Assertions.assertEquals(deviseCours, jourop.getTradeCurrency());
     }
 
 

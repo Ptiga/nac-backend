@@ -86,7 +86,7 @@ public class CheckFluctuationServiceTest {
 
     @Test
     public void retrieveCheckFluctuationData(){
-        CheckFluctuationData checkFluctuationData = checkFluctuationService.createCheckFluctuationData(invcah, vinvca, jourop);
+        CheckFluctuationData checkFluctuationData = checkFluctuationService.createCheckFluctuationData(invcah);
     }
 
 

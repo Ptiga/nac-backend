@@ -12,7 +12,7 @@ import java.util.Map;
 public class CheckFluctuationService implements CheckFluctuationServiceInterface{
 
     @Override
-    public CheckFluctuationData createCheckFluctuationData(Invcah invcah, Vinvca vinvca, Jourop jourop) {
+    public CheckFluctuationData createCheckFluctuationData(Invcah invcah) {
         return null;
     }
 
@@ -25,4 +25,6 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
     public double retrieveTheshold(Map thresholdList, String triComptable) {
         return (double) thresholdList.get(triComptable);
     }
+
+
 }

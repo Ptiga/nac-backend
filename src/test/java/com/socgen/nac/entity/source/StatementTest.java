@@ -10,8 +10,8 @@ public class StatementTest {
 
     @Test
     public void testNumberOfSeparators(){
-        Statement statement = new Statement(filename);
-        Assertions.assertEquals(4, statement.getNumberOfSeparators());
+        Statement statement = new Statement(filename, '_', 4);
+        Assertions.assertEquals(statement.getNumberOfSeparatorExpected(), statement.getNumberOfSeparators());
     }
 
 }

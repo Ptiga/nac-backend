@@ -41,4 +41,9 @@ public class InvcahServiceTest {
         Assertions.assertEquals(deviseCours, invcah.getDeviseCours());
     }
 
+    @Test
+    public void fillListFromExtracted(){
+
+    }
+
 }
