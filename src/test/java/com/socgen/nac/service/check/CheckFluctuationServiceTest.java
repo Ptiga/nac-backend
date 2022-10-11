@@ -83,12 +83,7 @@ public class CheckFluctuationServiceTest {
         thresholds.put("T", thresholdT);
         return map;
     }
-
-    @Test
-    public void retrieveCheckFluctuationData(){
-        CheckFluctuationData checkFluctuationData = checkFluctuationService.createCheckFluctuationData(invcah);
-    }
-
+    
 
     @Test
     public void calculateFluctuation(){
@@ -102,6 +97,21 @@ public class CheckFluctuationServiceTest {
         Assertions.assertEquals(0.05, checkFluctuationService.retrieveTheshold(thresholds, invcah.getTriComptable()));
     }
 
+    @Test
+    public void compareInvcahAndVinvca(){
+        Assertions.assertTrue(checkFluctuationService.compareInvcahAndVinvca(invcah, vinvca));
+    }
 
+    @Test
+    public void compareInvcahAndJourop(){
+        Assertions.assertFalse(checkFluctuationService.compareInvcahAndJourop(invcah, jourop));
+    }
 
+    /*
+    //Test à finir
+    @Test
+    public void createCheckFluctuationData(){
+        Assertions.assertNotNull(checkFluctuationService.createCheckFluctuationData(invcah));
+    }
+    */
 }

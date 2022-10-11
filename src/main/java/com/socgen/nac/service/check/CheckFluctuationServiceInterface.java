@@ -14,7 +14,12 @@ public interface CheckFluctuationServiceInterface {
 
     double retrieveTheshold(Map ThresholdList, String triComptable);
 
-    CheckFluctuationData createCheckFluctuationData(Invcah invcah);
+    boolean compareInvcahAndVinvca(Invcah invcah, Vinvca vinvca);
+
+    boolean compareInvcahAndJourop(Invcah invcah, Jourop jourop);
+
+    Object createCheckFluctuationData(Invcah invcah);
+
 
 
     //Iterable<Vinvca>

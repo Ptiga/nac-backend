@@ -2,10 +2,12 @@ package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class JouropService implements JouropServiceInterface{
 
     List<Jourop> listeDetailJourop = new ArrayList<>();
