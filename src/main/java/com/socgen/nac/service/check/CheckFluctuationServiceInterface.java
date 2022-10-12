@@ -6,11 +6,14 @@ import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Vinvca;
 
+import java.util.List;
 import java.util.Map;
 
 public interface CheckFluctuationServiceInterface {
 
-    double calculateFluctuation(Vinvca vinvca, Invcah invcah);
+    List<CheckFluctuationData> getListeCheckFluctuation();
+
+    double calculateFluctuation(double coursJour, double coursVeille);
 
     double retrieveTheshold(Map ThresholdList, String triComptable);
 
@@ -18,8 +21,9 @@ public interface CheckFluctuationServiceInterface {
 
     boolean compareInvcahAndJourop(Invcah invcah, Jourop jourop);
 
-    Object createCheckFluctuationData(Invcah invcah);
+    void createCheckFluctuationData(Invcah invcah);
 
+    boolean isInvcahUsableForCheck(Invcah invcah);
 
 
     //Iterable<Vinvca>

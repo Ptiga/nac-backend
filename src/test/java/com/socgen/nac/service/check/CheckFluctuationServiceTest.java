@@ -5,6 +5,9 @@ import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Vinvca;
 import com.socgen.nac.service.check.CheckFluctuationService;
+import com.socgen.nac.service.source.InvcahService;
+import com.socgen.nac.service.source.JouropService;
+import com.socgen.nac.service.source.VinvcaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -69,7 +72,6 @@ public class CheckFluctuationServiceTest {
     Map<String, Double> thresholds = new HashMap<>();
 
 
-    CheckFluctuationService checkFluctuationService = new CheckFluctuationService();
 
     public Map fillThresholdMap(Map map){
         thresholds.put("0", threshold0);
@@ -83,11 +85,20 @@ public class CheckFluctuationServiceTest {
         thresholds.put("T", thresholdT);
         return map;
     }
-    
+
+    //List<CheckFluctuationData>listeCheckFluctuation = new ArrayList<>();
+
+    InvcahService invcahService = new InvcahService();
+    VinvcaService vinvcaService = new VinvcaService();
+    JouropService jouropService = new JouropService();
+
+    //CheckFluctuationService checkFluctuationService = new CheckFluctuationService(listeCheckFluctuation, invcahService, vinvcaService, jouropService);
+    CheckFluctuationService checkFluctuationService = new CheckFluctuationService(invcahService, vinvcaService, jouropService);
+
 
     @Test
     public void calculateFluctuation(){
-        Assertions.assertEquals(Math.abs((prixJ-prixV)/prixV), checkFluctuationService.calculateFluctuation(vinvca, invcah));
+        Assertions.assertEquals(Math.abs((prixJ-prixV)/prixV), checkFluctuationService.calculateFluctuation(invcah.getCours(), vinvca.getCours()));
     }
 
     @Test
@@ -107,11 +118,42 @@ public class CheckFluctuationServiceTest {
         Assertions.assertFalse(checkFluctuationService.compareInvcahAndJourop(invcah, jourop));
     }
 
-    /*
-    //Test à finir
+
     @Test
-    public void createCheckFluctuationData(){
-        Assertions.assertNotNull(checkFluctuationService.createCheckFluctuationData(invcah));
+    public void createCheckFluctuationDataWithVinvca(){
+        checkFluctuationService.getVinvcaService().addVinvcaToList(vinvca);
+        checkFluctuationService.createCheckFluctuationData(invcah);
+        Assertions.assertTrue(checkFluctuationService.getListeCheckFluctuation().size()>0);
     }
-    */
+
+    @Test
+    public void createCheckFluctuationDataWithJourop(){
+        checkFluctuationService.getJouropService().addJouropToList(jourop);
+        checkFluctuationService.createCheckFluctuationData(invcah);
+        Assertions.assertFalse(checkFluctuationService.getListeCheckFluctuation().size()>0);
+    }
+
+    @Test
+    public void isInvcahUsable(){
+        Assertions.assertTrue(checkFluctuationService.isInvcahUsableForCheck(invcah));
+    }
+
+    @Test
+    public void isCategoryCorrect(){
+        Assertions.assertTrue(checkFluctuationService.isCategoryCorrect(invcah.getCategorie()));
+        Assertions.assertTrue(checkFluctuationService.isCategoryCorrect("FUTU"));
+        Assertions.assertTrue(checkFluctuationService.isCategoryCorrect("OPTI"));
+        Assertions.assertFalse(checkFluctuationService.isCategoryCorrect("CPON"));
+        Assertions.assertFalse(checkFluctuationService.isCategoryCorrect("SWAT"));
+    }
+
+    @Test
+    public void isTriComptableCorrect(){
+        Assertions.assertTrue(checkFluctuationService.isTriComptableCorrect(invcah.getTriComptable()));
+        Assertions.assertTrue(checkFluctuationService.isTriComptableCorrect("0"));
+        Assertions.assertTrue(checkFluctuationService.isTriComptableCorrect("4"));
+        Assertions.assertTrue(checkFluctuationService.isTriComptableCorrect("6"));
+        Assertions.assertFalse(checkFluctuationService.isTriComptableCorrect("7"));
+        Assertions.assertFalse(checkFluctuationService.isTriComptableCorrect("T"));
+    }
 }

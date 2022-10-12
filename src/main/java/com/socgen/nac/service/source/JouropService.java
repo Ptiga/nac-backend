@@ -13,6 +13,16 @@ public class JouropService implements JouropServiceInterface{
     List<Jourop> listeDetailJourop = new ArrayList<>();
 
 
+    public List<Jourop> getListeDetailJourop() {
+        return listeDetailJourop;
+    }
+
+
+    @Override
+    public void addJouropToList(Jourop jourop) {
+        listeDetailJourop.add(jourop);
+    }
+
     @Override
     public void createJouropFromList(List<String[]> listDetail) {
         for (String[] valeur: listDetail) {

@@ -13,6 +13,12 @@ public class CheckFluctuationData {
 
     public CheckFluctuationData(Invcah invcah, Vinvca vinvca) {
         this.invcah = invcah;
+        this.vinvca = vinvca;
+    }
+
+    public CheckFluctuationData(Invcah invcah, Jourop jourop) {
+        this.invcah = invcah;
+        this.jourop = jourop;
     }
 
 

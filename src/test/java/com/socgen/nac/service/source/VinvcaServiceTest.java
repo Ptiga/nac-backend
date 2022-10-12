@@ -58,4 +58,13 @@ public class VinvcaServiceTest{
         Assertions.assertTrue(vinvcaService.listeDetailVinvca.size()>0);
     }
 
+    @Test
+    public void getVinvcaList(){
+        List<Statement> listeFichiers = statementService.manageListOfFunds(sourceFileRepository.listFiles());
+        statementService.splitToDedicatedList(listeFichiers);
+        statementService.createStatementDetail(statementService.getDedicatedList("vinvca"));
+        vinvcaService.createVinvcaFromList(sourceFileRepository.getExtractedLinesList());
+        Assertions.assertTrue(vinvcaService.getListeDetailVinvca().size()>0);
+    }
+
 }

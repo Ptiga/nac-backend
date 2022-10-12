@@ -13,6 +13,15 @@ public class VinvcaService implements VinvcaServiceInterface {
     List<Vinvca> listeDetailVinvca = new ArrayList<>();
 
 
+    public List<Vinvca> getListeDetailVinvca() {
+        return listeDetailVinvca;
+    }
+
+    @Override
+    public void addVinvcaToList(Vinvca vinvca) {
+        listeDetailVinvca.add(vinvca);
+    }
+
     @Override
     public void createVinvcaFromList(List<String[]> listDetail) {
         for (String[] valeur: listDetail) {
