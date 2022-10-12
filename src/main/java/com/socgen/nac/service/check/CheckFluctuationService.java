@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,26 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
         return listeCheckFluctuation;
     }
 
+    private Map<String, Double> thresholds = fillThresholds();
+
+    @Override
+    public Map<String, Double> getThresholds() {
+        return thresholds;
+    }
+
+    private Map<String, Double> fillThresholds(){
+        Map<String, Double> thresholdsMap = new HashMap<>();
+        thresholdsMap.put("0", 0.05);
+        thresholdsMap.put("1", 0.015);
+        thresholdsMap.put("2", 0.005);
+        thresholdsMap.put("3", 0.02);
+        thresholdsMap.put("4", 0.03);
+        thresholdsMap.put("5", 0.3);
+        thresholdsMap.put("6", 0.1);
+        thresholdsMap.put("7", 1.0);
+        thresholdsMap.put("T", 1.0);
+        return thresholdsMap;
+    }
 
     @Autowired
     private InvcahServiceInterface invcahService;
@@ -73,12 +94,12 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
         this.jouropService = jouropService;
     }
 
-
+/*
     @Override
     public double calculateFluctuation(double coursJour, double coursVeille) {
         return Math.abs((coursJour-coursVeille)/coursVeille);
     }
-
+*/
     @Override
     public double retrieveTheshold(Map thresholdList, String triComptable) {
         return (double) thresholdList.get(triComptable);
@@ -124,12 +145,12 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
 
         for (Vinvca vinvca: vinvcaService.getListeDetailVinvca()) {
             if(compareInvcahAndVinvca(invcah, vinvca)){
-                listeCheckFluctuation.add(new CheckFluctuationData(invcah, vinvca));
+                listeCheckFluctuation.add(new CheckFluctuationData(invcah, vinvca, thresholds.get(invcah.getTriComptable())));
             }
             else{
                 for (Jourop jourop : jouropService.getListeDetailJourop()) {
                     if (compareInvcahAndJourop(invcah, jourop)) {
-                        listeCheckFluctuation.add(new CheckFluctuationData(invcah, jourop));
+                        listeCheckFluctuation.add(new CheckFluctuationData(invcah, jourop, thresholds.get(invcah.getTriComptable())));
                     }
                 }
             }

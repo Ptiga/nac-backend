@@ -59,53 +59,18 @@ public class CheckFluctuationServiceTest {
     Jourop jourop = new Jourop(sourceFilename, codeFonds, categorie, transactionType, isinValeur, tradeDate, tradePrice, deviseCours);
 
 
-    double threshold0 = 0.05;
-    double threshold1 = 0.015;
-    double threshold2 = 0.005;
-    double threshold3 = 0.02;
-    double threshold4 = 0.03;
-    double threshold5 = 0.3;
-    double threshold6 = 0.1;
-    double threshold7 = 1;
-    double thresholdT = 1;
-
-    Map<String, Double> thresholds = new HashMap<>();
-
-
-
-    public Map fillThresholdMap(Map map){
-        thresholds.put("0", threshold0);
-        thresholds.put("1", threshold1);
-        thresholds.put("2", threshold2);
-        thresholds.put("3", threshold3);
-        thresholds.put("4", threshold4);
-        thresholds.put("5", threshold5);
-        thresholds.put("6", threshold6);
-        thresholds.put("7", threshold7);
-        thresholds.put("T", thresholdT);
-        return map;
-    }
-
-    //List<CheckFluctuationData>listeCheckFluctuation = new ArrayList<>();
-
     InvcahService invcahService = new InvcahService();
     VinvcaService vinvcaService = new VinvcaService();
     JouropService jouropService = new JouropService();
 
-    //CheckFluctuationService checkFluctuationService = new CheckFluctuationService(listeCheckFluctuation, invcahService, vinvcaService, jouropService);
     CheckFluctuationService checkFluctuationService = new CheckFluctuationService(invcahService, vinvcaService, jouropService);
 
 
     @Test
-    public void calculateFluctuation(){
-        Assertions.assertEquals(Math.abs((prixJ-prixV)/prixV), checkFluctuationService.calculateFluctuation(invcah.getCours(), vinvca.getCours()));
-    }
-
-    @Test
     public void retrieveThreshold(){
-        thresholds = fillThresholdMap(thresholds);
-        System.out.println(thresholds);
-        Assertions.assertEquals(0.05, checkFluctuationService.retrieveTheshold(thresholds, invcah.getTriComptable()));
+        //thresholds = fillThresholdMap(thresholds);
+        System.out.println(checkFluctuationService.getThresholds());
+        Assertions.assertEquals(0.05, checkFluctuationService.retrieveTheshold(checkFluctuationService.getThresholds(), invcah.getTriComptable()));
     }
 
     @Test
@@ -116,21 +81,6 @@ public class CheckFluctuationServiceTest {
     @Test
     public void compareInvcahAndJourop(){
         Assertions.assertFalse(checkFluctuationService.compareInvcahAndJourop(invcah, jourop));
-    }
-
-
-    @Test
-    public void createCheckFluctuationDataWithVinvca(){
-        checkFluctuationService.getVinvcaService().addVinvcaToList(vinvca);
-        checkFluctuationService.createCheckFluctuationData(invcah);
-        Assertions.assertTrue(checkFluctuationService.getListeCheckFluctuation().size()>0);
-    }
-
-    @Test
-    public void createCheckFluctuationDataWithJourop(){
-        checkFluctuationService.getJouropService().addJouropToList(jourop);
-        checkFluctuationService.createCheckFluctuationData(invcah);
-        Assertions.assertFalse(checkFluctuationService.getListeCheckFluctuation().size()>0);
     }
 
     @Test
@@ -155,5 +105,23 @@ public class CheckFluctuationServiceTest {
         Assertions.assertTrue(checkFluctuationService.isTriComptableCorrect("6"));
         Assertions.assertFalse(checkFluctuationService.isTriComptableCorrect("7"));
         Assertions.assertFalse(checkFluctuationService.isTriComptableCorrect("T"));
+    }
+
+    @Test
+    public void createCheckFluctuationDataWithVinvca(){
+        //thresholds = fillThresholdMap(thresholds);
+        checkFluctuationService.getVinvcaService().addVinvcaToList(vinvca);
+        checkFluctuationService.createCheckFluctuationData(invcah);
+        Assertions.assertTrue(checkFluctuationService.getListeCheckFluctuation().size()>0);
+        Assertions.assertEquals(0.05, checkFluctuationService.getListeCheckFluctuation().get(0).getThreshold());
+        Assertions.assertEquals(Math.abs((invcah.getCours()-vinvca.getCours())/vinvca.getCours()), checkFluctuationService.getListeCheckFluctuation().get(0).getFluctuation());
+        Assertions.assertNull(checkFluctuationService.getListeCheckFluctuation().get(0).getAlertType());
+    }
+
+    @Test
+    public void createCheckFluctuationDataWithJourop(){
+        checkFluctuationService.getJouropService().addJouropToList(jourop);
+        checkFluctuationService.createCheckFluctuationData(invcah);
+        Assertions.assertFalse(checkFluctuationService.getListeCheckFluctuation().size()>0);
     }
 }

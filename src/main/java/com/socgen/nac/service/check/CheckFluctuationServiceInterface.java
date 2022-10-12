@@ -13,7 +13,9 @@ public interface CheckFluctuationServiceInterface {
 
     List<CheckFluctuationData> getListeCheckFluctuation();
 
-    double calculateFluctuation(double coursJour, double coursVeille);
+    Map<String, Double>getThresholds();
+
+    //double calculateFluctuation(double coursJour, double coursVeille);
 
     double retrieveTheshold(Map ThresholdList, String triComptable);
 
