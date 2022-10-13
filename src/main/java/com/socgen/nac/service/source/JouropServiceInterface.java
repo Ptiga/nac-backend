@@ -6,9 +6,6 @@ import java.util.List;
 
 public interface JouropServiceInterface {
 
-    List<Jourop> getListeDetailJourop();
+    List<Jourop> createJouropAndAddToList(List<String[]> listDetail);
 
-    void createJouropAndAddToList(List<String[]> listDetail);
-
-    void addJouropToList(Jourop jourop);
 }

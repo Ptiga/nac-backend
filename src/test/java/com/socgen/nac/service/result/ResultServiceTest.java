@@ -1,12 +1,18 @@
 package com.socgen.nac.service.result;
 
+import com.socgen.nac.entity.check.CheckFluctuationData;
+import com.socgen.nac.entity.result.Result;
 import com.socgen.nac.entity.source.Invcah;
+import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Vinvca;
 import com.socgen.nac.repository.file.SourceFileRepository;
 import com.socgen.nac.service.check.CheckFluctuationService;
 import com.socgen.nac.service.source.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResultServiceTest {
 
@@ -25,6 +31,11 @@ public class ResultServiceTest {
 
     ResultService resultService = new ResultService(sourceFileRepository, checkFluctuationService, invcahService, vinvcaService, jouropService, statementService);
 
+    List<Vinvca> listVinvca = new ArrayList<>();
+    List<Jourop>listJourop = new ArrayList<>();
+    List<CheckFluctuationData>listCheckFluctuation = new ArrayList<>();
+    List<Result> resultList = new ArrayList<>();
+
     @Test
     public void retrieveNoAlerts(){
         Vinvca vinvca = new Vinvca("vinvca_kdja_FD0004_20220629_300622091342.fic",
@@ -36,10 +47,10 @@ public class ResultServiceTest {
                 "0","VMOB","FR0000120321","LOREAL SA",
                 "20220630",322.1,"EUR");
 
-        checkFluctuationService.getVinvcaService().addVinvcaToList(vinvca);
-        checkFluctuationService.createCheckFluctuationData(invcah);
-        resultService.createResultFluctuationCheck(checkFluctuationService.getListeCheckFluctuation());
-        Assertions.assertTrue(resultService.getResultList().size()==0);
+        listVinvca.add(vinvca);
+        listCheckFluctuation.add(checkFluctuationService.createCheckFluctuationData(invcah, listVinvca, listJourop));
+        resultList = resultService.createResultFluctuationCheck(listCheckFluctuation);
+        Assertions.assertTrue(resultList.size()==0);
     }
 
     @Test
@@ -53,16 +64,16 @@ public class ResultServiceTest {
                 "0","VMOB","FR0000120321","LOREAL SA",
                 "20220630",360.0,"EUR");
 
-        checkFluctuationService.getVinvcaService().addVinvcaToList(vinvca);
-        checkFluctuationService.createCheckFluctuationData(invcah);
-        resultService.createResultFluctuationCheck(checkFluctuationService.getListeCheckFluctuation());
-        Assertions.assertTrue(resultService.getResultList().size()==1);
+        listVinvca.add(vinvca);
+        listCheckFluctuation.add(checkFluctuationService.createCheckFluctuationData(invcah, listVinvca, listJourop));
+        resultList = resultService.createResultFluctuationCheck(listCheckFluctuation);
+        Assertions.assertTrue(resultList.size()==1);
     }
 
     @Test
     public void fromFolderToResult(){
-        resultService.fromSourceFolderToResultList();
-        Assertions.assertNotNull(resultService.getResultList());
+        resultList = resultService.fromSourceFolderToResultList();
+        Assertions.assertNotNull(resultList);
     }
 
 }

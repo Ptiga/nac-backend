@@ -10,18 +10,15 @@ import java.util.List;
 @Service
 public class InvcahService implements InvcahServiceInterface {
 
-    List<Invcah> listeDetailInvcah = new ArrayList<>();
-
-    public List<Invcah> getListeDetailInvcah() {
-        return listeDetailInvcah;
-    }
 
     @Override
-    public void createInvcahAndAddToList(List<String[]> listDetail) {
+    public List<Invcah> createInvcahAndAddToList(List<String[]> listDetail) {
+        List<Invcah> listeDetailInvcah = new ArrayList<>();
         for (String[] valeur: listDetail) {
             if(valeur[0].substring(0,6).equals("invcah")) {
                 listeDetailInvcah.add(new Invcah(valeur[0], valeur[1], valeur[2], valeur[21], valeur[13], valeur[7], valeur[14], valeur[17], valeur[18], valeur[65], Double.parseDouble(valeur[24]), valeur[47]));
             }
         }
+        return listeDetailInvcah;
     }
 }

@@ -68,6 +68,7 @@ public class StatementService implements StatementServiceInterface{
 
     @Override
     public void manageListOfFunds(List<Statement> listeFichiers) {
+        usableStatementsList.clear();
         for (Statement statement: listeFichiers) {
             if(isStatementUsable(statement)){
                 addRemainingAttributes(statement);
@@ -93,6 +94,9 @@ public class StatementService implements StatementServiceInterface{
 
     @Override
     public void splitToDedicatedList(List<Statement> listeFichiers) {
+        listeInvcah.clear();
+        listeVinvca.clear();
+        listeJourop.clear();
         for (Statement statement: listeFichiers) {
             putStatementInProperList(statement);
         }
@@ -134,7 +138,8 @@ public class StatementService implements StatementServiceInterface{
         List<String[]>extractedList = new ArrayList<>();
         for (Statement statement: listStatement) {
             //sourceFileRepository = getSourceFileRepository();
-            extractedList = sourceFileRepository.readSourceFile(statement);
+            //extractedList = sourceFileRepository.readSourceFile(statement);
+            extractedList.addAll(sourceFileRepository.readSourceFile(statement));
         }
         return extractedList;
     }

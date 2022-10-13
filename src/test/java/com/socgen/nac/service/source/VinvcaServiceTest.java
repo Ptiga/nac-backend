@@ -54,8 +54,8 @@ public class VinvcaServiceTest{
         statementService.manageListOfFunds(listOfFiles);
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
         List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("vinvca"));
-        vinvcaService.createVinvcaAndAddToList(extractedList);
-        Assertions.assertTrue(vinvcaService.listeDetailVinvca.size()>0);
+        List<Vinvca> listeDetailVinvca = vinvcaService.createVinvcaAndAddToList(extractedList);
+        Assertions.assertTrue(listeDetailVinvca.size()>0);
     }
 
     @Test
@@ -64,8 +64,8 @@ public class VinvcaServiceTest{
         statementService.manageListOfFunds(listOfFiles);
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
         List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("vinvca"));
-        vinvcaService.createVinvcaAndAddToList(extractedList);
-        Assertions.assertTrue(vinvcaService.getListeDetailVinvca().size()>0);
+        List<Vinvca> listeDetailVinvca = vinvcaService.createVinvcaAndAddToList(extractedList);
+        Assertions.assertTrue(listeDetailVinvca.size()>0);
     }
 
 }

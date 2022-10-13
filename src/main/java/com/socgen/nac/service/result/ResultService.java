@@ -2,7 +2,10 @@ package com.socgen.nac.service.result;
 
 import com.socgen.nac.entity.check.CheckFluctuationData;
 import com.socgen.nac.entity.result.Result;
+import com.socgen.nac.entity.source.Invcah;
+import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.entity.source.Vinvca;
 import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
 import com.socgen.nac.service.check.CheckFluctuationServiceInterface;
 import com.socgen.nac.service.source.*;
@@ -27,19 +30,11 @@ public class ResultService implements ResultServiceInterface {
         this.sourceFileRepository = sourceFileRepository;
     }
 
-
     private CheckFluctuationServiceInterface checkFluctuationService;
-
     private InvcahServiceInterface invcahService;
-
-
     private VinvcaServiceInterface vinvcaService;
-
     private JouropServiceInterface jouropService;
-
     private StatementServiceInterface statementService;
-
-
 
     public ResultService(SourceFileRepositoryInterface sourceFileRepository, CheckFluctuationServiceInterface checkFluctuationService, InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService, StatementServiceInterface statementService){
         this.sourceFileRepository = sourceFileRepository;
@@ -51,19 +46,11 @@ public class ResultService implements ResultServiceInterface {
     }
 
 
-    //Importer Repository ?
-    //Importer StatementService ?
-    //Importer CheckFluctuationService (+ services Invcah, Vinvca et Jourop)
 
-
-    private List<Result> resultList = new ArrayList<>();
-
-    public List<Result> getResultList() {
-        return resultList;
-    }
 
     @Override
-    public void createResultFluctuationCheck(List<CheckFluctuationData> listeCheckFluctuation) {
+    public List<Result> createResultFluctuationCheck(List<CheckFluctuationData> listeCheckFluctuation) {
+        List<Result> resultList = new ArrayList<>();
         for (CheckFluctuationData checkFluctuationData: listeCheckFluctuation) {
             if(checkFluctuationData.getAlertType()!=null){
                 Result checkResult = new Result(checkFluctuationData.getInvcah(), checkFluctuationData.getFluctuation(), checkFluctuationData.getThreshold(), checkFluctuationData.getAlertType());
@@ -75,7 +62,8 @@ public class ResultService implements ResultServiceInterface {
                 resultList.add(checkResult);
             }
         }
-            }
+        return resultList;
+    }
 
     private boolean isFluctuationDataContainsVinvca(CheckFluctuationData checkFluctuationData) {
         if (checkFluctuationData.getVinvca()!=null){
@@ -86,31 +74,50 @@ public class ResultService implements ResultServiceInterface {
     }
 
     @Override
-    public void fromSourceFolderToResultList() {
-        //On liste les fichiers
+    public List<Result> fromSourceFolderToResultList() {
+        //Création des listes utilisées
+        //Liste des fichiers du répertoire source
         List<Statement> listOfFiles = new ArrayList<>();
+        List<String[]>extractedList = new ArrayList<>();
+        List<Invcah> listeDetailInvcah = new ArrayList<>();
+        List<Vinvca> listeDetailVinvca = new ArrayList<>();
+        List<Jourop> listeDetailJourop = new ArrayList<>();
+        List<CheckFluctuationData>listCheckFluctuationData = new ArrayList<>();
+        List<Result> resultList = new ArrayList<>();
+
+        //On liste les fichiers
         listOfFiles = sourceFileRepository.listFiles();
+
         //On défini si l'état est utilisable
         statementService.manageListOfFunds(listOfFiles);
+
         //On met les états dans la liste dédiée
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
+
         //On extrait les données des fichiers invcah
-        List<String[]>extractedList = new ArrayList<>();
         extractedList = statementService.createStatementDetail(statementService.getDedicatedList("invcah"));
-        invcahService.createInvcahAndAddToList(extractedList);
+        listeDetailInvcah = invcahService.createInvcahAndAddToList(extractedList);
+
         //On extrait les données des fichiers vinvca
         extractedList = statementService.createStatementDetail(statementService.getDedicatedList("vinvca"));
-        vinvcaService.createVinvcaAndAddToList(extractedList);
+        listeDetailVinvca = vinvcaService.createVinvcaAndAddToList(extractedList);
+
         //On extrait les données des fichiers jourop
         extractedList = statementService.createStatementDetail(statementService.getDedicatedList("jourop"));
-        jouropService.createJouropAndAddToList(extractedList);
-        System.out.println("taille liste invcah: " + invcahService.getListeDetailInvcah().size());
+        listeDetailJourop = jouropService.createJouropAndAddToList(extractedList);
+        System.out.println("taille liste invcah: " + listeDetailInvcah.size());
+        System.out.println("taille liste vinvca: " + listeDetailVinvca.size());
+        System.out.println("taille liste jourop: " + listeDetailJourop.size());
+
         //On créée la liste des éléments utilisables pour le contrôle
-        checkFluctuationService.createCheckDataFromInvcahList(invcahService.getListeDetailInvcah());
-        System.out.println("taille liste checkFluct: " + checkFluctuationService.getListeCheckFluctuation().size());
+        listCheckFluctuationData = checkFluctuationService.createCheckDataFromInvcahList(listeDetailInvcah, listeDetailVinvca, listeDetailJourop);
+        System.out.println("taille liste checkFluct: " + listCheckFluctuationData.size());
+
         //On récupère crée une liste avec uniquement les alertes
-        createResultFluctuationCheck(checkFluctuationService.getListeCheckFluctuation());
+        resultList = createResultFluctuationCheck(listCheckFluctuationData);
         System.out.println("Taille Result : " + resultList.size());
+
+        return resultList;
     }
 
 

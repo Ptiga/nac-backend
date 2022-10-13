@@ -10,25 +10,15 @@ import java.util.List;
 @Service
 public class JouropService implements JouropServiceInterface{
 
-    List<Jourop> listeDetailJourop = new ArrayList<>();
-
-
-    public List<Jourop> getListeDetailJourop() {
-        return listeDetailJourop;
-    }
-
 
     @Override
-    public void addJouropToList(Jourop jourop) {
-        listeDetailJourop.add(jourop);
-    }
-
-    @Override
-    public void createJouropAndAddToList(List<String[]> listDetail) {
+    public List<Jourop> createJouropAndAddToList(List<String[]> listDetail) {
+        List<Jourop> listeDetailJourop = new ArrayList<>();
         for (String[] valeur: listDetail) {
             if(valeur[0].substring(0,6).equals("jourop")) {
                 listeDetailJourop.add(new Jourop(valeur[0], valeur[1], valeur[2],valeur[6], valeur[3], valeur[9],Double.parseDouble(valeur[14]), valeur[15]));
             }
         }
+        return listeDetailJourop;
     }
 }

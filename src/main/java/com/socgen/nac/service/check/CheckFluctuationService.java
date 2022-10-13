@@ -128,6 +128,16 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
         }
     }
 
+    public List<CheckFluctuationData> createCheckDataFromInvcahList(List<Invcah>listInvcah, List<Vinvca>listVinvca, List<Jourop>listJourop){
+        List<CheckFluctuationData>listeCheckFluctuation = new ArrayList<>();
+        for (Invcah invcah: listInvcah) {
+            if(isInvcahUsableForCheck(invcah)){
+                listeCheckFluctuation.add(createCheckFluctuationData(invcah, listVinvca, listJourop));
+            }
+        }
+        return listeCheckFluctuation;
+    }
+
     @Override
     public boolean isInvcahUsableForCheck(Invcah invcah) {
         if(isCategoryCorrect(invcah.getCategorie()) && isTriComptableCorrect(invcah.getTriComptable())){
@@ -137,32 +147,27 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
         }
     }
 
-
-    public void createCheckDataFromInvcahList(List<Invcah>listInvcah){
-        for (Invcah invcah: listInvcah) {
-            createCheckFluctuationData(invcah);
-        }
-    }
-
     @Override
-    //Créer méthode void ?  -> Ajouter directement dans une liste si créée ?
-    public void createCheckFluctuationData(Invcah invcah) {
-
-        for (Vinvca vinvca: vinvcaService.getListeDetailVinvca()) {
+    public CheckFluctuationData createCheckFluctuationData(Invcah invcah, List<Vinvca>listVinvca, List<Jourop>listJourop) {
+        //List<CheckFluctuationData>listeCheckFluctuation = new ArrayList<>();
+        for (Vinvca vinvca: listVinvca) {
             if(compareInvcahAndVinvca(invcah, vinvca)){
-                listeCheckFluctuation.add(new CheckFluctuationData(invcah, vinvca, thresholds.get(invcah.getTriComptable())));
-                break;
+                //listeCheckFluctuation.add(new CheckFluctuationData(invcah, vinvca, thresholds.get(invcah.getTriComptable())));
+                return new CheckFluctuationData(invcah, vinvca, thresholds.get(invcah.getTriComptable()));
+                //break;
             }
             else{
-                for (Jourop jourop : jouropService.getListeDetailJourop()) {
+                for (Jourop jourop : listJourop) {
                     if (compareInvcahAndJourop(invcah, jourop)) {
-                        listeCheckFluctuation.add(new CheckFluctuationData(invcah, jourop, thresholds.get(invcah.getTriComptable())));
-                        break;
+                        //listeCheckFluctuation.add(new CheckFluctuationData(invcah, jourop, thresholds.get(invcah.getTriComptable())));
+                        return new CheckFluctuationData(invcah, jourop, thresholds.get(invcah.getTriComptable()));
+                        //break;
                     }
                 }
             }
 
             }
+        return null;
         }
 
 

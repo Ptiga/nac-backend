@@ -7,10 +7,8 @@ import java.util.List;
 
 public interface ResultServiceInterface {
 
-    public List<Result> getResultList();
+    List<Result> createResultFluctuationCheck(List<CheckFluctuationData> listeCheckFluctuation);
 
-    void createResultFluctuationCheck(List<CheckFluctuationData> listeCheckFluctuation);
-
-    void fromSourceFolderToResultList();
+    List<Result> fromSourceFolderToResultList();
 
 }

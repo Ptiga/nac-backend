@@ -6,9 +6,5 @@ import java.util.List;
 
 public interface VinvcaServiceInterface {
 
-    List<Vinvca> getListeDetailVinvca();
-
-    void addVinvcaToList(Vinvca vinvca);
-
-    void createVinvcaAndAddToList(List<String[]> listDetail);
+    List<Vinvca> createVinvcaAndAddToList(List<String[]> listDetail);
 }

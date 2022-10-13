@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface InvcahServiceInterface {
 
-    List<Invcah> getListeDetailInvcah();
 
-    void createInvcahAndAddToList(List<String[]> listDetail);
+    List<Invcah> createInvcahAndAddToList(List<String[]> listDetail);
 }

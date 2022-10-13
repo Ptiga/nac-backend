@@ -10,25 +10,15 @@ import java.util.List;
 @Service
 public class VinvcaService implements VinvcaServiceInterface {
 
-    List<Vinvca> listeDetailVinvca = new ArrayList<>();
-
-
-    public List<Vinvca> getListeDetailVinvca() {
-        return listeDetailVinvca;
-    }
-
     @Override
-    public void addVinvcaToList(Vinvca vinvca) {
-        listeDetailVinvca.add(vinvca);
-    }
-
-    @Override
-    public void createVinvcaAndAddToList(List<String[]> listDetail) {
+    public List<Vinvca> createVinvcaAndAddToList(List<String[]> listDetail) {
+        List<Vinvca> listeDetailVinvca = new ArrayList<>();
         for (String[] valeur: listDetail) {
             if(valeur[0].substring(0,6).equals("vinvca")) {
                 listeDetailVinvca.add(new Vinvca(valeur[0], valeur[1], valeur[2],valeur[21], valeur[13], valeur[7],valeur[14], valeur[17], valeur[18],valeur[65], Double.parseDouble(valeur[24]), valeur[47]));
             }
         }
+        return listeDetailVinvca;
     }
 
 

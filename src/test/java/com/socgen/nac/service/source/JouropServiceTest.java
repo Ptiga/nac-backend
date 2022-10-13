@@ -47,8 +47,8 @@ public class JouropServiceTest {
         statementService.manageListOfFunds(listOfFiles);
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
         List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("jourop"));
-        jouropService.createJouropAndAddToList(extractedList);
-        Assertions.assertTrue(jouropService.listeDetailJourop.size()>0);
+        List<Jourop> listeDetailJourop = jouropService.createJouropAndAddToList(extractedList);
+        Assertions.assertTrue(listeDetailJourop.size()>0);
     }
 
 

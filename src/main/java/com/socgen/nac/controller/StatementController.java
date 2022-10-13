@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -132,12 +133,15 @@ public class StatementController implements StatementControllerInterface{
     @GetMapping("/get-result")
     public ResponseEntity<List<Result>> getResult(){
 
-        resultService.fromSourceFolderToResultList();
+        System.out.println("On passe par la méthode de génération des résultats");
 
-        System.out.println(resultService.getResultList().size());
+        List<Result>listeResultat = new ArrayList<>();
+        listeResultat = resultService.fromSourceFolderToResultList();
 
-        return ResponseEntity.ok(resultService.getResultList());
+        System.out.println("Taille liste des résultats : " + listeResultat.size());
 
+        //return ResponseEntity.ok(resultService.fromSourceFolderToResultList());
+        return ResponseEntity.ok(listeResultat);
     }
 
 

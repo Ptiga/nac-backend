@@ -6,6 +6,7 @@ import com.socgen.nac.repository.file.SourceFileRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InvcahServiceTest {
@@ -50,11 +51,6 @@ public class InvcahServiceTest {
         Assertions.assertEquals(deviseCours, invcah.getDeviseCours());
     }
 
-    @Test
-    public void addInvcahToList(){
-        invcahService.listeDetailInvcah.add(new Invcah(filename, fonds, nomFonds, deviseFonds, dataValo, triComptable, categorie, isin, libelleValeur, dateCours, prix, deviseCours));
-        Assertions.assertEquals(1, invcahService.listeDetailInvcah.size());
-    }
 
     @Test
     public void createInvcahFromFiles(){
@@ -62,8 +58,8 @@ public class InvcahServiceTest {
         statementService.manageListOfFunds(listOfFiles);
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
         List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("invcah"));
-        invcahService.createInvcahAndAddToList(extractedList);
-        Assertions.assertTrue(invcahService.listeDetailInvcah.size()>0);
+        List<Invcah> listeDetailInvcah = invcahService.createInvcahAndAddToList(extractedList);
+        Assertions.assertTrue(listeDetailInvcah.size()>0);
     }
 
 

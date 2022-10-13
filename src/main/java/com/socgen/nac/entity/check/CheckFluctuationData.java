@@ -17,6 +17,7 @@ public class CheckFluctuationData {
     public CheckFluctuationData(Invcah invcah, Vinvca vinvca, double threshold) {
         this.invcah = invcah;
         this.vinvca = vinvca;
+        this.jourop = null;
         setFluctuation();
         this.threshold = threshold;
         setAlertType();
@@ -24,6 +25,7 @@ public class CheckFluctuationData {
 
     public CheckFluctuationData(Invcah invcah, Jourop jourop, double threshold) {
         this.invcah = invcah;
+        this.vinvca = null;
         this.jourop = jourop;
         setFluctuation();
         this.threshold = threshold;

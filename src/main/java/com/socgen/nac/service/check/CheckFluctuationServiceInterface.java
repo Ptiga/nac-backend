@@ -11,11 +11,7 @@ import java.util.Map;
 
 public interface CheckFluctuationServiceInterface {
 
-    List<CheckFluctuationData> getListeCheckFluctuation();
-
     Map<String, Double>getThresholds();
-
-    //double calculateFluctuation(double coursJour, double coursVeille);
 
     double retrieveTheshold(Map ThresholdList, String triComptable);
 
@@ -23,9 +19,9 @@ public interface CheckFluctuationServiceInterface {
 
     boolean compareInvcahAndJourop(Invcah invcah, Jourop jourop);
 
-    void createCheckDataFromInvcahList(List<Invcah>listInvcah);
+    List<CheckFluctuationData> createCheckDataFromInvcahList(List<Invcah>listInvcah, List<Vinvca>listVinvca, List<Jourop>listJourop);
 
-    void createCheckFluctuationData(Invcah invcah);
+    CheckFluctuationData createCheckFluctuationData(Invcah invcah, List<Vinvca>listVinvca, List<Jourop>listJourop);
 
     boolean isInvcahUsableForCheck(Invcah invcah);
 

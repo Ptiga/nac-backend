@@ -65,6 +65,10 @@ public class CheckFluctuationServiceTest {
 
     CheckFluctuationService checkFluctuationService = new CheckFluctuationService(invcahService, vinvcaService, jouropService);
 
+    List<Vinvca>listVinvca = new ArrayList<>();
+    List<Jourop>listJourop = new ArrayList<>();
+    List<CheckFluctuationData>listCheckFluctuation = new ArrayList<>();
+
 
     @Test
     public void retrieveThreshold(){
@@ -109,19 +113,18 @@ public class CheckFluctuationServiceTest {
 
     @Test
     public void createCheckFluctuationDataWithVinvca(){
-        //thresholds = fillThresholdMap(thresholds);
-        checkFluctuationService.getVinvcaService().addVinvcaToList(vinvca);
-        checkFluctuationService.createCheckFluctuationData(invcah);
-        Assertions.assertTrue(checkFluctuationService.getListeCheckFluctuation().size()>0);
-        Assertions.assertEquals(0.05, checkFluctuationService.getListeCheckFluctuation().get(0).getThreshold());
-        Assertions.assertEquals(Math.abs((invcah.getCours()-vinvca.getCours())/vinvca.getCours()), checkFluctuationService.getListeCheckFluctuation().get(0).getFluctuation());
-        Assertions.assertNull(checkFluctuationService.getListeCheckFluctuation().get(0).getAlertType());
+        listVinvca.add(vinvca);
+        listCheckFluctuation.add(checkFluctuationService.createCheckFluctuationData(invcah, listVinvca, listJourop));
+        Assertions.assertTrue(listCheckFluctuation.size()>0);
+        Assertions.assertEquals(0.05, listCheckFluctuation.get(0).getThreshold());
+        Assertions.assertEquals(Math.abs((invcah.getCours()-vinvca.getCours())/vinvca.getCours()), listCheckFluctuation.get(0).getFluctuation());
+        Assertions.assertNull(listCheckFluctuation.get(0).getAlertType());
     }
 
     @Test
     public void createCheckFluctuationDataWithJourop(){
-        checkFluctuationService.getJouropService().addJouropToList(jourop);
-        checkFluctuationService.createCheckFluctuationData(invcah);
-        Assertions.assertFalse(checkFluctuationService.getListeCheckFluctuation().size()>0);
+        listJourop.add(jourop);
+        listCheckFluctuation.add(checkFluctuationService.createCheckFluctuationData(invcah, listVinvca, listJourop));
+        Assertions.assertNull(listCheckFluctuation.get(0));
     }
 }

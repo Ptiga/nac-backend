@@ -4,6 +4,8 @@ import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Vinvca;
 
+import java.text.DecimalFormat;
+
 //@tablename("xx") -> Permettre d'utiliser un nom de table différent dans la BDD
 
 public class Result {
@@ -39,8 +41,8 @@ public class Result {
         this.currentDatePrice = invcah.getDateCours();
         this.currentPrice = invcah.getCours();
         this.currentCurrency = invcah.getDeviseCours();
-        this.fluctuation = fluctuation;
-        this.threshold = threshold;
+        setFluctuation(fluctuation);
+        setThreshold(threshold);
         this.alertType = alertType;
         this.isResultValidated = false;
     }
@@ -146,7 +148,7 @@ public class Result {
     }
 
     public void setFluctuation(double fluctuation) {
-        this.fluctuation = fluctuation;
+        this.fluctuation = convertToTwoDecimal(fluctuation);
     }
 
     public double getThreshold() {
@@ -154,7 +156,7 @@ public class Result {
     }
 
     public void setThreshold(double threshold) {
-        this.threshold = threshold;
+        this.threshold = convertToTwoDecimal(threshold);
     }
 
     public String getAlertType() {
@@ -201,6 +203,10 @@ public class Result {
         setPriorDatePrice(jourop.getTradeDate());
         setPriorPrice(jourop.getTradePrice());
         setPriorCurrency(jourop.getTradeCurrency());
+    }
+
+    private double convertToTwoDecimal(double nombre){
+        return  Math.round(nombre*10000.0)/100.0;
     }
 
 }
