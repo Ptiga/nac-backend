@@ -10,5 +10,5 @@ public interface VinvcaServiceInterface {
 
     void addVinvcaToList(Vinvca vinvca);
 
-    void createVinvcaFromList(List<String[]> listDetail);
+    void createVinvcaAndAddToList(List<String[]> listDetail);
 }

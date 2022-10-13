@@ -4,6 +4,8 @@ import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Vinvca;
 
+//@tablename("xx") -> Permettre d'utiliser un nom de table différent dans la BDD
+
 public class Result {
 
     private Long id;
@@ -186,6 +188,7 @@ public class Result {
     public void setResultValidated(boolean resultValidated) {
         isResultValidated = resultValidated;
     }
+
 
 
     public void addVinvcaAttributes(Vinvca vinvca) {

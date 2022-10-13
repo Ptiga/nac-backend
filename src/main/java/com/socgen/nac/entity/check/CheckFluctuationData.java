@@ -101,9 +101,9 @@ public class CheckFluctuationData {
 
     private boolean isSameCurrency() {
         if(this.jourop == null){
-            return invcah.getDeviseCours()==vinvca.getDeviseCours();
-    }else{
-            return invcah.getDeviseCours()==jourop.getTradeCurrency();
+            return invcah.getDeviseCours().equals(vinvca.getDeviseCours());
+        }else{
+            return invcah.getDeviseCours().equals(jourop.getTradeCurrency());
         }
 }
 

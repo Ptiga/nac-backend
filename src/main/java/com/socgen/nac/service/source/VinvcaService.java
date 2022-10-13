@@ -23,9 +23,11 @@ public class VinvcaService implements VinvcaServiceInterface {
     }
 
     @Override
-    public void createVinvcaFromList(List<String[]> listDetail) {
+    public void createVinvcaAndAddToList(List<String[]> listDetail) {
         for (String[] valeur: listDetail) {
-            listeDetailVinvca.add(new Vinvca(valeur[0], valeur[1], valeur[2],valeur[21], valeur[13], valeur[7],valeur[14], valeur[17], valeur[18],valeur[65], Double.parseDouble(valeur[24]), valeur[47]));
+            if(valeur[0].substring(0,6).equals("vinvca")) {
+                listeDetailVinvca.add(new Vinvca(valeur[0], valeur[1], valeur[2],valeur[21], valeur[13], valeur[7],valeur[14], valeur[17], valeur[18],valeur[65], Double.parseDouble(valeur[24]), valeur[47]));
+            }
         }
     }
 

@@ -3,7 +3,6 @@ package com.socgen.nac.service.source;
 import com.socgen.nac.entity.source.Statement;
 import com.socgen.nac.entity.source.Vinvca;
 import com.socgen.nac.repository.file.SourceFileRepository;
-import com.socgen.nac.service.source.VinvcaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -51,19 +50,21 @@ public class VinvcaServiceTest{
 
     @Test
     public void createVinvcaFromFiles(){
-        List<Statement> listeFichiers = statementService.manageListOfFunds(sourceFileRepository.listFiles());
-        statementService.splitToDedicatedList(listeFichiers);
-        statementService.createStatementDetail(statementService.getDedicatedList("vinvca"));
-        vinvcaService.createVinvcaFromList(sourceFileRepository.getExtractedLinesList());
+        List<Statement> listOfFiles = sourceFileRepository.listFiles();
+        statementService.manageListOfFunds(listOfFiles);
+        statementService.splitToDedicatedList(statementService.getUsableStatementsList());
+        List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("vinvca"));
+        vinvcaService.createVinvcaAndAddToList(extractedList);
         Assertions.assertTrue(vinvcaService.listeDetailVinvca.size()>0);
     }
 
     @Test
     public void getVinvcaList(){
-        List<Statement> listeFichiers = statementService.manageListOfFunds(sourceFileRepository.listFiles());
-        statementService.splitToDedicatedList(listeFichiers);
-        statementService.createStatementDetail(statementService.getDedicatedList("vinvca"));
-        vinvcaService.createVinvcaFromList(sourceFileRepository.getExtractedLinesList());
+        List<Statement> listOfFiles = sourceFileRepository.listFiles();
+        statementService.manageListOfFunds(listOfFiles);
+        statementService.splitToDedicatedList(statementService.getUsableStatementsList());
+        List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("vinvca"));
+        vinvcaService.createVinvcaAndAddToList(extractedList);
         Assertions.assertTrue(vinvcaService.getListeDetailVinvca().size()>0);
     }
 

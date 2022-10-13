@@ -10,4 +10,7 @@ public interface ResultServiceInterface {
     public List<Result> getResultList();
 
     void createResultFluctuationCheck(List<CheckFluctuationData> listeCheckFluctuation);
+
+    void fromSourceFolderToResultList();
+
 }

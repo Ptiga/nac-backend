@@ -3,11 +3,9 @@ package com.socgen.nac.service.source;
 import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Statement;
 import com.socgen.nac.repository.file.SourceFileRepository;
-import com.socgen.nac.service.source.InvcahService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InvcahServiceTest {
@@ -60,10 +58,11 @@ public class InvcahServiceTest {
 
     @Test
     public void createInvcahFromFiles(){
-        List<Statement> listeFichiers = statementService.manageListOfFunds(sourceFileRepository.listFiles());
-        statementService.splitToDedicatedList(listeFichiers);
-        statementService.createStatementDetail(statementService.getDedicatedList("invcah"));
-        invcahService.createInvcahFromList(sourceFileRepository.getExtractedLinesList());
+        List<Statement> listOfFiles = sourceFileRepository.listFiles();
+        statementService.manageListOfFunds(listOfFiles);
+        statementService.splitToDedicatedList(statementService.getUsableStatementsList());
+        List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("invcah"));
+        invcahService.createInvcahAndAddToList(extractedList);
         Assertions.assertTrue(invcahService.listeDetailInvcah.size()>0);
     }
 

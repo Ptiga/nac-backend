@@ -17,7 +17,7 @@ public class SourceFileRepository implements SourceFileRepositoryInterface {
 
 
 
-    List<String[]> extractedLines = new ArrayList<>();
+
 
     private String sourceFolder;
     private Character dataSeparator;
@@ -29,25 +29,29 @@ public class SourceFileRepository implements SourceFileRepositoryInterface {
         this.dataSeparator = dataSeparator;
         this.numberOfSeparatorExpected = numberOfSeparatorExpected;
     }
-
-
+/*
+    public List<Statement> getListOfFiles() {
+        return listOfFiles;
+    }
+*/
     @Override
     public List<Statement> listFiles() {
-        List <Statement> listFiles = new ArrayList<>();
+        List<Statement> listOfFiles = new ArrayList<>();
         File dir  = new File(sourceFolder);
         File[] liste = dir.listFiles();
         for(File item : liste){
             if(item.isFile())
             {
                 //listFiles.add(statementService.createStatement(item.getName()));
-                listFiles.add(new Statement(item.getName(), this.dataSeparator, this.numberOfSeparatorExpected));
+                listOfFiles.add(new Statement(item.getName(), this.dataSeparator, this.numberOfSeparatorExpected));
             }
         }
-        return listFiles;
+        return listOfFiles;
     }
 
     @Override
-    public void readSourceFile(Statement statement) {
+    public List<String[]> readSourceFile(Statement statement) {
+        List<String[]> extractedLines = new ArrayList<>();
         try {
             int lineNum = 1;
             FileReader fileReader = new FileReader(sourceFolder + statement.getFilename());
@@ -67,13 +71,15 @@ public class SourceFileRepository implements SourceFileRepositoryInterface {
         } catch (Exception e) {
             throw new Error(e);
         }
+        return extractedLines;
     }
 
+    /*
     @Override
     public List<String[]> getExtractedLinesList() {
         return extractedLines;
     }
-
+    */
 
 
 

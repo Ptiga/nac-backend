@@ -138,6 +138,11 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
     }
 
 
+    public void createCheckDataFromInvcahList(List<Invcah>listInvcah){
+        for (Invcah invcah: listInvcah) {
+            createCheckFluctuationData(invcah);
+        }
+    }
 
     @Override
     //Créer méthode void ?  -> Ajouter directement dans une liste si créée ?
@@ -146,11 +151,13 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
         for (Vinvca vinvca: vinvcaService.getListeDetailVinvca()) {
             if(compareInvcahAndVinvca(invcah, vinvca)){
                 listeCheckFluctuation.add(new CheckFluctuationData(invcah, vinvca, thresholds.get(invcah.getTriComptable())));
+                break;
             }
             else{
                 for (Jourop jourop : jouropService.getListeDetailJourop()) {
                     if (compareInvcahAndJourop(invcah, jourop)) {
                         listeCheckFluctuation.add(new CheckFluctuationData(invcah, jourop, thresholds.get(invcah.getTriComptable())));
+                        break;
                     }
                 }
             }

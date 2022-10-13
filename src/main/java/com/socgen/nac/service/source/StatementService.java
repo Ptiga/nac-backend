@@ -1,10 +1,8 @@
 package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Statement;
-import com.socgen.nac.repository.file.SourceFileRepository;
 import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,10 +11,14 @@ import java.util.List;
 @Service
 public class StatementService implements StatementServiceInterface{
 
+    private List<Statement> usableStatementsList = new ArrayList<>();
     private List<Statement>listeInvcah = new ArrayList<>();
     private List<Statement>listeVinvca = new ArrayList<>();
     private List<Statement>listeJourop = new ArrayList<>();
 
+    public List<Statement> getUsableStatementsList() {
+        return usableStatementsList;
+    }
 
     @Autowired
     private SourceFileRepositoryInterface sourceFileRepository;
@@ -65,6 +67,16 @@ public class StatementService implements StatementServiceInterface{
     }
 
     @Override
+    public void manageListOfFunds(List<Statement> listeFichiers) {
+        for (Statement statement: listeFichiers) {
+            if(isStatementUsable(statement)){
+                addRemainingAttributes(statement);
+                usableStatementsList.add(statement);
+            }
+        }
+    }
+
+    @Override
     public void addRemainingAttributes(Statement statement) {
         List<String> listAttributes = new ArrayList<String>();
         String filename = statement.getFilename().substring(statement.getFilename().indexOf(statement.getDataSeparator())+1);
@@ -78,18 +90,6 @@ public class StatementService implements StatementServiceInterface{
         statement.setNavDate(listAttributes.get(2));
         statement.setFileTimestamp(listAttributes.get(3));
     }
-
-    @Override
-    public List<Statement> manageListOfFunds(List<Statement> listeFichiers) {
-        List<Statement>usableStatements = new ArrayList<>();
-        for (Statement statement: listeFichiers) {
-            if(isStatementUsable(statement)){
-                addRemainingAttributes(statement);
-                usableStatements.add(statement);
-            }
-        }
-        return usableStatements;
-        }
 
     @Override
     public void splitToDedicatedList(List<Statement> listeFichiers) {
@@ -130,16 +130,18 @@ public class StatementService implements StatementServiceInterface{
     }
 
     @Override
-    public void createStatementDetail(List<Statement> listStatement) {
+    public List<String[]> createStatementDetail(List<Statement> listStatement) {
+        List<String[]>extractedList = new ArrayList<>();
         for (Statement statement: listStatement) {
             //sourceFileRepository = getSourceFileRepository();
-            sourceFileRepository.readSourceFile(statement);
+            extractedList = sourceFileRepository.readSourceFile(statement);
         }
+        return extractedList;
     }
 
     @Override
-    public List<Statement> checkSourceFolder() {
-        return sourceFileRepository.listFiles();
+    public void checkSourceFolder() {
+        sourceFileRepository.listFiles();
     }
 
 

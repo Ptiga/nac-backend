@@ -2,23 +2,28 @@ package com.socgen.nac.service.result;
 
 import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Vinvca;
+import com.socgen.nac.repository.file.SourceFileRepository;
 import com.socgen.nac.service.check.CheckFluctuationService;
-import com.socgen.nac.service.source.InvcahService;
-import com.socgen.nac.service.source.JouropService;
-import com.socgen.nac.service.source.VinvcaService;
+import com.socgen.nac.service.source.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ResultServiceTest {
 
+    String sourceFolder = "c://temp//GP3_files_test//";
+    char dataSeparator = '_';
+    int numberOfSeparator = 4;
+
+    SourceFileRepository sourceFileRepository = new SourceFileRepository(sourceFolder, dataSeparator, numberOfSeparator);
 
     InvcahService invcahService = new InvcahService();
     VinvcaService vinvcaService = new VinvcaService();
     JouropService jouropService = new JouropService();
+    StatementService statementService = new StatementService(sourceFileRepository);
 
     CheckFluctuationService checkFluctuationService = new CheckFluctuationService(invcahService, vinvcaService, jouropService);
 
-    ResultService resultService = new ResultService();
+    ResultService resultService = new ResultService(sourceFileRepository, checkFluctuationService, invcahService, vinvcaService, jouropService, statementService);
 
     @Test
     public void retrieveNoAlerts(){
@@ -52,6 +57,12 @@ public class ResultServiceTest {
         checkFluctuationService.createCheckFluctuationData(invcah);
         resultService.createResultFluctuationCheck(checkFluctuationService.getListeCheckFluctuation());
         Assertions.assertTrue(resultService.getResultList().size()==1);
+    }
+
+    @Test
+    public void fromFolderToResult(){
+        resultService.fromSourceFolderToResultList();
+        Assertions.assertNotNull(resultService.getResultList());
     }
 
 }

@@ -43,10 +43,11 @@ public class JouropServiceTest {
 
     @Test
     public void createJouropFromFiles(){
-        List<Statement> listeFichiers = statementService.manageListOfFunds(sourceFileRepository.listFiles());
-        statementService.splitToDedicatedList(listeFichiers);
-        statementService.createStatementDetail(statementService.getDedicatedList("jourop"));
-        jouropService.createJouropFromList(sourceFileRepository.getExtractedLinesList());
+        List<Statement> listOfFiles = sourceFileRepository.listFiles();
+        statementService.manageListOfFunds(listOfFiles);
+        statementService.splitToDedicatedList(statementService.getUsableStatementsList());
+        List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("jourop"));
+        jouropService.createJouropAndAddToList(extractedList);
         Assertions.assertTrue(jouropService.listeDetailJourop.size()>0);
     }
 

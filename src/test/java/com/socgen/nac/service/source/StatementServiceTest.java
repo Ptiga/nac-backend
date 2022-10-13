@@ -2,11 +2,9 @@ package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Statement;
 import com.socgen.nac.repository.file.SourceFileRepository;
-import com.socgen.nac.service.source.StatementService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StatementServiceTest {
@@ -82,20 +80,22 @@ public class StatementServiceTest {
 
     @Test
     void manageCheckSourceFolder(){
-        List<Statement> listeFichiers = statementService.checkSourceFolder();
-        Assertions.assertEquals(30, listeFichiers.size());
+        statementService.checkSourceFolder();
+        Assertions.assertEquals(30, sourceFileRepository.listFiles().size());
     }
 
     @Test
     void manageListOfFiles(){
-        List<Statement> listeFichiers = statementService.manageListOfFunds(sourceFileRepository.listFiles());
-        Assertions.assertEquals(18, listeFichiers.size());
+        List<Statement> listOfFiles = sourceFileRepository.listFiles();
+        statementService.manageListOfFunds(listOfFiles);
+        Assertions.assertEquals(18, statementService.getUsableStatementsList().size());
     }
 
     @Test
     void splitToDedicatedList(){
-        List<Statement> listeFichiers = statementService.manageListOfFunds(sourceFileRepository.listFiles());
-        statementService.splitToDedicatedList(listeFichiers);
+        List<Statement> listOfFiles = sourceFileRepository.listFiles();
+        statementService.manageListOfFunds(listOfFiles);
+        statementService.splitToDedicatedList(statementService.getUsableStatementsList());
         Assertions.assertEquals(6, statementService.getDedicatedList("invcah").size());
         Assertions.assertEquals(6, statementService.getDedicatedList("vinvca").size());
         Assertions.assertEquals(6, statementService.getDedicatedList("jourop").size());
@@ -126,11 +126,12 @@ public class StatementServiceTest {
 
     @Test
     void createDetail(){
-        List<Statement> listeFichiers = statementService.manageListOfFunds(sourceFileRepository.listFiles());
-        statementService.splitToDedicatedList(listeFichiers);
-        statementService.createStatementDetail(statementService.getDedicatedList("invcah"));
-        System.out.println(sourceFileRepository.getExtractedLinesList());
-        Assertions.assertTrue(sourceFileRepository.getExtractedLinesList().size()>0);
+        List<Statement> listOfFiles = sourceFileRepository.listFiles();
+        statementService.manageListOfFunds(listOfFiles);
+        statementService.splitToDedicatedList(statementService.getUsableStatementsList());
+        List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("invcah"));
+        System.out.println(extractedList);
+        Assertions.assertTrue(extractedList.size()>0);
     }
 
 

@@ -24,9 +24,11 @@ public class JouropService implements JouropServiceInterface{
     }
 
     @Override
-    public void createJouropFromList(List<String[]> listDetail) {
+    public void createJouropAndAddToList(List<String[]> listDetail) {
         for (String[] valeur: listDetail) {
-            listeDetailJourop.add(new Jourop(valeur[0], valeur[1], valeur[2],valeur[6], valeur[3], valeur[9],Double.parseDouble(valeur[14]), valeur[15]));
+            if(valeur[0].substring(0,6).equals("jourop")) {
+                listeDetailJourop.add(new Jourop(valeur[0], valeur[1], valeur[2],valeur[6], valeur[3], valeur[9],Double.parseDouble(valeur[14]), valeur[15]));
+            }
         }
     }
 }

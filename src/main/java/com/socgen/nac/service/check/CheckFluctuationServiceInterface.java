@@ -23,10 +23,11 @@ public interface CheckFluctuationServiceInterface {
 
     boolean compareInvcahAndJourop(Invcah invcah, Jourop jourop);
 
+    void createCheckDataFromInvcahList(List<Invcah>listInvcah);
+
     void createCheckFluctuationData(Invcah invcah);
 
     boolean isInvcahUsableForCheck(Invcah invcah);
-
 
     //Iterable<Vinvca>
 

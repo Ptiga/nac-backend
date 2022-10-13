@@ -8,7 +8,7 @@ public interface JouropServiceInterface {
 
     List<Jourop> getListeDetailJourop();
 
-    void createJouropFromList(List<String[]> listDetail);
+    void createJouropAndAddToList(List<String[]> listDetail);
 
     void addJouropToList(Jourop jourop);
 }

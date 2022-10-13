@@ -9,7 +9,7 @@ public interface StatementServiceInterface {
 
     void setSourceFileRepository(SourceFileRepositoryInterface sourceFileRepository);
 
-    //Statement createStatement(String filename);
+    List<Statement> getUsableStatementsList();
 
     boolean isExpectedStatementType(Statement statement);
 
@@ -19,7 +19,7 @@ public interface StatementServiceInterface {
 
     void addRemainingAttributes(Statement statement);
 
-    List<Statement> manageListOfFunds(List<Statement> listeFichiers);
+    void manageListOfFunds(List<Statement> listeFichiers);
 
     void splitToDedicatedList(List<Statement> listeFichiers);
 
@@ -27,9 +27,9 @@ public interface StatementServiceInterface {
 
     List<Statement> getDedicatedList(String listName);
 
-    void createStatementDetail(List<Statement> listStatement);
+    List<String[]> createStatementDetail(List<Statement> listStatement);
 
-    List<Statement> checkSourceFolder();
+    void checkSourceFolder();
 }
 
 
