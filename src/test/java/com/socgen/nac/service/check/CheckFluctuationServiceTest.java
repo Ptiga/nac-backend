@@ -3,8 +3,8 @@ package com.socgen.nac.service.check;
 import com.socgen.nac.entity.check.CheckFluctuationData;
 import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
+import com.socgen.nac.entity.source.Threshold;
 import com.socgen.nac.entity.source.Vinvca;
-import com.socgen.nac.service.check.CheckFluctuationService;
 import com.socgen.nac.service.source.InvcahService;
 import com.socgen.nac.service.source.JouropService;
 import com.socgen.nac.service.source.VinvcaService;
@@ -69,12 +69,13 @@ public class CheckFluctuationServiceTest {
     List<Jourop>listJourop = new ArrayList<>();
     List<CheckFluctuationData>listCheckFluctuation = new ArrayList<>();
 
+    List<Threshold>thresholds = checkFluctuationService.createThresholds();
 
     @Test
     public void retrieveThreshold(){
         //thresholds = fillThresholdMap(thresholds);
-        System.out.println(checkFluctuationService.getThresholds());
-        Assertions.assertEquals(0.05, checkFluctuationService.retrieveTheshold(checkFluctuationService.getThresholds(), invcah.getTriComptable()));
+        //System.out.println(checkFluctuationService.getThresholds());
+        Assertions.assertEquals(0.05, checkFluctuationService.searchThresholdByTriComptable(thresholds, invcah.getTriComptable()).getThresholdRate());
     }
 
     @Test
@@ -116,7 +117,7 @@ public class CheckFluctuationServiceTest {
         listVinvca.add(vinvca);
         listCheckFluctuation.add(checkFluctuationService.createCheckFluctuationData(invcah, listVinvca, listJourop));
         Assertions.assertTrue(listCheckFluctuation.size()>0);
-        Assertions.assertEquals(0.05, listCheckFluctuation.get(0).getThreshold());
+        Assertions.assertEquals(0.05, listCheckFluctuation.get(0).getThreshold().getThresholdRate());
         Assertions.assertEquals(Math.abs((invcah.getCours()-vinvca.getCours())/vinvca.getCours()), listCheckFluctuation.get(0).getFluctuation());
         Assertions.assertNull(listCheckFluctuation.get(0).getAlertType());
     }

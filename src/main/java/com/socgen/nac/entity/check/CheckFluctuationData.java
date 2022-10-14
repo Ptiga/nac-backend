@@ -2,6 +2,7 @@ package com.socgen.nac.entity.check;
 
 import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
+import com.socgen.nac.entity.source.Threshold;
 import com.socgen.nac.entity.source.Vinvca;
 
 public class CheckFluctuationData {
@@ -10,11 +11,11 @@ public class CheckFluctuationData {
     private Vinvca vinvca;
     private Jourop jourop;
     private double fluctuation;
-    private double threshold;
+    private Threshold threshold;
     private String alertType;
 
 
-    public CheckFluctuationData(Invcah invcah, Vinvca vinvca, double threshold) {
+    public CheckFluctuationData(Invcah invcah, Vinvca vinvca, Threshold threshold) {
         this.invcah = invcah;
         this.vinvca = vinvca;
         this.jourop = null;
@@ -23,7 +24,7 @@ public class CheckFluctuationData {
         setAlertType();
     }
 
-    public CheckFluctuationData(Invcah invcah, Jourop jourop, double threshold) {
+    public CheckFluctuationData(Invcah invcah, Jourop jourop, Threshold threshold) {
         this.invcah = invcah;
         this.vinvca = null;
         this.jourop = jourop;
@@ -71,11 +72,11 @@ public class CheckFluctuationData {
         }
     }
 
-    public double getThreshold() {
+    public Threshold getThreshold() {
         return threshold;
     }
 
-    public void setThreshold(double threshold) {
+    public void setThreshold(Threshold threshold) {
         this.threshold = threshold;
     }
 
@@ -92,7 +93,7 @@ public class CheckFluctuationData {
     }
 
     public String defineAlertType() {
-        if (fluctuation >= threshold) {
+        if (fluctuation >= threshold.getThresholdRate()) {
             return "Security's threshold exceeded";
         } else if(!isSameCurrency()) {
             return "Different Currency through each datasource";

@@ -10,7 +10,6 @@ import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
 import com.socgen.nac.service.check.CheckFluctuationServiceInterface;
 import com.socgen.nac.service.source.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

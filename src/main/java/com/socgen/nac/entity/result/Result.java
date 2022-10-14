@@ -2,6 +2,7 @@ package com.socgen.nac.entity.result;
 
 import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
+import com.socgen.nac.entity.source.Threshold;
 import com.socgen.nac.entity.source.Vinvca;
 
 import java.text.DecimalFormat;
@@ -17,6 +18,7 @@ public class Result {
     private String controlName;
     private String securityCode;
     private String securityLabel;
+    private String securityType;
     private String priorDatePrice;
     private double priorPrice;
     private String priorCurrency;
@@ -31,18 +33,19 @@ public class Result {
     private boolean isResultValidated;
 
 
-    public Result(Invcah invcah, double fluctuation, double threshold, String alertType) {
+    public Result(Invcah invcah, double fluctuation, Threshold threshold, String alertType) {
         this.codeFonds = invcah.getCodeFonds();
         this.nomFonds = invcah.getNomfonds();
         this.navDate = invcah.getDateVL();
         setControlName();
         this.securityCode = invcah.getIsinValeur();
         this.securityLabel = invcah.getLibeleValeur();
+        setSecurityType(threshold);
         this.currentDatePrice = invcah.getDateCours();
         this.currentPrice = invcah.getCours();
         this.currentCurrency = invcah.getDeviseCours();
         setFluctuation(fluctuation);
-        setThreshold(threshold);
+        setThreshold(threshold.getThresholdRate());
         this.alertType = alertType;
         this.isResultValidated = false;
     }
@@ -93,6 +96,14 @@ public class Result {
 
     public void setSecurityLabel(String securityLabel) {
         this.securityLabel = securityLabel;
+    }
+
+    public String getSecurityType() {
+        return securityType;
+    }
+
+    public void setSecurityType(Threshold Threshold) {
+        this.securityType = Threshold.getTypeInstrument();
     }
 
     public String getPriorDatePrice() {
@@ -206,7 +217,7 @@ public class Result {
     }
 
     private double convertToTwoDecimal(double nombre){
-        return  Math.round(nombre*10000.0)/100.0;
+        return Math.round(nombre*10000.0)/100.0;
     }
 
 }
