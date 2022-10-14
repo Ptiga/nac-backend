@@ -1,16 +1,30 @@
 package com.socgen.nac.entity.source;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Threshold {
 
+    @Id
+    @Column(name = "tri_comptable")
     private String triComptable;
+    @Column(name = "type_instrument")
     private String typeInstrument;
-    private double thresholdRate;
+    private double threshold;
+
+
+    public Threshold() {
+    }
 
     public Threshold(String triComptable, String typeInstrument, double threshold) {
         this.triComptable = triComptable;
         this.typeInstrument = typeInstrument;
-        this.thresholdRate = threshold;
+        this.threshold = threshold;
     }
+
+
 
 
     public String getTriComptable() {
@@ -29,12 +43,12 @@ public class Threshold {
         this.typeInstrument = typeInstrument;
     }
 
-    public double getThresholdRate() {
-        return thresholdRate;
+    public double getThreshold() {
+        return threshold;
     }
 
-    public void setThresholdRate(double thresholdRate) {
-        this.thresholdRate = thresholdRate;
+    public void setThreshold(double threshold) {
+        this.threshold = threshold;
     }
 
 }

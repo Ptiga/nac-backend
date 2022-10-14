@@ -75,7 +75,7 @@ public class CheckFluctuationServiceTest {
     public void retrieveThreshold(){
         //thresholds = fillThresholdMap(thresholds);
         //System.out.println(checkFluctuationService.getThresholds());
-        Assertions.assertEquals(0.05, checkFluctuationService.searchThresholdByTriComptable(thresholds, invcah.getTriComptable()).getThresholdRate());
+        Assertions.assertEquals(0.05, checkFluctuationService.searchThresholdByTriComptable(thresholds, invcah.getTriComptable()).getThreshold());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class CheckFluctuationServiceTest {
         listVinvca.add(vinvca);
         listCheckFluctuation.add(checkFluctuationService.createCheckFluctuationData(invcah, listVinvca, listJourop));
         Assertions.assertTrue(listCheckFluctuation.size()>0);
-        Assertions.assertEquals(0.05, listCheckFluctuation.get(0).getThreshold().getThresholdRate());
+        Assertions.assertEquals(0.05, listCheckFluctuation.get(0).getThreshold().getThreshold());
         Assertions.assertEquals(Math.abs((invcah.getCours()-vinvca.getCours())/vinvca.getCours()), listCheckFluctuation.get(0).getFluctuation());
         Assertions.assertNull(listCheckFluctuation.get(0).getAlertType());
     }

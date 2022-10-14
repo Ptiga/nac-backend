@@ -5,8 +5,6 @@ import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Threshold;
 import com.socgen.nac.entity.source.Vinvca;
 
-import java.text.DecimalFormat;
-
 //@tablename("xx") -> Permettre d'utiliser un nom de table différent dans la BDD
 
 public class Result {
@@ -45,7 +43,7 @@ public class Result {
         this.currentPrice = invcah.getCours();
         this.currentCurrency = invcah.getDeviseCours();
         setFluctuation(fluctuation);
-        setThreshold(threshold.getThresholdRate());
+        setThreshold(threshold.getThreshold());
         this.alertType = alertType;
         this.isResultValidated = false;
     }

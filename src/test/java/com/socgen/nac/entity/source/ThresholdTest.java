@@ -43,7 +43,7 @@ public class ThresholdTest {
         for (Threshold t: listeThreshold) {
             if (t.getTriComptable().equals(triComptable)){
                 instrument = t.getTypeInstrument();
-                threshold = t.getThresholdRate();
+                threshold = t.getThreshold();
             }
         }
         Assertions.assertEquals("Futures", instrument);

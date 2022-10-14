@@ -5,18 +5,15 @@ import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Threshold;
 import com.socgen.nac.entity.source.Vinvca;
-import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
+import com.socgen.nac.repository.database.ThresholdRepositoryInterface;
 import com.socgen.nac.service.source.InvcahServiceInterface;
 import com.socgen.nac.service.source.JouropServiceInterface;
-import com.socgen.nac.service.source.VinvcaService;
 import com.socgen.nac.service.source.VinvcaServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CheckFluctuationService implements CheckFluctuationServiceInterface{
@@ -83,14 +80,25 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
         this.jouropService = jouropService;
     }
 
-/*
-    public CheckFluctuationService(List<CheckFluctuationData>listeCheckFluctuation, InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService){
-        this.listeCheckFluctuation = listeCheckFluctuation;
-        this.invcahService = invcahService;
-        this.vinvcaService = vinvcaService;
-        this.jouropService = jouropService;
+    @Autowired
+    private ThresholdRepositoryInterface thresholdRepository;
+
+    public ThresholdRepositoryInterface getThresholdRepository() {
+        return thresholdRepository;
     }
-*/
+
+    public void setThresholdRepository(ThresholdRepositoryInterface thresholdRepository) {
+        this.thresholdRepository = thresholdRepository;
+    }
+
+    /*
+        public CheckFluctuationService(List<CheckFluctuationData>listeCheckFluctuation, InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService){
+            this.listeCheckFluctuation = listeCheckFluctuation;
+            this.invcahService = invcahService;
+            this.vinvcaService = vinvcaService;
+            this.jouropService = jouropService;
+        }
+    */
     public CheckFluctuationService(InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService){
         this.invcahService = invcahService;
         this.vinvcaService = vinvcaService;
@@ -154,6 +162,7 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
     @Override
     public CheckFluctuationData createCheckFluctuationData(Invcah invcah, List<Vinvca>listVinvca, List<Jourop>listJourop) {
         List<Threshold> thresholds = createThresholds();
+        Iterable<Threshold> t2 = thresholdRepository.findAll();
         for (Vinvca vinvca: listVinvca) {
             if(compareInvcahAndVinvca(invcah, vinvca)){
                 //listeCheckFluctuation.add(new CheckFluctuationData(invcah, vinvca, thresholds.get(invcah.getTriComptable())));

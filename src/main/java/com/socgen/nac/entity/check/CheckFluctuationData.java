@@ -93,7 +93,7 @@ public class CheckFluctuationData {
     }
 
     public String defineAlertType() {
-        if (fluctuation >= threshold.getThresholdRate()) {
+        if (fluctuation >= threshold.getThreshold()) {
             return "Security's threshold exceeded";
         } else if(!isSameCurrency()) {
             return "Different Currency through each datasource";
