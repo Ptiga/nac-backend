@@ -22,7 +22,7 @@ public interface CheckFluctuationServiceInterface {
 
     List<CheckFluctuationData> createCheckDataFromInvcahList(List<Invcah>listInvcah, List<Vinvca>listVinvca, List<Jourop>listJourop);
 
-    CheckFluctuationData createCheckFluctuationData(Invcah invcah, List<Vinvca>listVinvca, List<Jourop>listJourop);
+    CheckFluctuationData createCheckFluctuationData(Invcah invcah, List<Vinvca>listVinvca, List<Jourop>listJourop, List<Threshold> thresholds);
 
     boolean isInvcahUsableForCheck(Invcah invcah);
 

@@ -142,9 +142,10 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
 
     public List<CheckFluctuationData> createCheckDataFromInvcahList(List<Invcah>listInvcah, List<Vinvca>listVinvca, List<Jourop>listJourop){
         List<CheckFluctuationData>listeCheckFluctuation = new ArrayList<>();
+        List<Threshold> thresholds = createThresholds();
         for (Invcah invcah: listInvcah) {
             if(isInvcahUsableForCheck(invcah)){
-                listeCheckFluctuation.add(createCheckFluctuationData(invcah, listVinvca, listJourop));
+                listeCheckFluctuation.add(createCheckFluctuationData(invcah, listVinvca, listJourop, thresholds));
             }
         }
         return listeCheckFluctuation;
@@ -160,9 +161,8 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
     }
 
     @Override
-    public CheckFluctuationData createCheckFluctuationData(Invcah invcah, List<Vinvca>listVinvca, List<Jourop>listJourop) {
-        List<Threshold> thresholds = createThresholds();
-        Iterable<Threshold> t2 = thresholdRepository.findAll();
+    public CheckFluctuationData createCheckFluctuationData(Invcah invcah, List<Vinvca>listVinvca, List<Jourop>listJourop, List<Threshold> thresholds) {
+        //List<Threshold> thresholds = createThresholds();
         for (Vinvca vinvca: listVinvca) {
             if(compareInvcahAndVinvca(invcah, vinvca)){
                 //listeCheckFluctuation.add(new CheckFluctuationData(invcah, vinvca, thresholds.get(invcah.getTriComptable())));
@@ -214,6 +214,7 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
 
     public List<Threshold> createThresholds(){
         List<Threshold>thresholds = new ArrayList<>();
+        /*
         thresholds.add(new Threshold("0", "Securities",0.05));
         thresholds.add(new Threshold("1", "Bonds",0.015));
         thresholds.add(new Threshold("2", "Debt securities",0.005));
@@ -223,6 +224,10 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
         thresholds.add(new Threshold("6", "Options",0.3));
         thresholds.add(new Threshold("7", "Swap",1.0));
         thresholds.add(new Threshold("T", "X-currencies", 1.0));
+        return thresholds;
+         */
+        Iterable<Threshold> thresholdsFromDatabase = thresholdRepository.findAll();
+        thresholdsFromDatabase.forEach(thresholds::add);
         return thresholds;
     }
 

@@ -65,11 +65,24 @@ public class CheckFluctuationServiceTest {
 
     CheckFluctuationService checkFluctuationService = new CheckFluctuationService(invcahService, vinvcaService, jouropService);
 
+    List<Threshold>thresholds = createThresholdsForTest();
     List<Vinvca>listVinvca = new ArrayList<>();
     List<Jourop>listJourop = new ArrayList<>();
     List<CheckFluctuationData>listCheckFluctuation = new ArrayList<>();
 
-    List<Threshold>thresholds = checkFluctuationService.createThresholds();
+    private List<Threshold> createThresholdsForTest(){
+        List<Threshold>thresholds = new ArrayList<>();
+            thresholds.add(new Threshold("0", "Securities",0.05));
+            thresholds.add(new Threshold("1", "Bonds",0.015));
+            thresholds.add(new Threshold("2", "Debt securities",0.005));
+            thresholds.add(new Threshold("3", "Ucits - ETF",0.02));
+            thresholds.add(new Threshold("4", "Ucits",0.02));
+            thresholds.add(new Threshold("5", "Futures",0.03));
+            thresholds.add(new Threshold("6", "Options",0.3));
+            thresholds.add(new Threshold("7", "Swap",1.0));
+            thresholds.add(new Threshold("T", "X-currencies", 1.0));
+        return thresholds;
+    }
 
     @Test
     public void retrieveThreshold(){
@@ -115,7 +128,8 @@ public class CheckFluctuationServiceTest {
     @Test
     public void createCheckFluctuationDataWithVinvca(){
         listVinvca.add(vinvca);
-        listCheckFluctuation.add(checkFluctuationService.createCheckFluctuationData(invcah, listVinvca, listJourop));
+
+        listCheckFluctuation.add(checkFluctuationService.createCheckFluctuationData(invcah, listVinvca, listJourop, thresholds));
         Assertions.assertTrue(listCheckFluctuation.size()>0);
         Assertions.assertEquals(0.05, listCheckFluctuation.get(0).getThreshold().getThreshold());
         Assertions.assertEquals(Math.abs((invcah.getCours()-vinvca.getCours())/vinvca.getCours()), listCheckFluctuation.get(0).getFluctuation());
@@ -125,7 +139,7 @@ public class CheckFluctuationServiceTest {
     @Test
     public void createCheckFluctuationDataWithJourop(){
         listJourop.add(jourop);
-        listCheckFluctuation.add(checkFluctuationService.createCheckFluctuationData(invcah, listVinvca, listJourop));
+        listCheckFluctuation.add(checkFluctuationService.createCheckFluctuationData(invcah, listVinvca, listJourop, thresholds));
         Assertions.assertNull(listCheckFluctuation.get(0));
     }
 }
