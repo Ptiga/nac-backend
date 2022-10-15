@@ -101,6 +101,9 @@ public class StatementController implements StatementControllerInterface{
 */
     @Autowired
     private ResultServiceInterface resultService;
+
+    @Autowired
+    private StatementServiceInterface statementService;
 /*
     public ResultServiceInterface getResultService() {
         return resultService;
@@ -144,6 +147,19 @@ public class StatementController implements StatementControllerInterface{
         return ResponseEntity.ok(listeResultat);
     }
 
+
+    @GetMapping("/load-save")
+    public void loadAndSave(){
+
+        System.out.println("On passe par la méthode de sauvegarde des états en base");
+
+        //List<Result>listeResultat = new ArrayList<>();
+        //listeResultat = resultService.fromSourceFolderToResultList();
+        statementService.loadAndSaveStatements();
+
+        System.out.println("Sauvegarde des éléments effectuée");
+
+    }
 
     //Méthode de création d'état (check dans dossier)
 

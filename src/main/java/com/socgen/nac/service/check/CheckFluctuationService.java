@@ -99,10 +99,11 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
             this.jouropService = jouropService;
         }
     */
-    public CheckFluctuationService(InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService){
+    public CheckFluctuationService(InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService, ThresholdRepositoryInterface thresholdRepository){
         this.invcahService = invcahService;
         this.vinvcaService = vinvcaService;
         this.jouropService = jouropService;
+        this.thresholdRepository = thresholdRepository;
     }
 
 /*

@@ -1,6 +1,8 @@
 package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.repository.database.StatementRepositoryInterface;
+import com.socgen.nac.repository.database.ThresholdRepositoryInterface;
 import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,9 +34,24 @@ public class StatementService implements StatementServiceInterface{
         this.sourceFileRepository = sourceFileRepository;
     }
 
-    public StatementService(SourceFileRepositoryInterface sourceFileRepository) {
-        this.sourceFileRepository = sourceFileRepository;
+    @Autowired
+    private StatementRepositoryInterface statementRepository;
+
+    public StatementRepositoryInterface getStatementRepository() {
+        return statementRepository;
     }
+
+    public void setStatementRepository(StatementRepositoryInterface statementRepository) {
+        this.statementRepository = statementRepository;
+    }
+
+    public StatementService(SourceFileRepositoryInterface sourceFileRepository, StatementRepositoryInterface statementRepository) {
+        this.sourceFileRepository = sourceFileRepository;
+        this.statementRepository = statementRepository;
+    }
+
+
+
 
     @Override
     public boolean isExpectedStatementType(Statement statement) {
@@ -147,6 +164,22 @@ public class StatementService implements StatementServiceInterface{
     @Override
     public void checkSourceFolder() {
         sourceFileRepository.listFiles();
+    }
+
+    @Override
+    public void loadAndSaveStatements() {
+        //Liste des fichiers présents dans le dossier source
+        List<Statement>statements = sourceFileRepository.listFiles();
+        //On vérifie si les états sont corrects puis on ajoute les attributs manquants
+        manageListOfFunds(statements);
+        //On sauvegarde les états dans la BDD
+        saveStatementsToDatabase(statements);
+    }
+
+    private void saveStatementsToDatabase(List<Statement> statements){
+        for (Statement statement: statements) {
+            statementRepository.save(statement);
+        }
     }
 
 

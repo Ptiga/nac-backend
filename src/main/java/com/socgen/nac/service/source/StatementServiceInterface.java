@@ -30,6 +30,8 @@ public interface StatementServiceInterface {
     List<String[]> createStatementDetail(List<Statement> listStatement);
 
     void checkSourceFolder();
+
+    void loadAndSaveStatements();
 }
 
 

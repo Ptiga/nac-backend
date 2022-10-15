@@ -1,6 +1,7 @@
 package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.repository.database.StatementRepositoryInterface;
 import com.socgen.nac.repository.file.SourceFileRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,8 @@ public class StatementServiceTest {
     int numberOfSeparator = 4;
 
     SourceFileRepository sourceFileRepository = new SourceFileRepository(sourceFolder, dataSeparator, numberOfSeparator);
-    StatementService statementService = new StatementService(sourceFileRepository);
+    private StatementRepositoryInterface statementRepository;
+    StatementService statementService = new StatementService(sourceFileRepository, statementRepository);
 
 
     @Test

@@ -5,6 +5,7 @@ import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Threshold;
 import com.socgen.nac.entity.source.Vinvca;
+import com.socgen.nac.repository.database.ThresholdRepositoryInterface;
 import com.socgen.nac.service.source.InvcahService;
 import com.socgen.nac.service.source.JouropService;
 import com.socgen.nac.service.source.VinvcaService;
@@ -62,8 +63,9 @@ public class CheckFluctuationServiceTest {
     InvcahService invcahService = new InvcahService();
     VinvcaService vinvcaService = new VinvcaService();
     JouropService jouropService = new JouropService();
+    ThresholdRepositoryInterface thresholdRepository;
 
-    CheckFluctuationService checkFluctuationService = new CheckFluctuationService(invcahService, vinvcaService, jouropService);
+    CheckFluctuationService checkFluctuationService = new CheckFluctuationService(invcahService, vinvcaService, jouropService, thresholdRepository);
 
     List<Threshold>thresholds = createThresholdsForTest();
     List<Vinvca>listVinvca = new ArrayList<>();

@@ -1,35 +1,50 @@
 package com.socgen.nac.entity.source;
 
-//import org.apache.commons.io.FilenameUtils;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
-//@PropertySource("classpath:application.properties")
+@Entity
 public class Statement {
 
-    //L'annotation ne récupère pas la valeur renseignée dans le fichier .properties !!!
-    //@Value("${statement.dataSeparator}")
-    private final Character dataSeparator;
-    private final int numberOfSeparatorExpected;
+    //@Transient
+    @Column(name="data_separator")
+    private Character dataSeparator;
+    //private final Character dataSeparator;
+    //@Transient
+    @Column(name = "number_expected")
+    private int numberOfSeparatorExpected;
+    //private final int numberOfSeparatorExpected;
 
+    @Id
     private String filename;
+    @Column(name = "statement_type")
     private String statementType;
+    @Column(name = "user_tag")
     private String userTag;
     private String fund;
+    @Column(name = "nav_date")
     private String navDate;
+    @Column(name = "file_timestamp")
     private String fileTimestamp;
+    @Column(name = "file_extension")
     private String fileExtension;
+    @Column(name = "number_of_separators")
     private int numberOfSeparators;
+
 
 /*
     public Statement() {
     }
 */
+
+
+
     public Statement(String filename, char dataSeparator, int numberOfSeparatorExpected) {
         this.filename = filename;
         this.setStatementType();
@@ -37,6 +52,9 @@ public class Statement {
         this.dataSeparator = dataSeparator;
         this.setNumberOfSeparator();
         this.numberOfSeparatorExpected = numberOfSeparatorExpected;
+    }
+
+    public Statement() {
     }
 
 

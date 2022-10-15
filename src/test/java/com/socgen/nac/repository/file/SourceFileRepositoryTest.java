@@ -1,6 +1,7 @@
 package com.socgen.nac.repository.file;
 
 import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.repository.database.ThresholdRepositoryInterface;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Repository;

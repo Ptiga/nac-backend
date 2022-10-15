@@ -1,7 +1,9 @@
 package com.socgen.nac.repository.file;
 
 import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.repository.database.ThresholdRepositoryInterface;
 import com.socgen.nac.service.source.StatementService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -14,10 +16,6 @@ import java.util.List;
 
 @Component
 public class SourceFileRepository implements SourceFileRepositoryInterface {
-
-
-
-
 
     private String sourceFolder;
     private Character dataSeparator;
@@ -73,6 +71,7 @@ public class SourceFileRepository implements SourceFileRepositoryInterface {
         }
         return extractedLines;
     }
+
 
     /*
     @Override
