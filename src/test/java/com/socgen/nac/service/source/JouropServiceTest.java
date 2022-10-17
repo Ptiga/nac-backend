@@ -7,6 +7,7 @@ import com.socgen.nac.repository.file.SourceFileRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JouropServiceTest {
@@ -30,6 +31,7 @@ public class JouropServiceTest {
 
     JouropService jouropService = new JouropService();
 
+    List<Statement>uploadedStatements = new ArrayList<>();
 
     @Test
     public void createJourop(){
@@ -47,7 +49,7 @@ public class JouropServiceTest {
     @Test
     public void createJouropFromFiles(){
         List<Statement> listOfFiles = sourceFileRepository.listFiles();
-        statementService.manageListOfFunds(listOfFiles);
+        statementService.manageListOfFunds(listOfFiles, uploadedStatements);
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
         List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("jourop"));
         List<Jourop> listeDetailJourop = jouropService.createJouropAndAddToList(extractedList);

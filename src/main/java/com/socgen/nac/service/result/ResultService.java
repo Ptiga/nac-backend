@@ -6,6 +6,7 @@ import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Statement;
 import com.socgen.nac.entity.source.Vinvca;
+import com.socgen.nac.repository.database.ResultRepositoryInterface;
 import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
 import com.socgen.nac.service.check.CheckFluctuationServiceInterface;
 import com.socgen.nac.service.source.*;
@@ -29,23 +30,32 @@ public class ResultService implements ResultServiceInterface {
         this.sourceFileRepository = sourceFileRepository;
     }
 
+    @Autowired
+    private ResultRepositoryInterface resultRepository;
+
+    public ResultRepositoryInterface getResultRepository() {
+        return resultRepository;
+    }
+
+    public void setResultRepository(ResultRepositoryInterface resultRepository) {
+        this.resultRepository = resultRepository;
+    }
+
     private CheckFluctuationServiceInterface checkFluctuationService;
     private InvcahServiceInterface invcahService;
     private VinvcaServiceInterface vinvcaService;
     private JouropServiceInterface jouropService;
     private StatementServiceInterface statementService;
 
-    public ResultService(SourceFileRepositoryInterface sourceFileRepository, CheckFluctuationServiceInterface checkFluctuationService, InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService, StatementServiceInterface statementService){
+    public ResultService(SourceFileRepositoryInterface sourceFileRepository, CheckFluctuationServiceInterface checkFluctuationService, InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService, StatementServiceInterface statementService, ResultRepositoryInterface resultRepository){
         this.sourceFileRepository = sourceFileRepository;
         this.invcahService = invcahService;
         this.vinvcaService = vinvcaService;
         this.jouropService = jouropService;
         this.statementService = statementService;
         this.checkFluctuationService = checkFluctuationService;
+        this.resultRepository = resultRepository;
     }
-
-
-
 
     @Override
     public List<Result> createResultFluctuationCheck(List<CheckFluctuationData> listeCheckFluctuation) {
@@ -73,6 +83,38 @@ public class ResultService implements ResultServiceInterface {
     }
 
     @Override
+    public List<Result> uploadResults(){
+        List<Result>uploadedResults = new ArrayList<>();
+        Iterable<Result> resultsFromDatabase = resultRepository.findAll();
+        resultsFromDatabase.forEach(uploadedResults::add);
+        return uploadedResults;
+    }
+
+    @Override
+    public void saveNewResults(List<Result> results, List<Result> uploadedResults) {
+        List<Result>resultsToSave = new ArrayList<>();
+        for (Result result: results) {
+            if(!isInsideUploadedList(result, uploadedResults)){
+                resultsToSave.add(result);
+            }
+        }
+        System.out.println("Nombre de résultats sauvegardés en base : " + resultsToSave.size());
+        resultRepository.saveAll(resultsToSave);
+    }
+
+    private boolean isInsideUploadedList(Result result, List<Result> uploadedResults) {
+        for (Result uploadedResult: uploadedResults) {
+            if (uploadedResult.getCodeFonds().equals(result.getCodeFonds()) &&
+                    uploadedResult.getNavDate().equals(result.getNavDate()) &&
+                    uploadedResult.getSecurityCode().equals(result.getSecurityCode()) &&
+                    uploadedResult.getFluctuation() == result.getFluctuation()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public List<Result> fromSourceFolderToResultList() {
         //Création des listes utilisées
         //Liste des fichiers du répertoire source
@@ -82,13 +124,22 @@ public class ResultService implements ResultServiceInterface {
         List<Vinvca> listeDetailVinvca = new ArrayList<>();
         List<Jourop> listeDetailJourop = new ArrayList<>();
         List<CheckFluctuationData>listCheckFluctuationData = new ArrayList<>();
-        List<Result> resultList = new ArrayList<>();
+        List<Result> results = new ArrayList<>();
+        List<Result> resultsToSave = new ArrayList<>();
+
+        //On charge la liste des fichiers déjà présents en base
+        List<Statement>uploadedStatements = statementService.uploadStatements();
+
+        //On charge la liste des résultats déjà présents en base
+        List<Result>uploadedResults = uploadResults();
 
         //On liste les fichiers
         listOfFiles = sourceFileRepository.listFiles();
 
         //On défini si l'état est utilisable
-        statementService.manageListOfFunds(listOfFiles);
+        //TODO: Remplacer la liste vide par la liste 'uploadedStatements'
+        List<Statement>listeVide = new ArrayList<>();
+        statementService.manageListOfFunds(listOfFiles, listeVide);
 
         //On met les états dans la liste dédiée
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
@@ -113,10 +164,12 @@ public class ResultService implements ResultServiceInterface {
         System.out.println("taille liste checkFluct: " + listCheckFluctuationData.size());
 
         //On récupère crée une liste avec uniquement les alertes
-        resultList = createResultFluctuationCheck(listCheckFluctuationData);
-        System.out.println("Taille Result : " + resultList.size());
+        results = createResultFluctuationCheck(listCheckFluctuationData);
+        System.out.println("Taille Result : " + results.size());
 
-        return resultList;
+        saveNewResults(results, uploadedResults);
+
+        return results;
     }
 
 

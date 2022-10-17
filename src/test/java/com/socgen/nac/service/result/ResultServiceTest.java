@@ -6,6 +6,7 @@ import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Threshold;
 import com.socgen.nac.entity.source.Vinvca;
+import com.socgen.nac.repository.database.ResultRepositoryInterface;
 import com.socgen.nac.repository.database.StatementRepositoryInterface;
 import com.socgen.nac.repository.database.ThresholdRepositoryInterface;
 import com.socgen.nac.repository.file.SourceFileRepository;
@@ -34,7 +35,9 @@ public class ResultServiceTest {
 
     CheckFluctuationService checkFluctuationService = new CheckFluctuationService(invcahService, vinvcaService, jouropService, thresholdRepository);
 
-    ResultService resultService = new ResultService(sourceFileRepository, checkFluctuationService, invcahService, vinvcaService, jouropService, statementService);
+    ResultRepositoryInterface resultRepository;
+
+    ResultService resultService = new ResultService(sourceFileRepository, checkFluctuationService, invcahService, vinvcaService, jouropService, statementService, resultRepository);
 
     List<Vinvca> listVinvca = new ArrayList<>();
     List<Jourop>listJourop = new ArrayList<>();

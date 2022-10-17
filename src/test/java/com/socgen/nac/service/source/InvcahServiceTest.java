@@ -35,6 +35,7 @@ public class InvcahServiceTest {
 
     InvcahService invcahService = new InvcahService();
 
+    List<Statement>uploadedStatements = new ArrayList<>();
 
 
     @Test
@@ -58,7 +59,7 @@ public class InvcahServiceTest {
     @Test
     public void createInvcahFromFiles(){
         List<Statement> listOfFiles = sourceFileRepository.listFiles();
-        statementService.manageListOfFunds(listOfFiles);
+        statementService.manageListOfFunds(listOfFiles, uploadedStatements);
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
         List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("invcah"));
         List<Invcah> listeDetailInvcah = invcahService.createInvcahAndAddToList(extractedList);

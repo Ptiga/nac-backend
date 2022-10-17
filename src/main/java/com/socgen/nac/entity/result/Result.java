@@ -5,30 +5,55 @@ import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Threshold;
 import com.socgen.nac.entity.source.Vinvca;
 
+import javax.persistence.*;
+
 //@tablename("xx") -> Permettre d'utiliser un nom de table différent dans la BDD
 
+@Entity
 public class Result {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "code_fonds")
     private String codeFonds;
+    @Column(name = "nom_fonds")
     private String nomFonds;
+    @Column(name = "nav_date")
     private String navDate;
+    @Column(name = "nom_controle")
     private String controlName;
+    @Column(name = "code_isin")
     private String securityCode;
+    @Column(name = "libelle_valeur")
     private String securityLabel;
+    @Column(name = "type_instrument")
     private String securityType;
+    @Column(name = "date_cours_veille")
     private String priorDatePrice;
+    @Column(name = "prix_veille")
     private double priorPrice;
+    @Column(name = "devise_veille")
     private String priorCurrency;
+    @Column(name = "date_cours_jour")
     private String currentDatePrice;
+    @Column(name = "cours_jour")
     private double currentPrice;
+    @Column(name = "devise_jour")
     private String currentCurrency;
     private double fluctuation;
+    @Column(name = "seuil")
     private double threshold;
+    @Column(name = "alerte")
     private String alertType;
+    @Column(name = "commentaire_comptable")
     private String operatorComment;
+    @Column(name = "commentaire_superviseur")
     private String supervisorComment;
+    @Column(name = "validation")
     private boolean isResultValidated;
+    @Column(name = "active")
+    private boolean isActivatedLine;
 
 
     public Result(Invcah invcah, double fluctuation, Threshold threshold, String alertType) {
@@ -46,6 +71,20 @@ public class Result {
         setThreshold(threshold.getThreshold());
         this.alertType = alertType;
         this.isResultValidated = false;
+        this.isActivatedLine = true;
+    }
+
+    public Result() {
+
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCodeFonds() {
@@ -200,7 +239,13 @@ public class Result {
         isResultValidated = resultValidated;
     }
 
+    public boolean isActivatedLine() {
+        return isActivatedLine;
+    }
 
+    public void setActivatedLine(boolean activatedLine) {
+        isActivatedLine = activatedLine;
+    }
 
     public void addVinvcaAttributes(Vinvca vinvca) {
         setPriorDatePrice(vinvca.getDateCours());

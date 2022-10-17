@@ -6,6 +6,7 @@ import com.socgen.nac.repository.file.SourceFileRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StatementServiceTest {
@@ -21,6 +22,7 @@ public class StatementServiceTest {
     private StatementRepositoryInterface statementRepository;
     StatementService statementService = new StatementService(sourceFileRepository, statementRepository);
 
+    List<Statement>uploadedStatements = new ArrayList<>();
 
     @Test
     public void testStatementConstructor(){
@@ -89,14 +91,14 @@ public class StatementServiceTest {
     @Test
     void manageListOfFiles(){
         List<Statement> listOfFiles = sourceFileRepository.listFiles();
-        statementService.manageListOfFunds(listOfFiles);
+        statementService.manageListOfFunds(listOfFiles, uploadedStatements);
         Assertions.assertEquals(18, statementService.getUsableStatementsList().size());
     }
 
     @Test
     void splitToDedicatedList(){
         List<Statement> listOfFiles = sourceFileRepository.listFiles();
-        statementService.manageListOfFunds(listOfFiles);
+        statementService.manageListOfFunds(listOfFiles, uploadedStatements);
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
         Assertions.assertEquals(6, statementService.getDedicatedList("invcah").size());
         Assertions.assertEquals(6, statementService.getDedicatedList("vinvca").size());
@@ -129,14 +131,30 @@ public class StatementServiceTest {
     @Test
     void createDetail(){
         List<Statement> listOfFiles = sourceFileRepository.listFiles();
-        statementService.manageListOfFunds(listOfFiles);
+        statementService.manageListOfFunds(listOfFiles, uploadedStatements);
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
         List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("invcah"));
         System.out.println(extractedList);
         Assertions.assertTrue(extractedList.size()>0);
     }
 
+    @Test
+    void doNotkeepIfAlreadyInDatabase(){
+        List<Statement> listOfFiles = new ArrayList<>();
+        listOfFiles.add(new Statement(filename, dataSeparator, numberOfSeparator));
+        uploadedStatements.add(new Statement(filename, dataSeparator, numberOfSeparator));
+        statementService.manageListOfFunds(listOfFiles, uploadedStatements);
+        Assertions.assertTrue(statementService.getUsableStatementsList().size()==0);
+    }
 
-
+    @Test
+    void keepOnlyNewElements(){
+        List<Statement> listOfFiles = new ArrayList<>();
+        listOfFiles.add(new Statement(filename, dataSeparator, numberOfSeparator));
+        listOfFiles.add(new Statement(filename2, dataSeparator, numberOfSeparator));
+        uploadedStatements.add(new Statement(filename, dataSeparator, numberOfSeparator));
+        statementService.manageListOfFunds(listOfFiles, uploadedStatements);
+        Assertions.assertTrue(statementService.getUsableStatementsList().size()==1);
+    }
 
 }

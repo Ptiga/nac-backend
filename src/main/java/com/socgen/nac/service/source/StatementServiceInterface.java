@@ -17,9 +17,11 @@ public interface StatementServiceInterface {
 
     boolean isStatementUsable(Statement statement);
 
+    boolean isInsideUploadedList(Statement statement, List<Statement> uploadedStatements);
+
     void addRemainingAttributes(Statement statement);
 
-    void manageListOfFunds(List<Statement> listeFichiers);
+    void manageListOfFunds(List<Statement> listeFichiers, List<Statement> uploadedStatements);
 
     void splitToDedicatedList(List<Statement> listeFichiers);
 
@@ -31,7 +33,9 @@ public interface StatementServiceInterface {
 
     void checkSourceFolder();
 
-    void loadAndSaveStatements();
+    List<Statement> uploadStatements();
+
+    int loadAndSaveStatements();
 }
 
 

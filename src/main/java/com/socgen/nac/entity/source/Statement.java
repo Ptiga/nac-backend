@@ -38,13 +38,6 @@ public class Statement {
     private int numberOfSeparators;
 
 
-/*
-    public Statement() {
-    }
-*/
-
-
-
     public Statement(String filename, char dataSeparator, int numberOfSeparatorExpected) {
         this.filename = filename;
         this.setStatementType();

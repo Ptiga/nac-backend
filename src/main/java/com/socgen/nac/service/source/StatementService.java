@@ -1,6 +1,7 @@
 package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.entity.source.Threshold;
 import com.socgen.nac.repository.database.StatementRepositoryInterface;
 import com.socgen.nac.repository.database.ThresholdRepositoryInterface;
 import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
@@ -84,14 +85,24 @@ public class StatementService implements StatementServiceInterface{
     }
 
     @Override
-    public void manageListOfFunds(List<Statement> listeFichiers) {
+    public void manageListOfFunds(List<Statement> listeFichiers, List<Statement> uploadedStatements) {
         usableStatementsList.clear();
         for (Statement statement: listeFichiers) {
-            if(isStatementUsable(statement)){
+            if(isStatementUsable(statement) && !isInsideUploadedList(statement, uploadedStatements)){
                 addRemainingAttributes(statement);
                 usableStatementsList.add(statement);
             }
         }
+    }
+
+    @Override
+    public boolean isInsideUploadedList(Statement statement, List<Statement> uploadedStatements){
+        for (Statement uploadedStatement: uploadedStatements) {
+            if (uploadedStatement.getFilename().equals(statement.getFilename())){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -167,21 +178,35 @@ public class StatementService implements StatementServiceInterface{
     }
 
     @Override
-    public void loadAndSaveStatements() {
-        //Liste des fichiers présents dans le dossier source
-        List<Statement>statements = sourceFileRepository.listFiles();
-        //On vérifie si les états sont corrects puis on ajoute les attributs manquants
-        manageListOfFunds(statements);
-        //On sauvegarde les états dans la BDD
-        saveStatementsToDatabase(statements);
+    public List<Statement> uploadStatements(){
+        List<Statement>uploadedStatements = new ArrayList<>();
+        Iterable<Statement> statementsFromDatabase = statementRepository.findAll();
+        statementsFromDatabase.forEach(uploadedStatements::add);
+        return uploadedStatements;
     }
 
     private void saveStatementsToDatabase(List<Statement> statements){
+        /*
         for (Statement statement: statements) {
             statementRepository.save(statement);
         }
+         */
+        statementRepository.saveAll(statements);
     }
 
 
+    @Override
+    public int loadAndSaveStatements() {
+        //On charge la liste des fichiers déjà présents en base
+        List<Statement>uploadedStatements = uploadStatements();
+        //Liste des fichiers présents dans le dossier source
+        List<Statement>statements = sourceFileRepository.listFiles();
+        //On vérifie si les états sont corrects puis on ajoute les attributs manquants
+        manageListOfFunds(statements, uploadedStatements);
+        //On sauvegarde les états dans la BDD
+        saveStatementsToDatabase(usableStatementsList);
+
+        return usableStatementsList.size();
+    }
     //Appel dans le repo
 }

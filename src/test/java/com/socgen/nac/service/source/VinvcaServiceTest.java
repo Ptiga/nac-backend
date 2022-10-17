@@ -7,6 +7,7 @@ import com.socgen.nac.repository.file.SourceFileRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VinvcaServiceTest{
@@ -33,6 +34,8 @@ public class VinvcaServiceTest{
 
     VinvcaService vinvcaService = new VinvcaService();
 
+    List<Statement>uploadedStatements = new ArrayList<>();
+
     @Test
     public void testVinvcaConstructor(){
         Vinvca vinvca = new Vinvca(filename, fonds, nomFonds, deviseFonds, dataValo, triComptable, categorie, isin, libelleValeur, dateCours, prix, devise);
@@ -53,7 +56,7 @@ public class VinvcaServiceTest{
     @Test
     public void createVinvcaFromFiles(){
         List<Statement> listOfFiles = sourceFileRepository.listFiles();
-        statementService.manageListOfFunds(listOfFiles);
+        statementService.manageListOfFunds(listOfFiles, uploadedStatements);
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
         List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("vinvca"));
         List<Vinvca> listeDetailVinvca = vinvcaService.createVinvcaAndAddToList(extractedList);
@@ -63,7 +66,7 @@ public class VinvcaServiceTest{
     @Test
     public void getVinvcaList(){
         List<Statement> listOfFiles = sourceFileRepository.listFiles();
-        statementService.manageListOfFunds(listOfFiles);
+        statementService.manageListOfFunds(listOfFiles, uploadedStatements);
         statementService.splitToDedicatedList(statementService.getUsableStatementsList());
         List<String[]>extractedList = statementService.createStatementDetail(statementService.getDedicatedList("vinvca"));
         List<Vinvca> listeDetailVinvca = vinvcaService.createVinvcaAndAddToList(extractedList);

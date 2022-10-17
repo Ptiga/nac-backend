@@ -155,9 +155,9 @@ public class StatementController implements StatementControllerInterface{
 
         //List<Result>listeResultat = new ArrayList<>();
         //listeResultat = resultService.fromSourceFolderToResultList();
-        statementService.loadAndSaveStatements();
+        int nbSaves = statementService.loadAndSaveStatements();
 
-        System.out.println("Sauvegarde des éléments effectuée");
+        System.out.format("Traitement terminé : %d état(s) sauvegardé(s)", nbSaves);
 
     }
 
