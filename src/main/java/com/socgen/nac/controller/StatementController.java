@@ -18,106 +18,14 @@ import java.util.List;
 
 @RestController
 public class StatementController implements StatementControllerInterface{
-/*
-    @Autowired
-    private StatementServiceInterface statementService;
 
-
-    public StatementServiceInterface getStatementService(){
-        return statementService;
-    }
-
-    public void setStatementService(StatementServiceInterface statementService) {
-        this.statementService = statementService;
-    }
-
-*/
-    /*
-    @Autowired
-    private SourceFileRepositoryInterface sourceFileRepository;
-
-    public SourceFileRepositoryInterface getSourceFileRepository() {
-        return sourceFileRepository;
-    }
-
-    public void setSourceFileRepository(SourceFileRepositoryInterface sourceFileRepository) {
-        this.sourceFileRepository = sourceFileRepository;
-    }
-
-    @Autowired
-    private CheckFluctuationServiceInterface checkFluctuationService;
-
-    public CheckFluctuationServiceInterface getCheckFluctuationService() {
-        return checkFluctuationService;
-    }
-
-    public void setCheckFluctuationService(CheckFluctuationServiceInterface checkFluctuationService) {
-        this.checkFluctuationService = checkFluctuationService;
-    }
-
-    @Autowired
-    private InvcahServiceInterface invcahService;
-
-    public InvcahServiceInterface getInvcahService() {
-        return invcahService;
-    }
-
-    public void setInvcahService(InvcahServiceInterface invcahService) {
-        this.invcahService = invcahService;
-    }
-
-    @Autowired
-    private VinvcaServiceInterface vinvcaService;
-
-    public VinvcaServiceInterface getVinvcaService() {
-        return vinvcaService;
-    }
-
-    public void setVinvcaService(VinvcaServiceInterface vinvcaService) {
-        this.vinvcaService = vinvcaService;
-    }
-
-    @Autowired
-    private JouropServiceInterface jouropService;
-
-    public JouropServiceInterface getJouropService() {
-        return jouropService;
-    }
-
-    public void setJouropService(JouropServiceInterface jouropService) {
-        this.jouropService = jouropService;
-    }
-
-    @Autowired
-    private StatementServiceInterface statementService;
-
-    public StatementServiceInterface getStatementService() {
-        return statementService;
-    }
-
-    public void setStatementService(StatementServiceInterface statementService) {
-        this.statementService = statementService;
-    }
-*/
     @Autowired
     private ResultServiceInterface resultService;
 
     @Autowired
     private StatementServiceInterface statementService;
-/*
-    public ResultServiceInterface getResultService() {
-        return resultService;
-    }
 
-    public void setResultService(SourceFileRepositoryInterface sourceFileRepository, CheckFluctuationServiceInterface checkFluctuationService, InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService, StatementServiceInterface statementService) {
-        this.sourceFileRepository = sourceFileRepository;
-        this.invcahService = invcahService;
-        this.vinvcaService = vinvcaService;
-        this.jouropService = jouropService;
-        this.statementService = statementService;
-        this.checkFluctuationService = checkFluctuationService;
-    }
-*/
+
     @GetMapping("/home")
     public ResponseEntity<String> home(){
         //Statement statement = new Statement();
@@ -161,8 +69,43 @@ public class StatementController implements StatementControllerInterface{
 
     }
 
-    //Méthode de création d'état (check dans dossier)
+    @Override
+    @GetMapping("/Check-new-statements")
+    public ResponseEntity<String> checkNewStatements(){
 
-    //Interface avec endpoints/méthodes GET/POST/UPDATE
+        System.out.println("Méthoode pour vérifier s'il y a de nouveaux états");
 
+        String nbStatementsAvailable = String.valueOf(statementService.checkNewStatements());
+
+        System.out.format("nombre de nouveaux états: %s", nbStatementsAvailable);
+
+        return ResponseEntity.ok(nbStatementsAvailable);
+    }
+
+    @Override
+    @GetMapping("/upload-new-statements")
+    public ResponseEntity<String> uploadNewStatements() {
+
+        System.out.println("Méthoode pour charger en base les nouveaux états");
+
+        String nbUploadedStatements = String.valueOf(statementService.saveNewStatements());
+
+        System.out.format("nombre d'états chargés en base: %s", nbUploadedStatements);
+
+        return ResponseEntity.ok(nbUploadedStatements);
+    }
+
+    @Override
+    @GetMapping("/get-results")
+    public ResponseEntity<List<Result>> getCheckResult() {
+
+        System.out.println("Méthode pour obtenir les résultats");
+
+        List<Result>listeResultat = resultService.retrieveResults();
+
+        System.out.println("Taille liste des résultats : " + listeResultat.size());
+
+        //return ResponseEntity.ok(resultService.fromSourceFolderToResultList());
+        return ResponseEntity.ok(listeResultat);
+    }
 }

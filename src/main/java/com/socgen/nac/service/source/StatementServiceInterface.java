@@ -36,6 +36,10 @@ public interface StatementServiceInterface {
     List<Statement> uploadStatements();
 
     int loadAndSaveStatements();
+
+    int checkNewStatements();
+
+    int saveNewStatements();
 }
 
 

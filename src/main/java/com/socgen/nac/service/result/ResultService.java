@@ -91,14 +91,7 @@ public class ResultService implements ResultServiceInterface {
     }
 
     @Override
-    public void saveNewResults(List<Result> results, List<Result> uploadedResults) {
-        List<Result>resultsToSave = new ArrayList<>();
-        for (Result result: results) {
-            if(!isInsideUploadedList(result, uploadedResults)){
-                resultsToSave.add(result);
-            }
-        }
-        System.out.println("Nombre de résultats sauvegardés en base : " + resultsToSave.size());
+    public void saveNewResults(List<Result> resultsToSave) {
         resultRepository.saveAll(resultsToSave);
     }
 
@@ -113,6 +106,23 @@ public class ResultService implements ResultServiceInterface {
         }
         return false;
     }
+
+    private List<Result> compareResults(List<Result> results, List<Result> uploadedResults) {
+        List<Result>newResults = new ArrayList<>();
+        for (Result result: results) {
+            if (!isInsideUploadedList(result, uploadedResults)){
+                newResults.add(result);
+            }
+        }
+        return newResults;
+    }
+
+    private List<Result> concatResultLists(List<Result> results, List<Result> uploadedResults) {
+        uploadedResults.forEach(results::add);
+        return results;
+    }
+
+
 
     @Override
     public List<Result> fromSourceFolderToResultList() {
@@ -167,10 +177,42 @@ public class ResultService implements ResultServiceInterface {
         results = createResultFluctuationCheck(listCheckFluctuationData);
         System.out.println("Taille Result : " + results.size());
 
-        saveNewResults(results, uploadedResults);
+        compareResults(results, uploadedResults);
+
+        saveNewResults(results);
 
         return results;
     }
+
+    @Override
+    public List<Result> retrieveResults() {
+        //On charge les résultats déjà enregistrés en base
+        List<Result>uploadedResults = uploadResults();
+
+        //On récupère de la base les états nécessaires au contrôle
+        List<Invcah>invcahs = invcahService.getUploadedInvcah();
+        List<Vinvca>vinvcas = vinvcaService.getUploadedVinvca();
+        List<Jourop>jourops = jouropService.getUploadedJourop();
+
+        //On crée la liste des éléments utilisés pour le contrôle
+        List<CheckFluctuationData>checkFluctuations = checkFluctuationService.createCheckDataFromInvcahList(invcahs, vinvcas, jourops);
+
+        //On crée une liste de résultats avec uniquement les éléments en alerte
+        List<Result>results = createResultFluctuationCheck(checkFluctuations);
+
+        //On compare les 2 listes de résultats pour isoler les nouveaux résultats
+        results = compareResults(results, uploadedResults);
+
+        //On sauvegarde en base les nouveaux résultats
+        saveNewResults(results);
+
+        //On concatère les 2 listes de résultats
+        results = concatResultLists(results, uploadedResults);
+
+        return results;
+    }
+
+
 
 
 }

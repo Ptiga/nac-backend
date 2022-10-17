@@ -32,13 +32,19 @@ public class InvcahServiceTest {
     char dataSeparator = '_';
     int numberOfSeparator = 4;
 
-    SourceFileRepository sourceFileRepository = new SourceFileRepository(sourceFolder, dataSeparator, numberOfSeparator);
-    private StatementRepositoryInterface statementRepository;
-    StatementService statementService = new StatementService(sourceFileRepository, statementRepository);
-
     InvcahRepositoryInterface invcahRepository;
+    VinvcaRepositoryInterface vinvcaRepository;
+    JouropRepositoryInterface jouropRepository;
 
     InvcahService invcahService = new InvcahService(invcahRepository);
+    VinvcaService vinvcaService = new VinvcaService(vinvcaRepository);
+    JouropService jouropService = new JouropService(jouropRepository);
+
+    SourceFileRepository sourceFileRepository = new SourceFileRepository(sourceFolder, dataSeparator, numberOfSeparator);
+    private StatementRepositoryInterface statementRepository;
+    StatementService statementService = new StatementService(sourceFileRepository, invcahService, vinvcaService, jouropService, statementRepository);
+
+
 
     List<Statement>uploadedStatements = new ArrayList<>();
 

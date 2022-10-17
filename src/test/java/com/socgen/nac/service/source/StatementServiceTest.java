@@ -1,7 +1,10 @@
 package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.repository.database.InvcahRepositoryInterface;
+import com.socgen.nac.repository.database.JouropRepositoryInterface;
 import com.socgen.nac.repository.database.StatementRepositoryInterface;
+import com.socgen.nac.repository.database.VinvcaRepositoryInterface;
 import com.socgen.nac.repository.file.SourceFileRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,9 +21,17 @@ public class StatementServiceTest {
     char dataSeparator = '_';
     int numberOfSeparator = 4;
 
+    InvcahRepositoryInterface invcahRepository;
+    VinvcaRepositoryInterface vinvcaRepository;
+    JouropRepositoryInterface jouropRepository;
+
+    InvcahService invcahService = new InvcahService(invcahRepository);
+    VinvcaService vinvcaService = new VinvcaService(vinvcaRepository);
+    JouropService jouropService = new JouropService(jouropRepository);
+
     SourceFileRepository sourceFileRepository = new SourceFileRepository(sourceFolder, dataSeparator, numberOfSeparator);
     private StatementRepositoryInterface statementRepository;
-    StatementService statementService = new StatementService(sourceFileRepository, statementRepository);
+    StatementService statementService = new StatementService(sourceFileRepository, invcahService, vinvcaService, jouropService, statementRepository);
 
     List<Statement>uploadedStatements = new ArrayList<>();
 

@@ -13,6 +13,7 @@ public interface ResultServiceInterface {
 
     List<Result> uploadResults();
 
-    void saveNewResults(List<Result>results, List<Result>uploadedResults);
+    void saveNewResults(List<Result>results);
 
+    List<Result> retrieveResults();
 }

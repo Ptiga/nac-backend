@@ -1,13 +1,13 @@
 package com.socgen.nac.service.source;
 
-import com.socgen.nac.entity.source.Statement;
-import com.socgen.nac.entity.source.Threshold;
+import com.socgen.nac.entity.source.*;
 import com.socgen.nac.repository.database.StatementRepositoryInterface;
 import com.socgen.nac.repository.database.ThresholdRepositoryInterface;
 import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +36,39 @@ public class StatementService implements StatementServiceInterface{
     }
 
     @Autowired
+    private InvcahServiceInterface invcahService;
+
+    public InvcahServiceInterface getInvcahService() {
+        return invcahService;
+    }
+
+    public void setInvcahService(InvcahServiceInterface invcahService) {
+        this.invcahService = invcahService;
+    }
+
+    @Autowired
+    private VinvcaServiceInterface vinvcaService;
+
+    public VinvcaServiceInterface getVinvcaService() {
+        return vinvcaService;
+    }
+
+    public void setVinvcaService(VinvcaServiceInterface vinvcaService) {
+        this.vinvcaService = vinvcaService;
+    }
+
+    @Autowired
+    private JouropServiceInterface jouropService;
+
+    public JouropServiceInterface getJouropService() {
+        return jouropService;
+    }
+
+    public void setJouropService(JouropServiceInterface jouropService) {
+        this.jouropService = jouropService;
+    }
+
+    @Autowired
     private StatementRepositoryInterface statementRepository;
 
     public StatementRepositoryInterface getStatementRepository() {
@@ -46,8 +79,11 @@ public class StatementService implements StatementServiceInterface{
         this.statementRepository = statementRepository;
     }
 
-    public StatementService(SourceFileRepositoryInterface sourceFileRepository, StatementRepositoryInterface statementRepository) {
+    public StatementService(SourceFileRepositoryInterface sourceFileRepository, InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService, StatementRepositoryInterface statementRepository) {
         this.sourceFileRepository = sourceFileRepository;
+        this.invcahService = invcahService;
+        this.vinvcaService = vinvcaService;
+        this.jouropService = jouropService;
         this.statementRepository = statementRepository;
     }
 
@@ -93,6 +129,17 @@ public class StatementService implements StatementServiceInterface{
                 usableStatementsList.add(statement);
             }
         }
+    }
+
+    private List<Statement> compareStatements(List<Statement> statements, List<Statement> uploadedStatements) {
+        List<Statement>returnedList = new ArrayList<>();
+        for (Statement statement: statements) {
+            if(!isInsideUploadedList(statement, uploadedStatements) && isStatementUsable(statement)){
+                addRemainingAttributes(statement);
+                returnedList.add(statement);
+            }
+        }
+        return returnedList;
     }
 
     @Override
@@ -185,14 +232,23 @@ public class StatementService implements StatementServiceInterface{
         return uploadedStatements;
     }
 
-    private void saveStatementsToDatabase(List<Statement> statements){
+    private void saveStatementsToDatabase(List<Statement> statements, List<Invcah> invcahs, List<Vinvca> vinvcas, List<Jourop> jourops){
         /*
         for (Statement statement: statements) {
             statementRepository.save(statement);
         }
          */
         statementRepository.saveAll(statements);
+        invcahService.saveInvcahData(invcahs);
+        vinvcaService.saveVinvcaData(vinvcas);
+        jouropService.saveJouropData(jourops);
     }
+
+
+
+
+
+
 
 
     @Override
@@ -204,9 +260,42 @@ public class StatementService implements StatementServiceInterface{
         //On vérifie si les états sont corrects puis on ajoute les attributs manquants
         manageListOfFunds(statements, uploadedStatements);
         //On sauvegarde les états dans la BDD
-        saveStatementsToDatabase(usableStatementsList);
+        //saveStatementsToDatabase(usableStatementsList);
 
         return usableStatementsList.size();
     }
-    //Appel dans le repo
+
+    //Méthode pour vérifier s'il y a de nouveaux états
+    @Override
+    public int checkNewStatements() {
+        //On charge la liste des fichiers déjà présents en base
+        List<Statement>uploadedStatements = uploadStatements();
+        //Liste des fichiers présents dans le dossier source
+        List<Statement>statements = sourceFileRepository.listFiles();
+        statements = compareStatements(statements, uploadedStatements);
+        return statements.size();
+    }
+
+    @Override
+    public int saveNewStatements() {
+        if(checkNewStatements()==0){
+            return 0;
+        }else{
+            //On charge la liste des fichiers déjà présents en base
+            List<Statement>uploadedStatements = uploadStatements();
+            //Liste des fichiers présents dans le dossier source
+            List<Statement>statements = sourceFileRepository.listFiles();
+            //On vérifie si les états sont corrects puis on ajoute les attributs manquants
+            statements = compareStatements(statements, uploadedStatements);
+            splitToDedicatedList(statements);
+            List<Invcah>invcahs = invcahService.createInvcahAndAddToList(createStatementDetail(listeInvcah));
+            List<Vinvca>vinvcas = vinvcaService.createVinvcaAndAddToList(createStatementDetail(listeVinvca));
+            List<Jourop>jourops = jouropService.createJouropAndAddToList(createStatementDetail(listeJourop));
+            saveStatementsToDatabase(statements, invcahs, vinvcas, jourops);
+            return statements.size();
+        }
+    }
+
+
+
 }

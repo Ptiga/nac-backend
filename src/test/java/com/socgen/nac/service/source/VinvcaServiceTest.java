@@ -31,13 +31,19 @@ public class VinvcaServiceTest{
     String sourceFolder = "c://temp//GP3_files_test//";
     char dataSeparator = '_';
     int numberOfSeparator = 4;
+
+    InvcahRepositoryInterface invcahRepository;
+    VinvcaRepositoryInterface vinvcaRepository;
+    JouropRepositoryInterface jouropRepository;
+
+    InvcahService invcahService = new InvcahService(invcahRepository);
+    VinvcaService vinvcaService = new VinvcaService(vinvcaRepository);
+    JouropService jouropService = new JouropService(jouropRepository);
+
     SourceFileRepository sourceFileRepository = new SourceFileRepository(sourceFolder, dataSeparator, numberOfSeparator);
     private StatementRepositoryInterface statementRepository;
-    StatementService statementService = new StatementService(sourceFileRepository, statementRepository);
+    StatementService statementService = new StatementService(sourceFileRepository, invcahService, vinvcaService, jouropService, statementRepository);
 
-    VinvcaRepositoryInterface vinvcaRepository;
-
-    VinvcaService vinvcaService = new VinvcaService(vinvcaRepository);
 
     List<Statement>uploadedStatements = new ArrayList<>();
 

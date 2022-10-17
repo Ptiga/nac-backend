@@ -33,7 +33,7 @@ public class ResultServiceTest {
     JouropService jouropService = new JouropService(jouropRepository);
     ThresholdRepositoryInterface thresholdRepository;
     private StatementRepositoryInterface statementRepository;
-    StatementService statementService = new StatementService(sourceFileRepository, statementRepository);
+    StatementService statementService = new StatementService(sourceFileRepository, invcahService, vinvcaService, jouropService, statementRepository);
 
     CheckFluctuationService checkFluctuationService = new CheckFluctuationService(invcahService, vinvcaService, jouropService, thresholdRepository);
 

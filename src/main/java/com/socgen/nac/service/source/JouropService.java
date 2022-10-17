@@ -35,7 +35,7 @@ public class JouropService implements JouropServiceInterface{
         List<Jourop> listeDetailJourop = new ArrayList<>();
         for (String[] valeur: listDetail) {
             if(valeur[0].substring(0,6).equals("jourop")) {
-                listeDetailJourop.add(new Jourop(valeur[3], valeur[0], valeur[1], valeur[2],valeur[6], valeur[3], valeur[9],Double.parseDouble(valeur[14]), valeur[15]));
+                listeDetailJourop.add(new Jourop(valeur[4], valeur[0], valeur[1], valeur[2],valeur[6], valeur[3], valeur[9],Double.parseDouble(valeur[14]), valeur[15]));
             }
         }
         return listeDetailJourop;
