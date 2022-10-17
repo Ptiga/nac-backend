@@ -6,9 +6,7 @@ import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Threshold;
 import com.socgen.nac.entity.source.Vinvca;
-import com.socgen.nac.repository.database.ResultRepositoryInterface;
-import com.socgen.nac.repository.database.StatementRepositoryInterface;
-import com.socgen.nac.repository.database.ThresholdRepositoryInterface;
+import com.socgen.nac.repository.database.*;
 import com.socgen.nac.repository.file.SourceFileRepository;
 import com.socgen.nac.service.check.CheckFluctuationService;
 import com.socgen.nac.service.source.*;
@@ -20,15 +18,19 @@ import java.util.List;
 
 public class ResultServiceTest {
 
-    String sourceFolder = "c://temp//GP3_files_test//";
+    String sourceFolder = "c://temp//GP3_files_test_class//";
     char dataSeparator = '_';
     int numberOfSeparator = 4;
 
     SourceFileRepository sourceFileRepository = new SourceFileRepository(sourceFolder, dataSeparator, numberOfSeparator);
 
-    InvcahService invcahService = new InvcahService();
-    VinvcaService vinvcaService = new VinvcaService();
-    JouropService jouropService = new JouropService();
+    InvcahRepositoryInterface invcahRepository;
+    VinvcaRepositoryInterface vinvcaRepository;
+    JouropRepositoryInterface jouropRepository;
+
+    InvcahService invcahService = new InvcahService(invcahRepository);
+    VinvcaService vinvcaService = new VinvcaService(vinvcaRepository);
+    JouropService jouropService = new JouropService(jouropRepository);
     ThresholdRepositoryInterface thresholdRepository;
     private StatementRepositoryInterface statementRepository;
     StatementService statementService = new StatementService(sourceFileRepository, statementRepository);

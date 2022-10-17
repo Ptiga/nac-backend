@@ -11,7 +11,7 @@ import java.util.List;
 //@Repository
 public class SourceFileRepositoryTest {
 
-    SourceFileRepository sourceFileRepository = new SourceFileRepository("c://temp//GP3_files_test//", '-', 4);
+    SourceFileRepository sourceFileRepository = new SourceFileRepository("c://temp//GP3_files_test_class//", '-', 4);
 
     //String sourceFolder = "c//temp//GP3_files_test//";
 

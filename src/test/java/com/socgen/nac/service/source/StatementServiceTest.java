@@ -14,7 +14,7 @@ public class StatementServiceTest {
     String filename = "jourop_kdja_FD0004_20220629_300622091342.fic";
     String filename2 = "vinvca_kdja_FD0004_20220630_010722105654.fic";
     String filename3 = "invcah_kdja_FD0004_20220630_010722105654.fic";
-    String sourceFolder = "c://temp//GP3_files_test//";
+    String sourceFolder = "c://temp//GP3_files_test_class//";
     char dataSeparator = '_';
     int numberOfSeparator = 4;
 

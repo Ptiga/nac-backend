@@ -1,18 +1,34 @@
 package com.socgen.nac.entity.source;
 
+import javax.persistence.*;
+
+@Entity
 public class Vinvca {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "source_filename")
     private String sourceFilename;
+    @Column(name = "code_fonds")
     private String codeFonds;
+    @Column(name = "nom_fonds")
     private String nomfonds;
+    @Column(name = "devise_fonds")
     private String deviseFonds;
+    @Column(name = "date_vl")
     private String dateVL;
+    @Column(name = "tri_comptable")
     private String triComptable;
     private String categorie;
+    @Column(name = "isin_valeur")
     private String isinValeur;
+    @Column(name = "libelle_valeur")
     private String libeleValeur;
+    @Column(name = "date_cours")
     private String dateCours;
     private double cours;
+    @Column(name = "devise_cours")
     private String deviseCours;
 
 

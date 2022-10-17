@@ -2,6 +2,8 @@ package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Vinvca;
+import com.socgen.nac.repository.database.VinvcaRepositoryInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,6 +11,24 @@ import java.util.List;
 
 @Service
 public class VinvcaService implements VinvcaServiceInterface {
+
+    @Autowired
+    VinvcaRepositoryInterface vinvcaRepository;
+
+
+    public VinvcaRepositoryInterface getVinvcaRepository() {
+        return vinvcaRepository;
+    }
+
+    public void setVinvcaRepository(VinvcaRepositoryInterface vinvcaRepository) {
+        this.vinvcaRepository = vinvcaRepository;
+    }
+
+
+    public VinvcaService(VinvcaRepositoryInterface vinvcaRepository){
+        this.vinvcaRepository = vinvcaRepository;
+    }
+
 
     @Override
     public List<Vinvca> createVinvcaAndAddToList(List<String[]> listDetail) {
@@ -21,5 +41,17 @@ public class VinvcaService implements VinvcaServiceInterface {
         return listeDetailVinvca;
     }
 
+    @Override
+    public void saveVinvcaData(List<Vinvca> listeVinvca) {
+        vinvcaRepository.saveAll(listeVinvca);
+    }
+
+    @Override
+    public List<Vinvca> getUploadedVinvca() {
+        List<Vinvca>uploadedVinvca = new ArrayList<>();
+        Iterable<Vinvca> vinvcaFromDatabase = vinvcaRepository.findAll();
+        vinvcaFromDatabase.forEach(uploadedVinvca::add);
+        return uploadedVinvca;
+    }
 
 }

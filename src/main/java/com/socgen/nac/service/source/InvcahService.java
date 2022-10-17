@@ -2,6 +2,8 @@ package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.repository.database.InvcahRepositoryInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,6 +11,22 @@ import java.util.List;
 
 @Service
 public class InvcahService implements InvcahServiceInterface {
+
+    @Autowired
+    InvcahRepositoryInterface invcahRepository;
+
+    public InvcahRepositoryInterface getInvcahRepository() {
+        return invcahRepository;
+    }
+
+    public void setInvcahRepository(InvcahRepositoryInterface invcahRepository) {
+        this.invcahRepository = invcahRepository;
+    }
+
+
+    public InvcahService(InvcahRepositoryInterface invcahRepository){
+        this.invcahRepository = invcahRepository;
+    }
 
 
     @Override
@@ -20,5 +38,18 @@ public class InvcahService implements InvcahServiceInterface {
             }
         }
         return listeDetailInvcah;
+    }
+
+    @Override
+    public void saveInvcahData(List<Invcah> listeInvcah) {
+        invcahRepository.saveAll(listeInvcah);
+    }
+
+    @Override
+    public List<Invcah> getUploadedInvcah() {
+        List<Invcah>uploadedInvcah = new ArrayList<>();
+        Iterable<Invcah> invcahFromDatabase = invcahRepository.findAll();
+        invcahFromDatabase.forEach(uploadedInvcah::add);
+        return uploadedInvcah;
     }
 }

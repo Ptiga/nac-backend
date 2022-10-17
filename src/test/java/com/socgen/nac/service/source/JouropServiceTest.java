@@ -2,7 +2,10 @@ package com.socgen.nac.service.source;
 
 import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Statement;
+import com.socgen.nac.repository.database.InvcahRepositoryInterface;
+import com.socgen.nac.repository.database.JouropRepositoryInterface;
 import com.socgen.nac.repository.database.StatementRepositoryInterface;
+import com.socgen.nac.repository.database.VinvcaRepositoryInterface;
 import com.socgen.nac.repository.file.SourceFileRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,6 +15,7 @@ import java.util.List;
 
 public class JouropServiceTest {
 
+    String codeOperation = "296557221";
     String sourceFilename = "jourop_kdja_FD0004_20220630_010722105654.fic";
     String codeFonds = "FD0004";
     String categorie = "CAT ";
@@ -29,13 +33,15 @@ public class JouropServiceTest {
     private StatementRepositoryInterface statementRepository;
     StatementService statementService = new StatementService(sourceFileRepository, statementRepository);
 
-    JouropService jouropService = new JouropService();
+    JouropRepositoryInterface jouropRepository;
+
+    JouropService jouropService = new JouropService(jouropRepository);
 
     List<Statement>uploadedStatements = new ArrayList<>();
 
     @Test
     public void createJourop(){
-        Jourop jourop = new Jourop(sourceFilename, codeFonds, categorie, transactionType, isinValeur, tradeDate, tradePrice, deviseCours);
+        Jourop jourop = new Jourop(codeOperation, sourceFilename, codeFonds, categorie, transactionType, isinValeur, tradeDate, tradePrice, deviseCours);
         Assertions.assertEquals(sourceFilename, jourop.getSourceFilename());
         Assertions.assertEquals(codeFonds, jourop.getCodeFonds());
         Assertions.assertEquals(categorie, jourop.getCategorie());

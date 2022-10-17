@@ -10,4 +10,8 @@ public interface InvcahServiceInterface {
 
 
     List<Invcah> createInvcahAndAddToList(List<String[]> listDetail);
+
+    void saveInvcahData(List<Invcah> listeInvcah);
+
+    List<Invcah>getUploadedInvcah();
 }

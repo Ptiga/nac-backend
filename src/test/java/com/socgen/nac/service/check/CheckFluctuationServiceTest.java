@@ -5,7 +5,10 @@ import com.socgen.nac.entity.source.Invcah;
 import com.socgen.nac.entity.source.Jourop;
 import com.socgen.nac.entity.source.Threshold;
 import com.socgen.nac.entity.source.Vinvca;
+import com.socgen.nac.repository.database.InvcahRepositoryInterface;
+import com.socgen.nac.repository.database.JouropRepositoryInterface;
 import com.socgen.nac.repository.database.ThresholdRepositoryInterface;
+import com.socgen.nac.repository.database.VinvcaRepositoryInterface;
 import com.socgen.nac.service.source.InvcahService;
 import com.socgen.nac.service.source.JouropService;
 import com.socgen.nac.service.source.VinvcaService;
@@ -49,6 +52,7 @@ public class CheckFluctuationServiceTest {
 
 
     String sourceFilename = "jourop_kdja_FD0004_20220630_010722105654.fic";
+    String codeOperation = "296557221";
     String codeFonds = "FD0004";
     String categorie = "CAT ";
     String transactionType = "CCT ";
@@ -57,12 +61,16 @@ public class CheckFluctuationServiceTest {
     double tradePrice =         23538976.39        ;
     String deviseCours = "USD";
 
-    Jourop jourop = new Jourop(sourceFilename, codeFonds, categorie, transactionType, isinValeur, tradeDate, tradePrice, deviseCours);
+    Jourop jourop = new Jourop(codeOperation, sourceFilename, codeFonds, categorie, transactionType, isinValeur, tradeDate, tradePrice, deviseCours);
+
+    InvcahRepositoryInterface invcahRepository;
+    VinvcaRepositoryInterface vinvcaRepository;
+    JouropRepositoryInterface jouropRepository;
 
 
-    InvcahService invcahService = new InvcahService();
-    VinvcaService vinvcaService = new VinvcaService();
-    JouropService jouropService = new JouropService();
+    InvcahService invcahService = new InvcahService(invcahRepository);
+    VinvcaService vinvcaService = new VinvcaService(vinvcaRepository);
+    JouropService jouropService = new JouropService(jouropRepository);
     ThresholdRepositoryInterface thresholdRepository;
 
     CheckFluctuationService checkFluctuationService = new CheckFluctuationService(invcahService, vinvcaService, jouropService, thresholdRepository);

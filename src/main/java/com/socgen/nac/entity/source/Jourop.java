@@ -1,18 +1,34 @@
 package com.socgen.nac.entity.source;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Jourop{
 
+    @Id
+    @Column(name = "code_operation")
+    private String codeOperation;
+    @Column(name = "source_filename")
     private String sourceFilename;
+    @Column(name = "code_fonds")
     private String codeFonds;
     private String categorie;
+    @Column(name = "transaction_type")
     private String transactionType;
+    @Column(name = "isin_valeur")
     private String isinValeur;
+    @Column(name = "date_transaction")
     private String tradeDate;
+    @Column(name = "cours_transaction")
     private double tradePrice;
+    @Column(name = "devise_transaction")
     private String tradeCurrency;
 
 
-    public Jourop(String sourceFilename, String codeFonds, String categorie, String transactionType, String isinValeur, String tradeDate, double tradePrice, String deviseCours) {
+    public Jourop(String codeOperation, String sourceFilename, String codeFonds, String categorie, String transactionType, String isinValeur, String tradeDate, double tradePrice, String deviseCours) {
+        this.codeOperation = codeOperation;
         this.sourceFilename = sourceFilename;
         this.codeFonds = codeFonds;
         this.categorie = categorie;
@@ -23,6 +39,17 @@ public class Jourop{
         this.tradeCurrency = deviseCours;
     }
 
+    public Jourop() {
+    }
+
+
+    public String getCodeOperation() {
+        return codeOperation;
+    }
+
+    public void setCodeOperation(String codeOperation) {
+        this.codeOperation = codeOperation;
+    }
 
     public String getSourceFilename() {
         return sourceFilename;
