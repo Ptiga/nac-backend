@@ -3,10 +3,12 @@ package com.socgen.nac.service.source;
 import com.socgen.nac.entity.source.Fund;
 import com.socgen.nac.repository.database.FundRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class FundService implements FundServiceInterface{
 
     @Autowired
@@ -33,4 +35,14 @@ public class FundService implements FundServiceInterface{
         fundFromDatabase.forEach(fundInformation::add);
         return fundInformation;
     }
+/*
+    @Override
+    public List<Fund> getFundByTeam(String valuationTeam) {
+        List<Fund>fundInformation = new ArrayList<>();
+        Iterable<Fund> fundFromDatabase = fundRepository.findFundByTeam(valuationTeam);
+        fundFromDatabase.forEach(fundInformation::add);
+        return fundInformation;
+    }
+*/
+
 }

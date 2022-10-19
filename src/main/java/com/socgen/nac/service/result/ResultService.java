@@ -11,10 +11,13 @@ import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
 import com.socgen.nac.service.check.CheckFluctuationServiceInterface;
 import com.socgen.nac.service.source.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ResultService implements ResultServiceInterface {
@@ -88,6 +91,11 @@ public class ResultService implements ResultServiceInterface {
         Iterable<Result> resultsFromDatabase = resultRepository.findAll();
         resultsFromDatabase.forEach(uploadedResults::add);
         return uploadedResults;
+    }
+
+    @Override
+    public Optional<Result> getSelectedResult(String resultId) {
+        return resultRepository.findById(Long.parseLong(resultId));
     }
 
     @Override
@@ -212,7 +220,19 @@ public class ResultService implements ResultServiceInterface {
         return results;
     }
 
+    @Override
+    public ResponseEntity updateResult(String resultId, Result result) {
+        Optional<Result> resultToUpdate = resultRepository.findById(Long.valueOf(resultId));
+        if (!resultToUpdate.isPresent()){
+            return new ResponseEntity("Result not existing", HttpStatus.BAD_REQUEST);
+        }
+        Result resultToSave = resultToUpdate.get();
+        resultToSave.setOperatorComment(result.getOperatorComment());
+        resultToSave.setSupervisorComment(result.getSupervisorComment());
+        resultToSave.setResultValidated(result.isResultValidated());
 
+        resultRepository.save(resultToSave);
 
-
+        return new ResponseEntity(resultToSave, HttpStatus.OK);
+    }
 }
