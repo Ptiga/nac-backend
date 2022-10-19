@@ -1,6 +1,7 @@
 package com.socgen.nac.service.user;
 
 import com.socgen.nac.entity.user.User;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ public interface UserServiceInterface {
 
     List<User> getUsers();
 
-    void addUser(User user);
+    ResponseEntity addUser(User user);
 }

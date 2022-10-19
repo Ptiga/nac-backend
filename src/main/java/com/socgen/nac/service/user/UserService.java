@@ -4,10 +4,13 @@ package com.socgen.nac.service.user;
 import com.socgen.nac.entity.user.User;
 import com.socgen.nac.repository.database.UserRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserServiceInterface{
@@ -36,7 +39,12 @@ public class UserService implements UserServiceInterface{
     }
 
     @Override
-    public void addUser(User user) {
-        userRepository.save(user);
+    public ResponseEntity addUser(User user) {
+        Optional<User> userCheck = userRepository.findById(user.getLogin());
+        if(userCheck != null){
+            return new ResponseEntity("Utilisateur déjà présent en base", HttpStatus.BAD_REQUEST);
+        }
+        User userSaved = userRepository.save(user);
+        return new ResponseEntity(userSaved, HttpStatus.CREATED);
     }
 }
