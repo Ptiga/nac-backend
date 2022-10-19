@@ -34,4 +34,9 @@ public class UserService implements UserServiceInterface{
         usersFromDatabase.forEach(users::add);
         return users;
     }
+
+    @Override
+    public void addUser(User user) {
+        userRepository.save(user);
+    }
 }

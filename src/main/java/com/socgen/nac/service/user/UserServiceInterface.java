@@ -6,6 +6,8 @@ import java.util.List;
 
 
 public interface UserServiceInterface {
+
     List<User> getUsers();
 
+    void addUser(User user);
 }

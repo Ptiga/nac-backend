@@ -13,8 +13,8 @@ public interface StatementControllerInterface {
 
     ResponseEntity<String > uploadNewStatements();
 
-    ResponseEntity<List<Result>> getCheckResult();
+    //ResponseEntity<List<Result>> getCheckResult();
 
-    ResponseEntity<Optional> getRequiredResult(@PathVariable("resultId") String resultId);
+   // ResponseEntity<Optional> getRequiredResult(@PathVariable("resultId") String resultId);
 
 }

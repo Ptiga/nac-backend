@@ -115,6 +115,10 @@ public class Result {
         return controlName;
     }
 
+    public void setControlName(String controlName) {
+        this.controlName = controlName;
+    }
+
     public void setControlName() {
         this.controlName = "Price_Fluctuation";
     }
@@ -137,6 +141,10 @@ public class Result {
 
     public String getSecurityType() {
         return securityType;
+    }
+
+    public void setSecurityType(String securityType) {
+        this.securityType = securityType;
     }
 
     public void setSecurityType(Threshold Threshold) {

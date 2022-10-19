@@ -12,6 +12,7 @@ import com.socgen.nac.service.user.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+//@EnableWebSecurity
 public class StatementController implements StatementControllerInterface{
 
     @Autowired
@@ -34,64 +36,7 @@ public class StatementController implements StatementControllerInterface{
     @Autowired
     private UserServiceInterface userService;
 
-    @GetMapping("/home")
-    public ResponseEntity<String> home(){
-        //Statement statement = new Statement();
 
-        System.out.println("Je passe par home");
-
-        return ResponseEntity.ok("Ok, ça marche !");
-    /*
-    public ResponseEntity<Statement> home(){
-        //Statement statement = new Statement();
-
-        return ResponseEntity.ok(statement);
-     */
-    }
-
-    @GetMapping("/test-fund")
-    public ResponseEntity<List<Fund>> testFund(){
-        List<Fund>findInfo = new ArrayList<>();
-        findInfo =  fundService.getFundInformation();
-        //findInfo = fundService.getFundByTeam("BU-A");
-        return ResponseEntity.ok(findInfo);
-    }
-
-    @GetMapping("/test-user")
-    public ResponseEntity<List<User>> testUser(){
-        List<User>users = new ArrayList<>();
-        users =  userService.getUsers();
-        //findInfo = fundService.getFundByTeam("BU-A");
-        return ResponseEntity.ok(users);
-    }
-/*
-    @GetMapping("/get-result")
-    public ResponseEntity<List<Result>> getResult(){
-
-        System.out.println("On passe par la méthode de génération des résultats");
-
-        List<Result>listeResultat = new ArrayList<>();
-        listeResultat = resultService.fromSourceFolderToResultList();
-
-        System.out.println("Taille liste des résultats : " + listeResultat.size());
-
-        //return ResponseEntity.ok(resultService.fromSourceFolderToResultList());
-        return ResponseEntity.ok(listeResultat);
-    }
-*/
-
-    @GetMapping("/load-save")
-    public void loadAndSave(){
-
-        System.out.println("On passe par la méthode de sauvegarde des états en base");
-
-        //List<Result>listeResultat = new ArrayList<>();
-        //listeResultat = resultService.fromSourceFolderToResultList();
-        int nbSaves = statementService.loadAndSaveStatements();
-
-        System.out.format("Traitement terminé : %d état(s) sauvegardé(s)", nbSaves);
-
-    }
 
     @Override
     @GetMapping("/Check-new-statements")
@@ -118,7 +63,7 @@ public class StatementController implements StatementControllerInterface{
 
         return ResponseEntity.ok(nbUploadedStatements);
     }
-
+/*
     @Override
     @GetMapping("/results")
     public ResponseEntity<List<Result>> getCheckResult() {
@@ -134,7 +79,7 @@ public class StatementController implements StatementControllerInterface{
     }
 
     @Override
-    @GetMapping("/results/result/{resultId}")
+    @GetMapping("/results/{resultId}")
     public ResponseEntity<Optional> getRequiredResult(@PathVariable("resultId") String resultId) {
 
         System.out.println("Méthode pour obtenir les résultats");
@@ -149,7 +94,9 @@ public class StatementController implements StatementControllerInterface{
 
     //@RequestMapping(value = "/results/{resultId}", produces = "application/json", method=RequestMethod.PUT)
     @PutMapping(value = "/results/{resultId}")
-    public ResponseEntity updateResult(@PathVariable("resultId") String resultId, @Valid @RequestBody Result result){
+    public ResponseEntity updateResult(@PathVariable("resultId") String resultId, @RequestBody Result result){
         return resultService.updateResult(resultId, result);
     }
+
+ */
             }
