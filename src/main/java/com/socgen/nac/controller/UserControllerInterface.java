@@ -12,4 +12,5 @@ public interface UserControllerInterface {
 
     ResponseEntity addUser(@RequestBody User user);
 
+    ResponseEntity isUserConnected();
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +47,8 @@ public class ResultController implements ResultControllerInterface {
 
     //@RequestMapping(value = "/results/{resultId}", produces = "application/json", method=RequestMethod.PUT)
     @PutMapping(value = "/results/{resultId}")
-    public ResponseEntity updateResult(@PathVariable("resultId") String resultId, @RequestBody Result result){
+    public ResponseEntity updateResult(@PathVariable("resultId") String resultId, @RequestBody Result result, Principal principal){
+       //Prendre en compte la vérification du user pour renvoyer les info au client
         return resultService.updateResult(resultId, result);
     }
 

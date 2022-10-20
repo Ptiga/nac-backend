@@ -10,8 +10,10 @@ import com.socgen.nac.repository.database.*;
 import com.socgen.nac.repository.file.SourceFileRepository;
 import com.socgen.nac.service.check.CheckFluctuationService;
 import com.socgen.nac.service.source.*;
+import com.socgen.nac.service.user.UserServiceInterface;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ public class ResultServiceTest {
 
     SourceFileRepository sourceFileRepository = new SourceFileRepository(sourceFolder, dataSeparator, numberOfSeparator);
 
+    UserServiceInterface userService;
     InvcahRepositoryInterface invcahRepository;
     VinvcaRepositoryInterface vinvcaRepository;
     JouropRepositoryInterface jouropRepository;
@@ -39,7 +42,7 @@ public class ResultServiceTest {
 
     ResultRepositoryInterface resultRepository;
 
-    ResultService resultService = new ResultService(sourceFileRepository, checkFluctuationService, invcahService, vinvcaService, jouropService, statementService, resultRepository);
+    ResultService resultService = new ResultService(sourceFileRepository, checkFluctuationService, invcahService, vinvcaService, jouropService, statementService, resultRepository, userService);
 
     List<Vinvca> listVinvca = new ArrayList<>();
     List<Jourop>listJourop = new ArrayList<>();

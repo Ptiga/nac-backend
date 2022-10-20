@@ -10,6 +10,7 @@ import com.socgen.nac.repository.database.ResultRepositoryInterface;
 import com.socgen.nac.repository.file.SourceFileRepositoryInterface;
 import com.socgen.nac.service.check.CheckFluctuationServiceInterface;
 import com.socgen.nac.service.source.*;
+import com.socgen.nac.service.user.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,17 @@ public class ResultService implements ResultServiceInterface {
     }
 
     @Autowired
+    private UserServiceInterface userService;
+
+    public UserServiceInterface getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserServiceInterface userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
     private ResultRepositoryInterface resultRepository;
 
     public ResultRepositoryInterface getResultRepository() {
@@ -50,7 +62,7 @@ public class ResultService implements ResultServiceInterface {
     private JouropServiceInterface jouropService;
     private StatementServiceInterface statementService;
 
-    public ResultService(SourceFileRepositoryInterface sourceFileRepository, CheckFluctuationServiceInterface checkFluctuationService, InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService, StatementServiceInterface statementService, ResultRepositoryInterface resultRepository){
+    public ResultService(SourceFileRepositoryInterface sourceFileRepository, CheckFluctuationServiceInterface checkFluctuationService, InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService, StatementServiceInterface statementService, ResultRepositoryInterface resultRepository, UserServiceInterface userService){
         this.sourceFileRepository = sourceFileRepository;
         this.invcahService = invcahService;
         this.vinvcaService = vinvcaService;
@@ -58,6 +70,7 @@ public class ResultService implements ResultServiceInterface {
         this.statementService = statementService;
         this.checkFluctuationService = checkFluctuationService;
         this.resultRepository = resultRepository;
+        this.userService = userService;
     }
 
     @Override

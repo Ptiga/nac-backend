@@ -33,6 +33,7 @@ public class SecurityConfiguration {
             .authorizeRequests()//Pour autoriser certaines routes
             .antMatchers("/users").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
             .antMatchers("/create-users").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
+            .antMatchers("/isConnected").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
             .anyRequest().authenticated();//Toutes les autres requeêtes devont être authentifiées
 
         //Avant d'effectuer l'authentification, on vérifie le token (filtre jwtFiler)
