@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
+import static com.socgen.nac.jwt.JwtFilter.AUTHORIZATION_HEADER;
+
 @RestController
 public class JwtController {
 
@@ -36,7 +38,7 @@ public class JwtController {
         //On met le token dans le header (via la notion 'Bearer')
         HttpHeaders httpHeaders = new HttpHeaders();
         //httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "bearer " + jwt);
-        httpHeaders.add("Authorization", "bearer " + jwt);
+        httpHeaders.add(AUTHORIZATION_HEADER, "bearer " + jwt);
 
         //On récupère l'utilisateur connecté
         Object principal = authentication.getPrincipal();
