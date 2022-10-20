@@ -1,5 +1,6 @@
 package com.socgen.nac.jwt;
 
+import com.socgen.nac.configuration.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,9 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 //Cette classe va servir de filtre pour savoir si le service appellé peut être consulté ou non.
 //le 'OncePerRequestFilter' signifie que le filtre va être appelé pour chaque url.
+
+    @Autowired
+    MyUserDetailService userDetailService;
 
     @Autowired
     JwtUtils jwtUtils;

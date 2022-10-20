@@ -27,7 +27,7 @@ public class UserController implements UserControllerInterface{
     }
 
     @Override
-    @PostMapping("/create-users")
+    @PostMapping("/create-user")
     public ResponseEntity addUser(@RequestBody User user){
         userService.addUser(user);
         return ResponseEntity.ok(user);

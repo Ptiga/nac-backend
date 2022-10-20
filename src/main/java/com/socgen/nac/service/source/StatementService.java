@@ -93,7 +93,9 @@ public class StatementService implements StatementServiceInterface{
     @Override
     public boolean isExpectedStatementType(Statement statement) {
         switch (statement.getStatementType()){
-            case "invcah", "vinvca", "jourop" :
+            case "invcah":
+            case "vinvca":
+            case "jourop" :
                 return true;
             default:
                 return false;

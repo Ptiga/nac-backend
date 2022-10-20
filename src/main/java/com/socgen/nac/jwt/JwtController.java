@@ -8,10 +8,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +27,7 @@ public class JwtController {
     @Autowired
     AuthenticationManagerBuilder autenticationManagerBuilder;
 
-    @PostMapping("/autenticate")
+    @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest jwtRequest, HttpServletResponse response){
         //On va voir si l'utilisateur éxiste en base
         Authentication authentication = logUser(jwtRequest.getLogin(), jwtRequest.getPassword());

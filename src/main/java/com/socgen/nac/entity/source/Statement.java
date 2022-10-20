@@ -133,7 +133,8 @@ public class Statement {
 
     public boolean isStatementContainsHeader(){
         switch (this.statementType){
-            case "invcah", "vinvca":
+            case "invcah":
+            case "vinvca":
                 return true;
             case "jourop":
                 return false;

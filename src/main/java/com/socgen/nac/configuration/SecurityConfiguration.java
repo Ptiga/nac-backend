@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
     @Autowired
-    RestAutentificationEntryPoint restAutentificationEntryPoint;
+    RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     @Autowired
     JwtFilter jwtFilter;
@@ -25,17 +25,24 @@ public class SecurityConfiguration {
         http
             .csrf().disable()//désactivé car faille de sécurité assez connue (?)
             .exceptionHandling()//Méthode pour demander à Spring de gérer les exceptions
-            .authenticationEntryPoint((restAutentificationEntryPoint))//Pour renvoyer une erreur 401 au lieu d'un formulaire de login (après avoir créé classe RestAutentificationEntryPoint)
+            .authenticationEntryPoint((restAuthenticationEntryPoint))//Pour renvoyer une erreur 401 au lieu d'un formulaire de login (après avoir créé classe RestAutentificationEntryPoint)
             .and()//Pour ajouter d'autre comportements
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)//Gestion de session: on dit à Spring qu'on utilise une politique qui n'a pas de session côté serveur (STATELESS) -> On va passer par un JWT donc le stockage se fera côté client (Front).
             .and()
             .authorizeRequests()//Pour autoriser certaines routes
+            .antMatchers("/").permitAll()
+            .antMatchers("/static/**/").permitAll()
             .antMatchers("/users").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
-            .antMatchers("/create-users").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
-            .antMatchers("/isConnected").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
+            .antMatchers("/create-user").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
+            .antMatchers("/authenticate").permitAll()
+            .antMatchers("/isConnected").permitAll()
+            .antMatchers("/v3/api-docs/**").permitAll()
+            .antMatchers("/swagger-resources/**").permitAll()
+            .antMatchers("/swagger-ui/**").permitAll()
+            .antMatchers("/swagger-ui.html").permitAll()
+            .antMatchers("/webjars/**").permitAll()
             .anyRequest().authenticated();//Toutes les autres requeêtes devont être authentifiées
-
         //Avant d'effectuer l'authentification, on vérifie le token (filtre jwtFiler)
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
