@@ -1,3 +1,4 @@
+/*
 package com.socgen.nac.configuration;
 
 import org.springframework.security.core.AuthenticationException;
@@ -18,3 +19,5 @@ public class RestAutentificationEntryPoint implements AuthenticationEntryPoint {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Non autorisé");
     }
 }
+
+ */

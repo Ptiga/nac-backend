@@ -10,7 +10,7 @@ public interface UserControllerInterface {
 
     ResponseEntity<List<User>> getUsers();
 
-    ResponseEntity addUser(@RequestBody User user);
+    //ResponseEntity addUser(@RequestBody User user);
 
-    ResponseEntity isUserConnected();
+    //ResponseEntity isUserConnected();
 }

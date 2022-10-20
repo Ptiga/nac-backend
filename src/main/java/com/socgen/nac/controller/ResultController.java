@@ -2,6 +2,7 @@ package com.socgen.nac.controller;
 
 import com.socgen.nac.entity.result.Result;
 import com.socgen.nac.service.result.ResultServiceInterface;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 public class ResultController implements ResultControllerInterface {
 
     @Autowired

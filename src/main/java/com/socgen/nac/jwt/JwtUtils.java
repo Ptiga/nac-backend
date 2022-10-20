@@ -1,3 +1,4 @@
+/*
 package com.socgen.nac.jwt;
 
 
@@ -25,7 +26,7 @@ public class JwtUtils {
 
     //Clé secrète
     @Value("${jwt.secret}")
-    String secretKey;
+    String secretKey;// = "auro";
 
     //Méthode de génération du token qui sera appelée lorsqu'on voudra s'authentifier (ou s'inscrire s'il y a un endpoint d'inscription)
     public String generateToken(Authentication authentication) {
@@ -59,3 +60,5 @@ public class JwtUtils {
     }
 
 }
+
+ */

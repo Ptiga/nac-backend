@@ -2,18 +2,24 @@ package com.socgen.nac.service.user;
 
 
 import com.socgen.nac.entity.user.User;
+/*
 import com.socgen.nac.jwt.JwtController;
 import com.socgen.nac.jwt.JwtFilter;
 import com.socgen.nac.jwt.JwtUtils;
+
+ */
 import com.socgen.nac.repository.database.UserRepositoryInterface;
 import org.apache.catalina.valves.rewrite.InternalRewriteMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+/*
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+ */
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -36,7 +42,7 @@ public class UserService implements UserServiceInterface{
     public void setUserRepository(UserRepositoryInterface userRepository) {
         this.userRepository = userRepository;
     }
-
+/*
     @Autowired
     JwtController jwtController;
 
@@ -45,7 +51,7 @@ public class UserService implements UserServiceInterface{
 
     @Autowired
     JwtFilter jwtFilter;
-
+*/
     public UserService(UserRepositoryInterface userRepository){
         this.userRepository = userRepository;
     }
@@ -59,7 +65,7 @@ public class UserService implements UserServiceInterface{
         usersFromDatabase.forEach(users::add);
         return users;
     }
-
+/*
     private User prepareUserDataBeforeSave(User user){
         User userToSave = new User();
         userToSave.setLogin(user.getLogin());
@@ -101,4 +107,6 @@ public class UserService implements UserServiceInterface{
         //On renvoie son login
         return connectedUser.get().getLogin();
     }
+
+ */
 }

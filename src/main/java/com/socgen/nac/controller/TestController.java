@@ -30,6 +30,22 @@ public class TestController {
     private UserServiceInterface userService;
 
 
+    @GetMapping("/")
+    public ResponseEntity<String> TestLocal(){
+        //Statement statement = new Statement();
+
+        System.out.println("Je passe par home");
+
+        return ResponseEntity.ok("Ok, ça marche !");
+    /*
+    public ResponseEntity<Statement> home(){
+        //Statement statement = new Statement();
+
+        return ResponseEntity.ok(statement);
+     */
+    }
+
+
     @GetMapping("/home")
     public ResponseEntity<String> home(){
         //Statement statement = new Statement();

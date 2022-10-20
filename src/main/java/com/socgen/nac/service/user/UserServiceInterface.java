@@ -11,7 +11,7 @@ public interface UserServiceInterface {
 
     List<User> getUsers();
 
-    ResponseEntity addUser(User user);
+    //ResponseEntity addUser(User user);
 
-    String getUserConnected(Principal principal);
+    //String getUserConnected(Principal principal);
 }

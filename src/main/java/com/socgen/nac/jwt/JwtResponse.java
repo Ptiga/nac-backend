@@ -1,3 +1,4 @@
+/*
 package com.socgen.nac.jwt;
 
 public class JwtResponse {
@@ -18,3 +19,6 @@ public class JwtResponse {
     }
 }
 
+
+
+ */

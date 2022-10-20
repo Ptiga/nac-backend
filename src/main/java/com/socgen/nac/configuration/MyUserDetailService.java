@@ -1,3 +1,4 @@
+/*
 package com.socgen.nac.configuration;
 
 import com.socgen.nac.entity.user.User;
@@ -27,3 +28,5 @@ public class MyUserDetailService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(userLoaded.getLogin(), userLoaded.getPassword(), authorities);
     }
 }
+
+ */

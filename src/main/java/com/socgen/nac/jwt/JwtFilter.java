@@ -1,3 +1,4 @@
+/*
 package com.socgen.nac.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,3 +49,5 @@ public class JwtFilter extends OncePerRequestFilter {
         return null;
     }
 }
+
+ */

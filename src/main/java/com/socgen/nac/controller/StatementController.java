@@ -9,10 +9,14 @@ import com.socgen.nac.service.check.CheckFluctuationServiceInterface;
 import com.socgen.nac.service.result.ResultServiceInterface;
 import com.socgen.nac.service.source.*;
 import com.socgen.nac.service.user.UserServiceInterface;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+/*
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
+ */
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +26,7 @@ import java.util.Optional;
 
 @RestController
 //@EnableWebSecurity
+//@SecurityRequirement(name = "bearerAuth")
 public class StatementController implements StatementControllerInterface{
 
     @Autowired

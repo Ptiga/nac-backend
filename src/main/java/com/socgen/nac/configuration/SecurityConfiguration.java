@@ -1,3 +1,4 @@
+/*
 package com.socgen.nac.configuration;
 
 import com.socgen.nac.jwt.JwtFilter;
@@ -31,9 +32,15 @@ public class SecurityConfiguration {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)//Gestion de session: on dit à Spring qu'on utilise une politique qui n'a pas de session côté serveur (STATELESS) -> On va passer par un JWT donc le stockage se fera côté client (Front).
             .and()
             .authorizeRequests()//Pour autoriser certaines routes
+            .antMatchers("/").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
             .antMatchers("/users").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
             .antMatchers("/create-users").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
             .antMatchers("/isConnected").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
+            .antMatchers("/v3/api-docs/**").permitAll()
+            .antMatchers("/swagger-resources/**").permitAll()
+            .antMatchers("/swagger-ui/**").permitAll()
+            .antMatchers("/swagger-ui.html").permitAll()
+            .antMatchers("/webjars/**").permitAll()
             .anyRequest().authenticated();//Toutes les autres requeêtes devont être authentifiées
 
         //Avant d'effectuer l'authentification, on vérifie le token (filtre jwtFiler)
@@ -47,3 +54,5 @@ public class SecurityConfiguration {
     }
 
 }
+
+ */

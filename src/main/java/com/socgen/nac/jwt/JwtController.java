@@ -1,3 +1,4 @@
+/*
 package com.socgen.nac.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,3 +57,6 @@ public class JwtController {
         return authentication;
     }
 }
+
+
+ */
