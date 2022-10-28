@@ -32,14 +32,14 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //On récupère le token dans la requête
         String jwt = resolveToken(request);
-        if(StringUtils.hasText(jwt)){
+        if (StringUtils.hasText(jwt)){
             //A partir du token, on appelle la méthode pour authentifier l'utilisateur
             Authentication authentication = jwtUtils.getAuthentication(jwt);
             //Un fois effectué, on enregistre l'utilisateur en base
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
-
+    filterChain.doFilter(request, response);
     }
 
     private String resolveToken(HttpServletRequest request) {

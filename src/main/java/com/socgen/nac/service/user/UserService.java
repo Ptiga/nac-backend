@@ -74,7 +74,8 @@ public class UserService implements UserServiceInterface{
     @Override
     public ResponseEntity addUser(User user) {
         Optional<User> userCheck = userRepository.findById(user.getLogin());
-        if(userCheck != null){
+        //if(userCheck != null){
+        if(!userCheck.isEmpty()){
             return new ResponseEntity("Utilisateur déjà présent en base", HttpStatus.BAD_REQUEST);
         }
         User userSaved = userRepository.save(prepareUserDataBeforeSave(user));

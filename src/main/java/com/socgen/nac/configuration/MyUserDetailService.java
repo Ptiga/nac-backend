@@ -20,6 +20,7 @@ public class MyUserDetailService implements UserDetailsService {
     @Autowired
     UserRepositoryInterface userRepository;
 
+    //Voir si l'utilisateur existe en BDD
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findById(login);

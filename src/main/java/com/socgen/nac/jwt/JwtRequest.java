@@ -5,10 +5,10 @@ public class JwtRequest {
     String login;
     String password;
 
-
+/*
     public JwtRequest() {
     }
-
+*/
     public JwtRequest(String login, String password) {
         this.login = login;
         this.password = password;

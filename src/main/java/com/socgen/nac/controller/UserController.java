@@ -1,6 +1,7 @@
 package com.socgen.nac.controller;
 
 import com.socgen.nac.entity.user.User;
+import com.socgen.nac.jwt.JwtUtils;
 import com.socgen.nac.service.user.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,11 @@ import java.util.List;
 
 @RestController
 public class UserController implements UserControllerInterface{
+
+
+    @Autowired
+    JwtUtils jwtutils;
+
 
     @Autowired
     private UserServiceInterface userService;
