@@ -39,14 +39,14 @@ public class StatementController implements StatementControllerInterface{
 
 
     @Override
-    @GetMapping("/Check-new-statements")
+    @GetMapping("/check-new-statements")
     public ResponseEntity<String> checkNewStatements(){
 
         System.out.println("Méthoode pour vérifier s'il y a de nouveaux états");
 
         String nbStatementsAvailable = String.valueOf(statementService.checkNewStatements());
 
-        System.out.format("nombre de nouveaux états: %s", nbStatementsAvailable);
+        System.out.format("nombre de nouveaux états: %s", nbStatementsAvailable + "\n");
 
         return ResponseEntity.ok(nbStatementsAvailable);
     }
@@ -59,7 +59,7 @@ public class StatementController implements StatementControllerInterface{
 
         String nbUploadedStatements = String.valueOf(statementService.saveNewStatements());
 
-        System.out.format("nombre d'états chargés en base: %s", nbUploadedStatements);
+        System.out.format("nombre d'états chargés en base: %s", nbUploadedStatements + "\n");
 
         return ResponseEntity.ok(nbUploadedStatements);
     }
