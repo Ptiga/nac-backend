@@ -43,7 +43,8 @@ public class SecurityConfiguration {
             .antMatchers("/swagger-resources/**").permitAll()
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/swagger-ui.html").permitAll()
-            .antMatchers("/webjars/**").permitAll()
+                //TODO: Tester avec des accès spécifiques (".hasRole()")
+            .antMatchers("/webjars/**").permitAll()// -> possibilité de mettre .hasRole() pour déterminer l'accès à un rôle spécifique -> .hasRole("ROLE_USER")
             .anyRequest().authenticated();//Toutes les autres requeêtes devont être authentifiées
         //Avant d'effectuer l'authentification, on vérifie le token (filtre jwtFiler)
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
