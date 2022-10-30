@@ -10,12 +10,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.Optional;
 
 import static com.socgen.nac.jwt.JwtFilter.AUTHORIZATION_HEADER;
 
@@ -33,10 +33,12 @@ public class JwtController {
     @Autowired
     MyUserDetailService userDetailService;
     //
-    @PostMapping("/authenticate")
+
+    @CrossOrigin("*")
+    @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest jwtRequest, HttpServletResponse response){
         //On va voir si l'utilisateur éxiste en base
-        Authentication authentication = logUser(jwtRequest.getLogin(), jwtRequest.getPassword());
+        Authentication authentication = logUser(jwtRequest.getUserName(), jwtRequest.getPassword());
 
         //Une fois authentifié (côté Spring Security), on va pouvoir générer le jeton (Token) de l'utilisateur
         String jwt = jwtUtils.generateToken(authentication); //Token qui sera à transmettre au front (client)

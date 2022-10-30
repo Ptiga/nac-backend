@@ -33,11 +33,17 @@ public class SecurityConfiguration {
             .and()
             .authorizeRequests()//Pour autoriser certaines routes
             .antMatchers("/").permitAll()
-            //.antMatchers("/static/**/").permitAll()
+            .antMatchers("/static/**/").permitAll()
             .antMatchers("/users").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
             .antMatchers("/create-user").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
+            .antMatchers("/create-users").permitAll()
+            .antMatchers("/add-user").permitAll()
             .antMatchers("/authenticate").permitAll()
-            //.antMatchers("/results").permitAll()
+            .antMatchers("/login").permitAll()
+            .antMatchers("/login/**").permitAll()
+            .antMatchers("/Login").permitAll()
+            .antMatchers("/Login/**").permitAll()
+            .antMatchers("/results").permitAll()
             .antMatchers("/isConnected").permitAll()
             .antMatchers("/v3/api-docs/**").permitAll()
             .antMatchers("/swagger-resources/**").permitAll()

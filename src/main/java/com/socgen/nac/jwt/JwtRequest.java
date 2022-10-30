@@ -2,25 +2,25 @@ package com.socgen.nac.jwt;
 
 public class JwtRequest {
 
-    String login;
+    String userName;
     String password;
 
-/*
+
     public JwtRequest() {
     }
-*/
-    public JwtRequest(String login, String password) {
-        this.login = login;
+
+    public JwtRequest(String userName, String password) {
+        this.userName = userName;
         this.password = password;
     }
 
 
-    public String getLogin() {
-        return login;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
