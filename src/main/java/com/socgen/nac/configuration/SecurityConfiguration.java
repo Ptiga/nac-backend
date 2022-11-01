@@ -37,13 +37,17 @@ public class SecurityConfiguration {
             .antMatchers("/users").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
             .antMatchers("/create-user").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
             .antMatchers("/create-users").permitAll()
-            .antMatchers("/add-user").permitAll()
+            //.antMatchers("/add-user").permitAll()
+            //.antMatchers("/add-user").hasRole("ADMIN")//-> ne fonctionne pas
+            //.antMatchers("/results").hasAuthority("ROLE_ADMIN")
             .antMatchers("/authenticate").permitAll()
             .antMatchers("/login").permitAll()
             .antMatchers("/login/**").permitAll()
             .antMatchers("/Login").permitAll()
             .antMatchers("/Login/**").permitAll()
-            .antMatchers("/results").permitAll()
+            //.antMatchers("/results").permitAll()
+            //.antMatchers("/results").hasRole("USER")//-> ne fonctionne pas
+            //.antMatchers("/results").hasAuthority("ROLE_USER")
             .antMatchers("/isConnected").permitAll()
             .antMatchers("/v3/api-docs/**").permitAll()
             .antMatchers("/swagger-resources/**").permitAll()

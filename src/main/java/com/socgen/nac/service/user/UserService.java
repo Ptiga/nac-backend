@@ -102,4 +102,9 @@ public class UserService implements UserServiceInterface{
         //On renvoie son login
         return connectedUser.get().getLogin();
     }
+
+    @Override
+    public User getUser(String userName) {
+        return userRepository.findById(userName).get();
+    }
 }

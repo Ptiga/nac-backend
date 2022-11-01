@@ -14,4 +14,6 @@ public interface UserServiceInterface {
     ResponseEntity addUser(User user);
 
     String getUserConnected(Principal principal);
+
+    User getUser(String userName);
 }

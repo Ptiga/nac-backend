@@ -28,7 +28,8 @@ public class MyUserDetailService implements UserDetailsService {
         final List<GrantedAuthority> authorities = new ArrayList<>();
         //TODO
         //authorities.add(new SimpleGrantedAuthority(userLoaded.getRole()));//-> A tester si avec le rôle utilisateur, on peut gérer ('ROLE_'+userLoaded.getRole())
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        //authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+userLoaded.getRole()));
         return new org.springframework.security.core.userdetails.User(userLoaded.getLogin(), userLoaded.getPassword(), authorities);
     }
 }

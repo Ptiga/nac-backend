@@ -51,7 +51,9 @@ public class JwtController {
         //On récupère l'utilisateur connecté
         Object principal = authentication.getPrincipal();
 
-        return new ResponseEntity<>(new JwtResponse(((User) principal).getUsername()), httpHeaders, HttpStatus.OK);
+        //return new ResponseEntity<>(new JwtResponse(((User) principal).getUsername()), httpHeaders, HttpStatus.OK);
+        //TODO: avec gestion des rôles
+        return new ResponseEntity<>(new JwtResponse(((User) principal).getUsername(), ((User) principal).getAuthorities().stream().findAny().get().toString()), httpHeaders, HttpStatus.OK);
     }
 
         public Authentication logUser(String login, String password){

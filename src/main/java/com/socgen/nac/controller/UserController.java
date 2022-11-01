@@ -43,10 +43,14 @@ public class UserController implements UserControllerInterface{
     @Override
     @GetMapping("/isConnected")
     public ResponseEntity isUserConnected() {
+    //public ResponseEntity<?> isUserConnected() {
         //Après validation du token, on récupère le contexte utilisateur
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails){
-            return new ResponseEntity((((UserDetails) principal).getUsername()), HttpStatus.OK);
+            String userRole = userService.getUser((((UserDetails) principal).getUsername())).getRole();
+            //return new ResponseEntity((((UserDetails) principal).getUsername()), HttpStatus.OK);
+            return new ResponseEntity((((UserDetails) principal).getUsername())+"<#>"+userRole, HttpStatus.OK);
+            //return new ResponseEntity(userInfo, HttpStatus.OK);
         }
         return new ResponseEntity("Utilisateur non connecté", HttpStatus.FORBIDDEN);
     }
