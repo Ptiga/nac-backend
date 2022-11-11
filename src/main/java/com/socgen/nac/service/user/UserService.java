@@ -66,7 +66,7 @@ public class UserService implements UserServiceInterface{
         userToSave.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userToSave.setFirstName(StringUtils.capitalize((user.getFirstName())));
         userToSave.setLastName(user.getLastName().toUpperCase());
-        userToSave.setRole(user.getRole().toLowerCase());
+        userToSave.setRole(user.getRole().toUpperCase());
         userToSave.setTeam(user.getTeam().toUpperCase());
         return userToSave;
     }

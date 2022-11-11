@@ -30,6 +30,7 @@ public class JwtUtils {
     //Méthode de génération du token qui sera appelée lorsqu'on voudra s'authentifier (ou s'inscrire s'il y a un endpoint d'inscription)
     public String generateToken(Authentication authentication) {
         //Méthode issue de la doc JWT pour générer un token
+        //TODO: Voir si ça ne serait pas ici que le login remonte en tant que rôle
         Map<String, Object> claims = new HashMap<>();
         return Jwts.builder()
                 .setClaims(claims)
@@ -51,6 +52,7 @@ public class JwtUtils {
 
         //On créé un utilisateur Spring Security
         //Attention : on importe la classe User de SpringSecurity, pas celle du projet !!!
+        //TODO: Voir la valeur de 'authorities'
         User principal = new User(claims.getSubject(), "", authorities);
 
         //Méthode d'authentification Spring Security qui va appeller la méthode dans MyUserDetailService
