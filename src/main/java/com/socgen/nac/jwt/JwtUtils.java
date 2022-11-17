@@ -32,9 +32,13 @@ public class JwtUtils {
         //Méthode issue de la doc JWT pour générer un token
         //TODO: Voir si ça ne serait pas ici que le login remonte en tant que rôle
         Map<String, Object> claims = new HashMap<>();
+        //.setSubjet est passé avec le GetName.
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(authentication.getName())//login de l'utilisateur concerné
+                //Essayer avec :
+                //.setID(authentication.getName())
+                //.setSubject(authentication.getAuthorities())
                 .setIssuedAt(new Date(System.currentTimeMillis()))//Début de validité du token
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_VALIDITY * 1000))//Date de fin de validité du token (valeur de la constante JWT_VALIDITY x1000 pour convertir en millisecondes)
                 .signWith(SignatureAlgorithm.HS512, secretKey).compact();//Protocole de signature (avec notre clé secrète)
@@ -54,6 +58,8 @@ public class JwtUtils {
         //Attention : on importe la classe User de SpringSecurity, pas celle du projet !!!
         //TODO: Voir la valeur de 'authorities'
         User principal = new User(claims.getSubject(), "", authorities);
+
+
 
         //Méthode d'authentification Spring Security qui va appeller la méthode dans MyUserDetailService
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);

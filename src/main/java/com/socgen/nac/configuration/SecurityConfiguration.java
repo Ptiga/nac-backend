@@ -34,9 +34,9 @@ public class SecurityConfiguration {
             .authorizeRequests()//Pour autoriser certaines routes
             .antMatchers("/").permitAll()
             .antMatchers("/static/**/").permitAll()
-            .antMatchers("/users").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
-            .antMatchers("/create-user").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
-            .antMatchers("/create-users").permitAll()
+            //.antMatchers("/users").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
+            //.antMatchers("/create-user").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
+            //.antMatchers("/create-users").permitAll()
             //.antMatchers("/add-user").permitAll()
             //.antMatchers("/add-user").hasRole("ADMIN")//-> ne fonctionne pas
             //.antMatchers("/results").hasAuthority("ROLE_ADMIN")
