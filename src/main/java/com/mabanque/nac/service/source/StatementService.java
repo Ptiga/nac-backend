@@ -115,8 +115,8 @@ public class StatementService implements StatementServiceInterface{
 
     @Override
     public boolean isStatementUsable(Statement statement) {
-        //if (isExpectedStatementType(statement) && isExpectedFormat(statement) && statement.getNumberOfSeparators()==numberOfSeparatorExpected){
-        if (isExpectedStatementType(statement) && isExpectedFormat(statement) && statement.getNumberOfSeparators()==statement.getNumberOfSeparatorExpected()){
+        if (isExpectedStatementType(statement) && isExpectedFormat(statement) &&
+                statement.getNumberOfSeparators()==statement.getNumberOfSeparatorExpected()){
             return true;
         }else{
             return false;

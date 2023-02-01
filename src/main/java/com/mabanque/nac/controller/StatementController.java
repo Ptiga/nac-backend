@@ -5,11 +5,13 @@ import com.mabanque.nac.service.source.FundServiceInterface;
 import com.mabanque.nac.service.source.StatementServiceInterface;
 import com.mabanque.nac.service.source.*;
 import com.mabanque.nac.service.user.UserServiceInterface;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 //@EnableWebSecurity
 public class StatementController implements StatementControllerInterface{
 
