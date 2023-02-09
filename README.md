@@ -18,12 +18,12 @@ Ce projet fait office de POC afin d'évaluer la faisabilité de reproduire un de
 
 ## <u>II - Langage</u>
 
-Ce projet est développé en langage Java.
+Ce projet est développé en langage Java et utilise le framwork Spring.
 
-<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-java.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-java.png"  height="100" />
+<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-java.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-java.png"  height="100" /> <img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-spring.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-spring.png"  height="100" />
 
-Il utilise aussi le framwork Spring.
-<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-spring.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-spring.png"  height="100" />
+La base de donnée configurée est une base de donnée MySQL.
+<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-mysql.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-mysql.png" height="100" />
 
 
 ## <u>III - Dépendances</u>
@@ -31,16 +31,16 @@ Il utilise aussi le framwork Spring.
 Le projet utilise les dépendances suivantes :
 
 * Spring Boot
-<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-springboot.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-springboot.png" width="100" height="100" />
+<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-springboot.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-springboot.png" height="100" />
 
 * Spring Security
-<img src="https://github.com/Ptiga/nac-backend/blob/main/img/Spring Security.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/Spring Security.png" width="100" height="100" />
+<img src="https://github.com/Ptiga/nac-backend/blob/main/img/Spring Security.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/Spring Security.png" height="100" />
 
 * Hibernate
-<img src="https://github.com/Ptiga/nac-backend/blob/main/img/Hibernate.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/Hibernate.png" width="100" height="100" />
+<img src="https://github.com/Ptiga/nac-backend/blob/main/img/Hibernate.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/Hibernate.png" height="100" />
 
 * Swagger
-<img src="https://github.com/Ptiga/nac-backend/blob/main/img/Swagger.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/Swagger.png" width="100" height="100" />
+<img src="https://github.com/Ptiga/nac-backend/blob/main/img/Swagger.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/Swagger.png" height="100" />
 
 * Spring Boot
 
