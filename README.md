@@ -20,7 +20,7 @@ Ce projet fait office de POC afin d'évaluer la faisabilité de reproduire un de
 
 Ce projet est développé en langage Java.
 
-![logo](https://github.com/Ptiga/nac-backend/blob/main/img/logo-java.png)
+![logo](https://github.com/Ptiga/nac-backend/blob/main/img/logo-java.png | width=100)
 
 
 
