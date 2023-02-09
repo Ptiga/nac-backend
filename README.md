@@ -20,10 +20,10 @@ Ce projet fait office de POC afin d'évaluer la faisabilité de reproduire un de
 
 Ce projet est développé en langage Java.
 
-<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-java.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-java.png" width="100" height="100" />
+<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-java.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-java.png"  height="100" />
 
 Il utilise aussi le framwork Spring.
-<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-spring.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-spring.png" width="100" height="100" />
+<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-spring.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-spring.png"  height="100" />
 
 
 ## <u>III - Dépendances</u>
