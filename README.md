@@ -58,11 +58,11 @@ La base de donnée configurée est une base de donnée MySQL.
 
 L'application a été développée avec l'IDE IntelliJ.
 
-<img src="https://github.com/Ptiga/nac-backend/blob/main/img/Swagger.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/Swagger.png" height="100" />
+<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-IntelliJ.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-IntelliJ.png" height="100" />
 
 Le test des endpoints a été effectué avec le Swagger mais également à l'aide de Postman.
 
-<img src="https://github.com/Ptiga/nac-backend/blob/main/img/Swagger.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/Swagger.png" height="100" />
+<img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-postman.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-postman.png" height="100" />
 
 
 
