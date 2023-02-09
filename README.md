@@ -1,4 +1,4 @@
-[NAC](https://github.com/Ptiga/nac-backend/tree/main/img/NAC.png)
+![nac-logo](https://github.com/Ptiga/nac-backend/tree/main/img/NAC.png)
 <img align="center" src="https://github.com/Ptiga/nac-backend/tree/main/img/NAC.png></img>
 
 # __<u>NAC</u>__
