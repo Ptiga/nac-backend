@@ -4,9 +4,6 @@
 
 
 
-
-
-
 **Sommaire**
 * I - Présentation du projet
 * II - Langage
