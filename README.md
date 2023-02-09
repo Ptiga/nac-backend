@@ -71,6 +71,7 @@ Le test des endpoints a été effectué avec le Swagger mais également à l'aid
 Projet de fin d'étude effectué de septembre à novembre 2022 dans le cadre d'une formation reskilling avec l'EFREI.
 
 **Auteur**: Aurélien
+
 **Version**: 0
 
 
