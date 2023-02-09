@@ -35,7 +35,7 @@ Le projet utilise les dépendances suivantes :
 * Spring Boot
 <img src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-springboot.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/logo-springboot.png" height="100" />
 
-* Spring Security (Authentification et autorisations)
+* Spring Security (authentification et autorisations)
 <img src="https://github.com/Ptiga/nac-backend/blob/main/img/Spring Security.png" data-canonical-src="https://github.com/Ptiga/nac-backend/blob/main/img/Spring Security.png" height="100" />
 
 * Hibernate (requêtes vers la base de donnée)
