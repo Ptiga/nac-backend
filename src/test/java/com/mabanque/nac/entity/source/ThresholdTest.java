@@ -51,18 +51,3 @@ public class ThresholdTest {
     }
 
 }
-
-/*
-    private Map<String, Double> fillThresholds(){
-        Map<String, Double> thresholdsMap = new HashMap<>();
-        thresholdsMap.put("0", 0.05);
-        thresholdsMap.put("1", 0.015);
-        thresholdsMap.put("2", 0.005);
-        thresholdsMap.put("3", 0.02);
-        thresholdsMap.put("4", 0.03);
-        thresholdsMap.put("5", 0.3);
-        thresholdsMap.put("6", 0.1);
-        thresholdsMap.put("7", 1.0);
-        thresholdsMap.put("T", 1.0);
-
- */

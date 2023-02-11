@@ -23,11 +23,7 @@ public class SourceFileRepository implements SourceFileRepositoryInterface {
         this.dataSeparator = dataSeparator;
         this.numberOfSeparatorExpected = numberOfSeparatorExpected;
     }
-/*
-    public List<Statement> getListOfFiles() {
-        return listOfFiles;
-    }
-*/
+
     @Override
     public List<Statement> listFiles() {
         List<Statement> listOfFiles = new ArrayList<>();
@@ -36,7 +32,6 @@ public class SourceFileRepository implements SourceFileRepositoryInterface {
         for(File item : liste){
             if(item.isFile())
             {
-                //listFiles.add(statementService.createStatement(item.getName()));
                 listOfFiles.add(new Statement(item.getName(), this.dataSeparator, this.numberOfSeparatorExpected));
             }
         }
@@ -67,15 +62,6 @@ public class SourceFileRepository implements SourceFileRepositoryInterface {
         }
         return extractedLines;
     }
-
-
-    /*
-    @Override
-    public List<String[]> getExtractedLinesList() {
-        return extractedLines;
-    }
-    */
-
 
 
 //Interface avec BDD ou répertoire

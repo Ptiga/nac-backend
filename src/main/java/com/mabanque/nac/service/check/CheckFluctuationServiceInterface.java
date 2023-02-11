@@ -11,10 +11,6 @@ import java.util.List;
 
 public interface CheckFluctuationServiceInterface {
 
-    //Map<String, Double>getThresholds();
-
-    //double retrieveTheshold(Map ThresholdList, String triComptable);
-
     boolean compareInvcahAndVinvca(Invcah invcah, Vinvca vinvca);
 
     boolean compareInvcahAndJourop(Invcah invcah, Jourop jourop);
@@ -28,8 +24,5 @@ public interface CheckFluctuationServiceInterface {
     Threshold searchThresholdByTriComptable(List<Threshold> thresholds, String triComptable);
 
     List<Threshold> createThresholds();
-
-    //Iterable<Vinvca>
-
 
 }

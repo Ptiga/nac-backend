@@ -100,11 +100,4 @@ public class ResultServiceTest {
         resultList = resultService.createResultFluctuationCheck(listCheckFluctuation);
         Assertions.assertTrue(resultList.size()==1);
     }
-/*
-    @Test
-    public void fromFolderToResult(){
-        resultList = resultService.fromSourceFolderToResultList();
-        Assertions.assertNotNull(resultList);
-    }
-*/
 }

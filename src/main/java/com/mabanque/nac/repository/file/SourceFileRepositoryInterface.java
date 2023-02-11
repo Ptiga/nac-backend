@@ -6,13 +6,8 @@ import java.util.List;
 
 public interface SourceFileRepositoryInterface {
 
-    //List<Statement> getListOfFiles();
-
     List<Statement> listFiles();
 
     List<String[]> readSourceFile(Statement statement);
-
-
-    //List<String[]> getExtractedLinesList();
 
 }

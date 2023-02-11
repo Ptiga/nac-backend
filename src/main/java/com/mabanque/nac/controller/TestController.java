@@ -1,3 +1,4 @@
+/*
 package com.mabanque.nac.controller;
 
 import com.mabanque.nac.entity.source.Fund;
@@ -32,24 +33,16 @@ public class TestController {
 
     @GetMapping("/home")
     public ResponseEntity<String> home(){
-        //Statement statement = new Statement();
 
         System.out.println("Je passe par home");
 
         return ResponseEntity.ok("Ok, ça marche !");
-    /*
-    public ResponseEntity<Statement> home(){
-        //Statement statement = new Statement();
-
-        return ResponseEntity.ok(statement);
-     */
     }
 
     @GetMapping("/test-fund")
     public ResponseEntity<List<Fund>> testFund(){
         List<Fund>findInfo = new ArrayList<>();
         findInfo =  fundService.getFundInformation();
-        //findInfo = fundService.getFundByTeam("BU-A");
         return ResponseEntity.ok(findInfo);
     }
 
@@ -57,7 +50,6 @@ public class TestController {
     public ResponseEntity<List<User>> testUser(){
         List<User>users = new ArrayList<>();
         users =  userService.getUsers();
-        //findInfo = fundService.getFundByTeam("BU-A");
         return ResponseEntity.ok(users);
     }
 
@@ -66,8 +58,6 @@ public class TestController {
 
         System.out.println("On passe par la méthode de sauvegarde des états en base");
 
-        //List<Result>listeResultat = new ArrayList<>();
-        //listeResultat = resultService.fromSourceFolderToResultList();
         int nbSaves = statementService.loadAndSaveStatements();
 
         System.out.format("Traitement terminé : %d état(s) sauvegardé(s)", nbSaves);
@@ -75,3 +65,4 @@ public class TestController {
     }
 
 }
+*/

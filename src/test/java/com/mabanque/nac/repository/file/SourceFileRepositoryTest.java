@@ -11,8 +11,6 @@ public class SourceFileRepositoryTest {
 
     SourceFileRepository sourceFileRepository = new SourceFileRepository("c://temp//GP3_files_test_class//", '-', 4);
 
-    //String sourceFolder = "c//temp//GP3_files_test//";
-
     String filename = "invcah_kdja_FD0004_20220630_010722105654.fic";
 
     @Test
@@ -21,13 +19,7 @@ public class SourceFileRepositoryTest {
         System.out.println(listOfFiles);
         Assertions.assertEquals(30, listOfFiles.size());
     }
-/*
-    @Test
-    public void getExtractedList(){
-        List<String[]>extractedList = sourceFileRepository.getExtractedLinesList();
-        Assertions.assertNotNull(extractedList);
-    }
-*/
+
     @Test
     public void readInvcahSourceFile(){
         //Repasser en new Statement sans passer par la méthode create

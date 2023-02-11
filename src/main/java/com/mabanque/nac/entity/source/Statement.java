@@ -15,11 +15,9 @@ public class Statement {
     //@Transient
     @Column(name="data_separator")
     private Character dataSeparator;
-    //private final Character dataSeparator;
     //@Transient
     @Column(name = "number_expected")
     private int numberOfSeparatorExpected;
-    //private final int numberOfSeparatorExpected;
 
     @Id
     private String filename;

@@ -25,6 +25,7 @@ public class UserController implements UserControllerInterface{
     @Autowired
     private UserServiceInterface userService;
 
+    //TODO Tester avec @PreAuthorize
     //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @Override
     @GetMapping("/users")
@@ -33,7 +34,6 @@ public class UserController implements UserControllerInterface{
     }
 
     @Override
-    //@CrossOrigin("http://localhost:3000")
     @CrossOrigin("*")
     @PostMapping("/add-user")
     public ResponseEntity addUser(@RequestBody User user){

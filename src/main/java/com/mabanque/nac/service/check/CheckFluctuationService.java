@@ -24,29 +24,7 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
         return listeCheckFluctuation;
     }
 
-    //private Map<String, Double> thresholds = fillThresholds();
-/*
-    @Override
-    public Map<String, Double> getThresholds() {
-        return thresholds;
-    }
 
- */
-/*
-    private Map<String, Double> fillThresholds(){
-        Map<String, Double> thresholdsMap = new HashMap<>();
-        thresholdsMap.put("0", 0.05);
-        thresholdsMap.put("1", 0.015);
-        thresholdsMap.put("2", 0.005);
-        thresholdsMap.put("3", 0.02);
-        thresholdsMap.put("4", 0.03);
-        thresholdsMap.put("5", 0.3);
-        thresholdsMap.put("6", 0.1);
-        thresholdsMap.put("7", 1.0);
-        thresholdsMap.put("T", 1.0);
-        return thresholdsMap;
-    }
-*/
     @Autowired
     private InvcahServiceInterface invcahService;
 
@@ -91,14 +69,6 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
         this.thresholdRepository = thresholdRepository;
     }
 
-    /*
-        public CheckFluctuationService(List<CheckFluctuationData>listeCheckFluctuation, InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService){
-            this.listeCheckFluctuation = listeCheckFluctuation;
-            this.invcahService = invcahService;
-            this.vinvcaService = vinvcaService;
-            this.jouropService = jouropService;
-        }
-    */
     public CheckFluctuationService(InvcahServiceInterface invcahService, VinvcaServiceInterface vinvcaService, JouropServiceInterface jouropService, ThresholdRepositoryInterface thresholdRepository){
         this.invcahService = invcahService;
         this.vinvcaService = vinvcaService;
@@ -106,18 +76,6 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
         this.thresholdRepository = thresholdRepository;
     }
 
-/*
-    @Override
-    public double calculateFluctuation(double coursJour, double coursVeille) {
-        return Math.abs((coursJour-coursVeille)/coursVeille);
-    }
-*/
-    /*
-    @Override
-    public double retrieveTheshold(Map thresholdList, String triComptable) {
-        return (double) thresholdList.get(triComptable);
-    }
-*/
     @Override
     public boolean compareInvcahAndVinvca(Invcah invcah, Vinvca vinvca) {
         if(invcah.getCodeFonds().equals(vinvca.getCodeFonds()) &&
@@ -166,18 +124,13 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
         //List<Threshold> thresholds = createThresholds();
         for (Vinvca vinvca: listVinvca) {
             if(compareInvcahAndVinvca(invcah, vinvca)){
-                //listeCheckFluctuation.add(new CheckFluctuationData(invcah, vinvca, thresholds.get(invcah.getTriComptable())));
-                //return new CheckFluctuationData(invcah, vinvca, thresholds.get(invcah.getTriComptable()));
                 return new CheckFluctuationData(invcah, vinvca, searchThresholdByTriComptable(thresholds, invcah.getTriComptable()));
-                //break;
+
             }
             else{
                 for (Jourop jourop : listJourop) {
                     if (compareInvcahAndJourop(invcah, jourop)) {
-                        //listeCheckFluctuation.add(new CheckFluctuationData(invcah, jourop, thresholds.get(invcah.getTriComptable())));
-                        //return new CheckFluctuationData(invcah, jourop, thresholds.get(invcah.getTriComptable()));
                         return new CheckFluctuationData(invcah, jourop, searchThresholdByTriComptable(thresholds, invcah.getTriComptable()));
-                        //break;
                     }
                 }
             }
@@ -221,18 +174,6 @@ public class CheckFluctuationService implements CheckFluctuationServiceInterface
 
     public List<Threshold> createThresholds(){
         List<Threshold>thresholds = new ArrayList<>();
-        /*
-        thresholds.add(new Threshold("0", "Securities",0.05));
-        thresholds.add(new Threshold("1", "Bonds",0.015));
-        thresholds.add(new Threshold("2", "Debt securities",0.005));
-        thresholds.add(new Threshold("3", "Ucits - ETF",0.02));
-        thresholds.add(new Threshold("4", "Ucits",0.02));
-        thresholds.add(new Threshold("5", "Futures",0.03));
-        thresholds.add(new Threshold("6", "Options",0.3));
-        thresholds.add(new Threshold("7", "Swap",1.0));
-        thresholds.add(new Threshold("T", "X-currencies", 1.0));
-        return thresholds;
-         */
         Iterable<Threshold> thresholdsFromDatabase = thresholdRepository.findAll();
         thresholdsFromDatabase.forEach(thresholds::add);
         return thresholds;

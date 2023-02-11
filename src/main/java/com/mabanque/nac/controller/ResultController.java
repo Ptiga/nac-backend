@@ -18,6 +18,7 @@ public class ResultController implements ResultControllerInterface {
     @Autowired
     private ResultServiceInterface resultService;
 
+    //TODO Tester avec les @PreAuthorize
     //@PreAuthorize("hasAuthority('USER')")
     @Override
     @GetMapping("/results")
@@ -29,7 +30,6 @@ public class ResultController implements ResultControllerInterface {
 
         System.out.println("Taille liste des résultats : " + listeResultat.size());
 
-        //return ResponseEntity.ok(resultService.fromSourceFolderToResultList());
         return ResponseEntity.ok(listeResultat);
     }
 
@@ -41,9 +41,6 @@ public class ResultController implements ResultControllerInterface {
 
         Optional<Result> requiredResult = resultService.getSelectedResult(resultId);
 
-        //System.out.println("Taille liste des résultats : " + listeResultat.size());
-
-        //return ResponseEntity.ok(resultService.fromSourceFolderToResultList());
         return ResponseEntity.ok(requiredResult);
     }
 

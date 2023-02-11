@@ -8,8 +8,4 @@ public interface StatementControllerInterface {
 
     ResponseEntity<String > uploadNewStatements();
 
-    //ResponseEntity<List<Result>> getCheckResult();
-
-   // ResponseEntity<Optional> getRequiredResult(@PathVariable("resultId") String resultId);
-
 }

@@ -96,8 +96,6 @@ public class CheckFluctuationServiceTest {
 
     @Test
     public void retrieveThreshold(){
-        //thresholds = fillThresholdMap(thresholds);
-        //System.out.println(checkFluctuationService.getThresholds());
         Assertions.assertEquals(0.05, checkFluctuationService.searchThresholdByTriComptable(thresholds, invcah.getTriComptable()).getThreshold());
     }
 

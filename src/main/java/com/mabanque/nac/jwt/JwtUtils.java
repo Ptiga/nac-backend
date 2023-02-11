@@ -27,6 +27,7 @@ public class JwtUtils {
 
     //Clé secrète
     @Value("${jwt.secret}")
+    //@Value("${jwt.secret}"
     String secretKey;
 
     //Méthode de génération du token qui sera appelée lorsqu'on voudra s'authentifier (ou s'inscrire s'il y a un endpoint d'inscription)

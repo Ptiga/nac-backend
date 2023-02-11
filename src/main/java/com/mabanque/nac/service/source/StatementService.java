@@ -89,8 +89,6 @@ public class StatementService implements StatementServiceInterface{
     }
 
 
-
-
     @Override
     public boolean isExpectedStatementType(Statement statement) {
         switch (statement.getStatementType()){
@@ -215,8 +213,6 @@ public class StatementService implements StatementServiceInterface{
     public List<String[]> createStatementDetail(List<Statement> listStatement) {
         List<String[]>extractedList = new ArrayList<>();
         for (Statement statement: listStatement) {
-            //sourceFileRepository = getSourceFileRepository();
-            //extractedList = sourceFileRepository.readSourceFile(statement);
             extractedList.addAll(sourceFileRepository.readSourceFile(statement));
         }
         return extractedList;
@@ -236,11 +232,6 @@ public class StatementService implements StatementServiceInterface{
     }
 
     private void saveStatementsToDatabase(List<Statement> statements, List<Invcah> invcahs, List<Vinvca> vinvcas, List<Jourop> jourops){
-        /*
-        for (Statement statement: statements) {
-            statementRepository.save(statement);
-        }
-         */
         statementRepository.saveAll(statements);
         invcahService.saveInvcahData(invcahs);
         vinvcaService.saveVinvcaData(vinvcas);
@@ -262,9 +253,6 @@ public class StatementService implements StatementServiceInterface{
         List<Statement>statements = sourceFileRepository.listFiles();
         //On vérifie si les états sont corrects puis on ajoute les attributs manquants
         manageListOfFunds(statements, uploadedStatements);
-        //On sauvegarde les états dans la BDD
-        //saveStatementsToDatabase(usableStatementsList);
-
         return usableStatementsList.size();
     }
 

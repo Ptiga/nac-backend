@@ -35,14 +35,5 @@ public class FundService implements FundServiceInterface{
         fundFromDatabase.forEach(fundInformation::add);
         return fundInformation;
     }
-/*
-    @Override
-    public List<Fund> getFundByTeam(String valuationTeam) {
-        List<Fund>fundInformation = new ArrayList<>();
-        Iterable<Fund> fundFromDatabase = fundRepository.findFundByTeam(valuationTeam);
-        fundFromDatabase.forEach(fundInformation::add);
-        return fundInformation;
-    }
-*/
 
 }

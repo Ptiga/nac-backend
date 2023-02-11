@@ -34,26 +34,17 @@ public class SecurityConfiguration {
             .authorizeRequests()//Pour autoriser certaines routes
             .antMatchers("/").permitAll()
             .antMatchers("/static/**/").permitAll()
-            //.antMatchers("/users").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
-            //.antMatchers("/create-user").permitAll()//Autoriser cette url sans avoir besoin de s'authentifier
-            //.antMatchers("/create-users").permitAll()
-            //.antMatchers("/add-user").permitAll()
-            //.antMatchers("/add-user").hasRole("ADMIN")//-> ne fonctionne pas
-            //.antMatchers("/results").hasAuthority("ROLE_ADMIN")
             .antMatchers("/authenticate").permitAll()
             .antMatchers("/login").permitAll()
-            //.antMatchers("/login/**").permitAll()
-            //.antMatchers("/Login").permitAll()
-            //.antMatchers("/Login/**").permitAll()
-            //.antMatchers("/results").permitAll()
             .antMatchers("/isConnected").permitAll()
             .antMatchers("/v3/api-docs/**").permitAll()
             .antMatchers("/swagger-resources/**").permitAll()
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/swagger-ui.html").permitAll()
-                //TODO: Tester avec des accès spécifiques (".hasRole()")
-            .antMatchers("/webjars/**").permitAll()// -> possibilité de mettre .hasRole() pour déterminer l'accès à un rôle spécifique -> .hasRole("ROLE_USER")
-            //.antMatchers("/results").hasRole("USER")//-> ne fonctionne pas
+            //TODO: Tester avec des accès spécifiques (".hasRole()")
+            //-> possibilité de mettre .hasRole() pour déterminer l'accès à un rôle spécifique -> .hasRole("ROLE_USER")
+            //.antMatchers("/results").hasRole("USER")
+            .antMatchers("/webjars/**").permitAll()
             .antMatchers("/results").hasAuthority("ROLE_USER")
             .anyRequest().authenticated();//Toutes les autres requeêtes devont être authentifiées
         //Avant d'effectuer l'authentification, on vérifie le token (filtre jwtFiler)
